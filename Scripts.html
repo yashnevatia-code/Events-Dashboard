@@ -539,11 +539,17 @@
     $('detailDrawer').hidden = false;
     $('drawerOverlay').hidden = false;
     $('detailDrawer').setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // lock background scroll while open
   }
   function closeDrawer() {
+    if ($('detailDrawer').hidden) return; // already closed — nothing to do
     $('detailDrawer').hidden = true;
     $('drawerOverlay').hidden = true;
     $('detailDrawer').setAttribute('aria-hidden', 'true');
+    // Clear the selected event so no stale content lingers behind the drawer.
+    $('drawerTitle').textContent = 'Event';
+    $('drawerBody').innerHTML = '';
+    document.body.style.overflow = ''; // restore page scrolling
   }
   function detailItem(label, value, opts) {
     opts = opts || {};
