@@ -17,13 +17,17 @@
  * 1. CONFIGURATION  — the ONLY block you normally need to touch.
  * ------------------------------------------------------------------------- */
 const CONFIG = {
-  // India workbook ---------------------------------------------------------
-  INDIA_SPREADSHEET_ID: 'PASTE_INDIA_GOOGLE_SHEET_ID_HERE',
-  INDIA_SHEET_NAME: 'Events List',
+  // Both datasets currently live in ONE workbook ("Upcoming Events Dashboard
+  // Backend"), so both IDs are the same. If you later split them into two
+  // separate workbooks, just change the IDs.
 
-  // UK & Europe workbook ---------------------------------------------------
-  EUROPE_SPREADSHEET_ID: 'PASTE_UK_EUROPE_GOOGLE_SHEET_ID_HERE',
-  EUROPE_SHEET_NAME: 'Sheet2',
+  // India dataset ----------------------------------------------------------
+  INDIA_SPREADSHEET_ID: '1KXmRyQtRDB7epcdFFWvMaoXkck76sHccgPQ403TnICI',
+  INDIA_SHEET_NAME: 'India DRS Events',
+
+  // UK & Europe dataset ----------------------------------------------------
+  EUROPE_SPREADSHEET_ID: '1KXmRyQtRDB7epcdFFWvMaoXkck76sHccgPQ403TnICI',
+  EUROPE_SHEET_NAME: 'UK & Europe Events',
 
   // Frontend auto-refresh cadence (seconds) --------------------------------
   AUTO_REFRESH_SECONDS: 60

@@ -46,6 +46,14 @@ Files:
 
 ## PART 2 — Google Sheet Preparation
 
+> **Already done:** both datasets now live in one shared Google Sheets workbook,
+> **"Upcoming Events Dashboard Backend"**
+> (ID `1KXmRyQtRDB7epcdFFWvMaoXkck76sHccgPQ403TnICI`), with the India data on the
+> **`India DRS Events`** tab and the UK/Europe data on the **`UK & Europe Events`**
+> tab. The Spreadsheet ID and both tab names are already wired into `CONFIG` in
+> `Code.gs`, so you can skip straight to Part 4. The conversion steps below are kept
+> only for reference / re-doing the setup.
+
 You currently have two Excel files. Convert each to a Google Sheet:
 
 1. Go to **drive.google.com** and sign in with your Recykal Google account.
@@ -54,9 +62,9 @@ You currently have two Excel files. Convert each to a Google Sheet:
    **File → Save as Google Sheets**. This creates a native Google Sheet copy.
    (You can delete or keep the original `.xlsx` — the dashboard only uses the Google Sheet.)
 4. Repeat steps 2–3 for `UK Events.xlsx`.
-5. Confirm the tab names:
-   - India Google Sheet must contain a tab named exactly **`Events List`**.
-   - UK/Europe Google Sheet must contain a tab named exactly **`Sheet2`**.
+5. Confirm the tab names (as currently set in the shared workbook):
+   - India data is on a tab named exactly **`India DRS Events`**.
+   - UK/Europe data is on a tab named exactly **`UK & Europe Events`**.
    (Tab names are case-sensitive. If yours differ, either rename the tab or update
    `CONFIG` in `Code.gs`.)
 6. **Get each Spreadsheet ID** from its URL. The ID is the long code between `/d/` and `/edit`:
@@ -102,13 +110,28 @@ Copy each file's contents into the matching file in your Apps Script project (Pa
    > File names must be exactly `Index`, `Styles`, `Scripts` (no `.html` typed — Apps Script adds it).
 
 **3. Paste the India Spreadsheet ID**
-   In `Code.gs`, in the `CONFIG` block, replace `PASTE_INDIA_GOOGLE_SHEET_ID_HERE`
-   with your India Google Sheet ID (from Part 2). Keep the quotes.
+   Both datasets currently live in **one shared workbook**
+   ("Upcoming Events Dashboard Backend"), so both IDs are the same. That workbook is:
+   ```
+   https://docs.google.com/spreadsheets/d/1KXmRyQtRDB7epcdFFWvMaoXkck76sHccgPQ403TnICI/edit
+   ```
+   Its ID and the India tab name are **already filled in** for you in `CONFIG` — nothing to change:
+   ```javascript
+   INDIA_SPREADSHEET_ID: '1KXmRyQtRDB7epcdFFWvMaoXkck76sHccgPQ403TnICI',
+   INDIA_SHEET_NAME: 'India DRS Events',
+   ```
 
 **4. Paste the UK/Europe Spreadsheet ID**
-   In the same `CONFIG` block, replace `PASTE_UK_EUROPE_GOOGLE_SHEET_ID_HERE`
-   with your UK/Europe Google Sheet ID.
-   > These two lines are the **only** things you normally edit.
+   Same workbook, so this is **also already filled in**:
+   ```javascript
+   EUROPE_SPREADSHEET_ID: '1KXmRyQtRDB7epcdFFWvMaoXkck76sHccgPQ403TnICI',
+   EUROPE_SHEET_NAME: 'UK & Europe Events',
+   ```
+   > The two tab names (`India DRS Events` and `UK & Europe Events`) are confirmed
+   > against the live workbook and are case-sensitive. If you rename a tab later,
+   > update the matching `..._SHEET_NAME` line. If you split the two datasets into
+   > separate workbooks, paste each workbook's own ID into the matching
+   > `..._SPREADSHEET_ID` line. These are the only lines you'd ever edit.
 
 **5. Permissions required**
    - Click **Save** (💾).
