@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <title>Recykal — DRS Event Intelligence</title>
+  <!-- Chart.js (stable, CDN-loaded for HTML Service) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <?!= include('Styles'); ?>
+</head>
+<body>
+
+<!-- ===================== TOP NAVIGATION ===================== -->
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">RECYKAL</span>
+    <span class="brand-sub">Events Intelligence</span>
+  </div>
+  <nav class="mainnav" id="mainNav">
+    <button class="nav-btn active" data-view="india">India</button>
+    <button class="nav-btn" data-view="europe">UK &amp; Europe</button>
+  </nav>
+  <div class="topbar-actions">
+    <button class="btn btn-ghost" id="presentationBtn" title="Toggle presentation mode">
+      <span class="ico">▣</span> Presentation
+    </button>
+    <button class="btn btn-primary" id="refreshBtn">
+      <span class="ico refresh-ico">↻</span> Refresh Data
+    </button>
+    <span class="sync-label" id="syncLabel">Last synced: —</span>
+  </div>
+</header>
+
+<!-- ===================== GLOBAL HEADER ===================== -->
+<section class="pagehead">
+  <div>
+    <h1>DRS EVENT INTELLIGENCE</h1>
+    <p class="subtitle">Strategic Event Opportunities &nbsp;|&nbsp; Government • Brands • Speaking • Demonstration • Exhibition</p>
+  </div>
+  <div class="banner" id="statusBanner" hidden></div>
+</section>
+
+<!-- ===================== INDIA VIEW ===================== -->
+<main id="view-india" class="view active">
+
+  <!-- KPI CARDS -->
+  <section class="kpi-row" id="indiaKpis"></section>
+
+  <!-- FILTERS -->
+  <section class="filters card filter-bar" id="indiaFilters">
+    <div class="filter-grid">
+      <label class="fld"><span>Search Event</span>
+        <input type="text" id="in_search" placeholder="Type to search…"></label>
+      <label class="fld"><span>Month</span><select id="in_month"></select></label>
+      <label class="fld"><span>Priority</span><select id="in_priority"></select></label>
+      <label class="fld"><span>Status</span><select id="in_status"></select></label>
+      <label class="fld"><span>City / State</span><select id="in_city"></select></label>
+      <label class="fld"><span>Type</span><select id="in_type"></select></label>
+      <label class="fld"><span>Strategic Use</span><select id="in_use"></select></label>
+      <label class="fld"><span>Confidence</span><select id="in_confidence"></select></label>
+    </div>
+    <button class="btn btn-ghost btn-reset" id="in_reset">Reset Filters</button>
+  </section>
+
+  <!-- UPCOMING -->
+  <section class="block">
+    <h2 class="block-title">Upcoming Events</h2>
+    <div class="upcoming-row" id="indiaUpcoming"></div>
+  </section>
+
+  <!-- CHARTS -->
+  <section class="charts-grid">
+    <div class="card chart-card"><h3>Events by Month</h3><div class="chart-wrap"><canvas id="in_chartMonth"></canvas></div></div>
+    <div class="card chart-card"><h3>Priority Distribution</h3><div class="chart-wrap"><canvas id="in_chartPriority"></canvas></div></div>
+    <div class="card chart-card wide"><h3>Strategic Score vs Access Score</h3><div class="chart-wrap tall"><canvas id="in_chartScatter"></canvas></div></div>
+    <div class="card chart-card"><h3>Strategic Use Distribution</h3><div class="chart-wrap"><canvas id="in_chartUse"></canvas></div></div>
+    <div class="card chart-card"><h3>Status Overview</h3><div class="chart-wrap"><canvas id="in_chartStatus"></canvas></div></div>
+  </section>
+
+  <!-- MASTER TABLE -->
+  <section class="block">
+    <h2 class="block-title">Master Event Table <span class="count-badge" id="in_tableCount"></span></h2>
+    <div class="card table-card">
+      <div class="table-scroll">
+        <table class="data-table" id="in_table">
+          <thead><tr>
+            <th>Event</th><th>Start</th><th>End</th><th>City / State</th><th>Type</th>
+            <th>Priority</th><th>Status</th><th>Strategic Use</th>
+            <th class="num">Strat.</th><th class="num">Access</th><th>Confidence</th>
+          </tr></thead>
+          <tbody id="in_tableBody"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="in_empty" hidden>No events match the selected filters.</div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== UK & EUROPE VIEW ===================== -->
+<main id="view-europe" class="view">
+
+  <section class="kpi-row" id="europeKpis"></section>
+
+  <section class="filters card filter-bar" id="europeFilters">
+    <div class="filter-grid">
+      <label class="fld"><span>Search</span>
+        <input type="text" id="eu_search" placeholder="Type to search…"></label>
+      <label class="fld"><span>Month</span><select id="eu_month"></select></label>
+      <label class="fld"><span>Country</span><select id="eu_country"></select></label>
+      <label class="fld"><span>Entry Type</span><select id="eu_entry"></select></label>
+      <label class="fld"><span>Registration Status</span><select id="eu_reg"></select></label>
+      <label class="fld"><span>RVM Relevance</span><select id="eu_rvm"></select></label>
+    </div>
+    <button class="btn btn-ghost btn-reset" id="eu_reset">Reset Filters</button>
+  </section>
+
+  <section class="block">
+    <h2 class="block-title">Upcoming Events</h2>
+    <div class="upcoming-row" id="europeUpcoming"></div>
+  </section>
+
+  <section class="charts-grid">
+    <div class="card chart-card"><h3>Events by Country</h3><div class="chart-wrap"><canvas id="eu_chartCountry"></canvas></div></div>
+    <div class="card chart-card"><h3>Events by Month</h3><div class="chart-wrap"><canvas id="eu_chartMonth"></canvas></div></div>
+    <div class="card chart-card"><h3>Entry Type</h3><div class="chart-wrap"><canvas id="eu_chartEntry"></canvas></div></div>
+    <div class="card chart-card"><h3>Registration Status</h3><div class="chart-wrap"><canvas id="eu_chartReg"></canvas></div></div>
+    <div class="card chart-card wide"><h3>RVM / Business Relevance <span class="derived-tag">dashboard classification</span></h3><div class="chart-wrap"><canvas id="eu_chartRvm"></canvas></div></div>
+  </section>
+
+  <section class="block">
+    <h2 class="block-title">Event Table <span class="count-badge" id="eu_tableCount"></span></h2>
+    <div class="card table-card">
+      <div class="table-scroll">
+        <table class="data-table" id="eu_table">
+          <thead><tr>
+            <th>Event Name</th><th>Date</th><th>Location</th><th>Country</th>
+            <th>Entry</th><th>Registration Status</th><th>Planned Representatives</th>
+          </tr></thead>
+          <tbody id="eu_tableBody"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="eu_empty" hidden>No events match the selected filters.</div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== DETAIL DRAWER ===================== -->
+<div class="drawer-overlay" id="drawerOverlay" hidden></div>
+<aside class="drawer" id="detailDrawer" hidden aria-hidden="true">
+  <div class="drawer-head">
+    <h3 id="drawerTitle">Event</h3>
+    <button class="drawer-close" id="drawerClose" aria-label="Close">✕</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</aside>
+
+<!-- ===================== LOADING OVERLAY ===================== -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-inner">
+    <div class="spinner"></div>
+    <p>Loading event intelligence…</p>
+    <div class="skeleton-row">
+      <div class="skeleton-card"></div><div class="skeleton-card"></div>
+      <div class="skeleton-card"></div><div class="skeleton-card"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <span>Recykal | DRS Event Intelligence</span>
+  <span>Data source: Live Google Sheets</span>
+</footer>
+
+<?!= include('Scripts'); ?>
+</body>
+</html>
