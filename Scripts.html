@@ -121,6 +121,7 @@
     // Build filter option lists then render.
     buildIndiaFilterOptions();
     buildEuropeFilterOptions();
+    buildPlannerFilterOptions();
     renderActiveView();
   }
 
@@ -135,7 +136,8 @@
 
   function renderActiveView() {
     if (STATE.activeView === 'india') renderIndia();
-    else renderEurope();
+    else if (STATE.activeView === 'europe') renderEurope();
+    else if (STATE.activeView === 'planner') renderPlanner();
   }
 
   /* ---------------- UI helpers ---------------- */
@@ -148,10 +150,6 @@
   function showBanner(msg) { var b = $('statusBanner'); b.textContent = msg; b.hidden = false; }
   function hideBanner() { $('statusBanner').hidden = true; }
 
-  function priorityPill(p) {
-    var cls = p === 'P1' ? 'pill-p1' : p === 'P2' ? 'pill-p2' : p === 'P3' ? 'pill-p3' : 'pill-un';
-    return '<span class="pill ' + cls + '">' + esc(p || 'Unassigned') + '</span>';
-  }
   function daysAway(iso) {
     if (!iso) return null;
     var today = new Date(); today.setHours(0, 0, 0, 0);
@@ -197,16 +195,23 @@
   /* ==========================================================================
      ============================  INDIA VIEW  ==============================
      ========================================================================== */
-  var INDIA_FILTERS = { search: '', month: '', priority: '', status: '', city: '', type: '', use: '', confidence: '' };
+  var INDIA_FILTERS = { search: '', month: '', status: '', city: '', type: '', scale: '', use: '', organiser: '' };
+
+  // Strategic Use pills, built ONLY from the parsed multi-select tags.
+  function usePills(tags) {
+    if (!tags || !tags.length) return '';
+    return tags.map(function (t) { return '<span class="pill pill-use">' + esc(t) + '</span>'; }).join(' ');
+  }
 
   function buildIndiaFilterOptions() {
     fillSelect('in_month', ['']. concat(sortedMonthKeys(STATE.india)), function (k) { return k ? monthLabel(k) : 'All Months'; });
-    fillSelect('in_priority', ['', 'P1', 'P2', 'P3', 'Unassigned'], labelAll('All Priorities'));
     fillSelect('in_status', ['']. concat(uniqueSorted(STATE.india, function (e) { return e.status; })), labelAll('All Statuses'));
     fillSelect('in_city', ['']. concat(uniqueSorted(STATE.india, function (e) { return e.cityState; })), labelAll('All Cities'));
-    fillSelect('in_type', ['']. concat(uniqueSorted(STATE.india, function (e) { return e.type; })), labelAll('All Types'));
-    fillSelect('in_use', ['']. concat(allUseTags(STATE.india)), labelAll('All Strategic Use'));
-    fillSelect('in_confidence', ['']. concat(uniqueSorted(STATE.india, function (e) { return e.confidence; })), labelAll('All Confidence'));
+    fillSelect('in_type', ['']. concat(uniqueSorted(STATE.india, function (e) { return e.eventType; })), labelAll('All Types'));
+    fillSelect('in_scale', ['']. concat(uniqueSorted(STATE.india, function (e) { return e.scale; })), labelAll('All Scales'));
+    // Strategic Use options are the individual multi-select values, not whole cells.
+    fillSelect('in_use', ['']. concat(allUseValues(STATE.india)), labelAll('All Strategic Use'));
+    fillSelect('in_organiser', ['']. concat(uniqueSorted(STATE.india, function (e) { return e.organiser; })), labelAll('All Organisers'));
   }
 
   function filteredIndia() {
@@ -214,12 +219,13 @@
     return STATE.india.filter(function (e) {
       if (f.search && (e.event || '').toLowerCase().indexOf(f.search.toLowerCase()) === -1) return false;
       if (f.month && monthKey(e.startDate) !== f.month) return false;
-      if (f.priority && e.priority !== f.priority) return false;
       if (f.status && e.status !== f.status) return false;
       if (f.city && e.cityState !== f.city) return false;
-      if (f.type && e.type !== f.type) return false;
+      if (f.type && e.eventType !== f.type) return false;
+      if (f.scale && e.scale !== f.scale) return false;
+      // Multi-select: match if the parsed tags CONTAIN the selected value.
       if (f.use && (e.strategicUseTags || []).indexOf(f.use) === -1) return false;
-      if (f.confidence && e.confidence !== f.confidence) return false;
+      if (f.organiser && e.organiser !== f.organiser) return false;
       return true;
     });
   }
@@ -234,24 +240,23 @@
 
   function renderIndiaKpis(rows) {
     var total = rows.length;
-    var p1 = rows.filter(function (e) { return e.priority === 'P1'; }).length;
-    var speak = rows.filter(function (e) {
-      return (e.strategicUseTags || []).indexOf('SPEAK') !== -1 || hasContent(e.speakingRoute);
-    }).length;
-    var demo = rows.filter(function (e) {
-      var t = e.strategicUseTags || [];
-      return t.indexOf('DEMO') !== -1 || t.indexOf('EXHIBIT') !== -1 || hasContent(e.demoExhibitRoute);
-    }).length;
-    var strat = avg(rows.map(function (e) { return e.strategicScore; }));
-    var access = avg(rows.map(function (e) { return e.accessScore; }));
+    // Status KPIs compare on a normalised key (case/whitespace-insensitive).
+    var byStatus = function (label) {
+      var key = statusKey(label);
+      return rows.filter(function (e) { return statusKey(e.status) === key; }).length;
+    };
+    // Opportunity KPIs use the parsed multi-select booleans: one event can
+    // count toward BOTH Speaking and Exhibit, but only once within each.
+    var speaking = rows.filter(function (e) { return e.canSpeak; }).length;
+    var exhibit  = rows.filter(function (e) { return e.canExhibit; }).length;
 
     $('indiaKpis').innerHTML = [
       kpi('Total Events', total),
-      kpi('P1 Events', p1),
-      kpi('Speaking Opportunities', speak),
-      kpi('Demo / Exhibit Opportunities', demo),
-      kpi('Avg Strategic Score', strat === null ? '—' : strat.toFixed(0), '/ 100'),
-      kpi('Avg Access Score', access === null ? '—' : access.toFixed(1), '/ 10')
+      kpi('Yet To Start', byStatus('Yet To Start')),
+      kpi('In Progress', byStatus('In Progress')),
+      kpi('Evaluating', byStatus('Evaluating')),
+      kpi('Speaking Opportunities', speaking),
+      kpi('Exhibit Opportunities', exhibit)
     ].join('');
   }
 
@@ -264,17 +269,16 @@
     if (!up.length) { host.innerHTML = emptyCard('No upcoming events.'); return; }
     host.innerHTML = up.map(function (e) {
       var d = daysAway(e.startDate);
-      var tags = (e.strategicUseTags || []).slice(0, 3).map(function (t) {
-        return '<span class="pill pill-use">' + esc(t) + '</span>';
-      }).join(' ');
+      var pills = usePills(e.strategicUseTags);
       return '<div class="upcoming-card" data-view="india" data-key="' + esc(indiaKey(e)) + '">' +
         '<div class="uc-name">' + esc(e.event) + '</div>' +
         '<div class="uc-meta">' + esc(e.dateDisplay) + '</div>' +
         '<div class="uc-meta">' + esc(dash(e.cityState)) + '</div>' +
-        '<div class="uc-meta">' + priorityPill(e.priority) + ' &nbsp; ' +
-          'Strat ' + esc(numOrDash(e.strategicScore)) + ' · Access ' + esc(numOrDash(e.accessScore)) + '</div>' +
+        '<div class="uc-meta">' + esc(dash(e.eventType)) + '</div>' +
+        '<div class="uc-meta">Status: ' + esc(dash(e.status)) + '</div>' +
+        '<div class="uc-meta">Organiser: ' + esc(dash(e.organiser)) + '</div>' +
         '<span class="uc-countdown">' + (d === 0 ? 'Today' : d + ' day' + (d === 1 ? '' : 's') + ' away') + '</span>' +
-        '<div class="uc-tags">' + tags + '</div>' +
+        (pills ? '<div class="uc-tags">' + pills + '</div>' : '') +
       '</div>';
     }).join('');
     wireCardClicks(host, 'india');
@@ -290,73 +294,47 @@
       options: Object.assign({ scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }, NO_LEGEND)
     });
 
-    // B. Priority donut
-    var pr = ['P1', 'P2', 'P3', 'Unassigned'];
-    var prC = pr.map(function (p) { return rows.filter(function (e) { return e.priority === p; }).length; });
-    drawChart('in_priority', 'in_chartPriority', {
-      type: 'doughnut',
-      data: { labels: pr, datasets: [{ data: prC, backgroundColor: [C.p1, C.p2, C.p3, C.un] }] },
-      options: LEGEND_RIGHT
-    });
-
-    // C. Scatter Strategic vs Access
-    var groups = { P1: [], P2: [], P3: [], Unassigned: [] };
-    rows.forEach(function (e) {
-      if (e.accessScore == null || e.strategicScore == null) return;
-      (groups[e.priority] || groups.Unassigned).push({
-        x: e.accessScore, y: e.strategicScore, meta: e
-      });
-    });
-    var ds = [
-      { label: 'P1', data: groups.P1, backgroundColor: C.p1 },
-      { label: 'P2', data: groups.P2, backgroundColor: C.p2 },
-      { label: 'P3', data: groups.P3, backgroundColor: C.p3 },
-      { label: 'Unassigned', data: groups.Unassigned, backgroundColor: C.un }
-    ].filter(function (d) { return d.data.length; });
-    drawChart('in_scatter', 'in_chartScatter', {
-      type: 'scatter',
-      data: { datasets: ds.map(function (d) { return Object.assign(d, { pointRadius: 6, pointHoverRadius: 8 }); }) },
-      options: {
-        scales: {
-          x: { title: { display: true, text: 'Access Score /10' }, min: 0, max: 10 },
-          y: { title: { display: true, text: 'Strategic Score /100' }, min: 0, max: 100 }
-        },
-        plugins: {
-          legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
-          tooltip: { callbacks: { label: function (ctx) {
-            var e = ctx.raw.meta;
-            return [
-              e.event,
-              'Date: ' + e.dateDisplay,
-              'Priority: ' + e.priority,
-              'Strategic: ' + numOrDash(e.strategicScore),
-              'Access: ' + numOrDash(e.accessScore),
-              'Use: ' + (e.strategicUse || '—')
-            ];
-          } } }
-        }
-      }
-    });
-
-    // D. Strategic Use distribution
-    var useCounts = {};
-    rows.forEach(function (e) { (e.strategicUseTags || []).forEach(function (t) { useCounts[t] = (useCounts[t] || 0) + 1; }); });
-    var useKeys = Object.keys(useCounts).sort(function (a, b) { return useCounts[b] - useCounts[a]; });
-    drawChart('in_use', 'in_chartUse', {
-      type: 'bar',
-      data: { labels: useKeys, datasets: [{ data: useKeys.map(function (k) { return useCounts[k]; }),
-        backgroundColor: C.p3, borderRadius: 4 }] },
-      options: Object.assign({ indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { precision: 0 } } } }, NO_LEGEND)
-    });
-
-    // E. Status overview (dynamic)
-    var st = countBy(rows, function (e) { return e.status || 'Unspecified'; });
+    // B. Events by Status (dynamic; exact source labels)
+    var st = countBy(rows, function (e) { return hasContent(e.status) ? e.status : 'Unspecified'; });
     var stKeys = Object.keys(st).sort(function (a, b) { return st[b] - st[a]; });
     drawChart('in_status', 'in_chartStatus', {
       type: 'bar',
       data: { labels: stKeys, datasets: [{ data: stKeys.map(function (k) { return st[k]; }),
         backgroundColor: C.primary, borderRadius: 4 }] },
       options: Object.assign({ scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }, NO_LEGEND)
+    });
+
+    // C. Events by Strategic Use — multi-select split: "Exhibit, Speak" adds +1
+    //    to Exhibit AND +1 to Speak (never a combined "Exhibit, Speak" bucket).
+    var useCounts = {};
+    rows.forEach(function (e) {
+      (e.strategicUseTags || []).forEach(function (t) { useCounts[t] = (useCounts[t] || 0) + 1; });
+    });
+    var useKeys = Object.keys(useCounts).sort(function (a, b) { return useCounts[b] - useCounts[a]; });
+    drawChart('in_use', 'in_chartUse', {
+      type: 'doughnut',
+      data: { labels: useKeys, datasets: [{ data: useKeys.map(function (k) { return useCounts[k]; }), backgroundColor: C.series }] },
+      options: LEGEND_RIGHT
+    });
+
+    // D. Events by Event Type / Industry (dynamic)
+    var ty = countBy(rows, function (e) { return hasContent(e.eventType) ? e.eventType : 'Unspecified'; });
+    var tyKeys = Object.keys(ty).sort(function (a, b) { return ty[b] - ty[a]; });
+    drawChart('in_type', 'in_chartType', {
+      type: 'bar',
+      data: { labels: tyKeys, datasets: [{ data: tyKeys.map(function (k) { return ty[k]; }),
+        backgroundColor: C.p3, borderRadius: 4 }] },
+      options: Object.assign({ indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { precision: 0 } } } }, NO_LEGEND)
+    });
+
+    // E. Events by City / State (dynamic)
+    var ci = countBy(rows, function (e) { return hasContent(e.cityState) ? e.cityState : 'Unspecified'; });
+    var ciKeys = Object.keys(ci).sort(function (a, b) { return ci[b] - ci[a]; });
+    drawChart('in_city', 'in_chartCity', {
+      type: 'bar',
+      data: { labels: ciKeys, datasets: [{ data: ciKeys.map(function (k) { return ci[k]; }),
+        backgroundColor: C.p2, borderRadius: 4 }] },
+      options: Object.assign({ indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { precision: 0 } } } }, NO_LEGEND)
     });
   }
 
@@ -365,21 +343,19 @@
     var body = $('in_tableBody');
     $('in_empty').hidden = rows.length > 0;
     body.innerHTML = rows.map(function (e) {
-      var uses = (e.strategicUseTags || []).slice(0, 3).map(function (t) {
-        return '<span class="pill pill-use">' + esc(t) + '</span>';
-      }).join(' ');
       return '<tr data-key="' + esc(indiaKey(e)) + '">' +
         '<td class="evt">' + esc(e.event) + (e.duplicate ? '<span class="dup-flag" title="Possible duplicate">DUP</span>' : '') + '</td>' +
-        '<td>' + esc(dash(e.startDate ? fmtShort(e.startDate) : '')) + '</td>' +
+        '<td>' + esc(dash(e.startDate ? fmtShort(e.startDate) : (hasContent(e.dateText) ? e.dateText : ''))) + '</td>' +
         '<td>' + esc(dash(e.endDate ? fmtShort(e.endDate) : '')) + '</td>' +
         '<td>' + esc(dash(e.cityState)) + '</td>' +
-        '<td>' + esc(dash(e.type)) + '</td>' +
-        '<td>' + priorityPill(e.priority) + '</td>' +
+        '<td>' + esc(dash(e.eventType)) + '</td>' +
+        '<td>' + esc(dash(e.scale)) + '</td>' +
         '<td>' + esc(dash(e.status)) + '</td>' +
-        '<td>' + (uses || '—') + '</td>' +
-        '<td class="num">' + esc(numOrDash(e.strategicScore)) + '</td>' +
-        '<td class="num">' + esc(numOrDash(e.accessScore)) + '</td>' +
-        '<td>' + esc(dash(e.confidence)) + '</td>' +
+        '<td>' + esc(dash(e.organiser)) + '</td>' +
+        '<td>' + esc(dash(e.govStakeholders)) + '</td>' +
+        '<td>' + (usePills(e.strategicUseTags) || '—') + '</td>' +
+        '<td>' + esc(dash(e.relevance)) + '</td>' +
+        '<td>' + linkOrText(e.sources) + '</td>' +
       '</tr>';
     }).join('');
     wireRowClicks(body, 'india');
@@ -388,13 +364,14 @@
   /* ==========================================================================
      ==========================  UK & EUROPE VIEW  ==========================
      ========================================================================== */
-  var EUROPE_FILTERS = { search: '', month: '', country: '', entry: '', reg: '', rvm: '' };
+  var EUROPE_FILTERS = { search: '', month: '', country: '', entry: '', reg: '', organiser: '', rvm: '' };
 
   function buildEuropeFilterOptions() {
     fillSelect('eu_month', ['']. concat(sortedMonthKeys(STATE.europe)), function (k) { return k ? monthLabel(k) : 'All Months'; });
     fillSelect('eu_country', ['']. concat(uniqueSorted(STATE.europe, function (e) { return e.country; })), labelAll('All Countries'));
     fillSelect('eu_entry', ['']. concat(uniqueSorted(STATE.europe, function (e) { return e.entryType; })), labelAll('All Entry Types'));
     fillSelect('eu_reg', ['']. concat(uniqueSorted(STATE.europe, function (e) { return e.registrationStatus; })), labelAll('All Registration'));
+    fillSelect('eu_organiser', ['']. concat(uniqueSorted(STATE.europe, function (e) { return e.organiser; })), labelAll('All Organisers'));
     fillSelect('eu_rvm', ['']. concat(uniqueSorted(STATE.europe, function (e) { return e.rvmCategory; })), labelAll('All RVM Relevance'));
   }
 
@@ -406,6 +383,7 @@
       if (f.country && e.country !== f.country) return false;
       if (f.entry && e.entryType !== f.entry) return false;
       if (f.reg && e.registrationStatus !== f.reg) return false;
+      if (f.organiser && e.organiser !== f.organiser) return false;
       if (f.rvm && e.rvmCategory !== f.rvm) return false;
       return true;
     });
@@ -452,6 +430,7 @@
         '<div class="uc-meta">' + esc(dash(e.location)) + (e.country ? ' · ' + esc(e.country) : '') + '</div>' +
         '<div class="uc-meta"><span class="pill pill-neutral">' + esc(e.entryType) + '</span> ' +
           (hasContent(e.registrationStatus) ? '<span class="pill pill-use">Registered</span>' : '') + '</div>' +
+        (hasContent(e.organiser) ? '<div class="uc-meta">Organiser: ' + esc(e.organiser) + '</div>' : '') +
         (hasContent(e.plannedReps) ? '<div class="uc-meta">Reps: ' + esc(e.plannedReps) + '</div>' : '') +
         '<span class="uc-countdown">' + (d === 0 ? 'Today' : d + ' day' + (d === 1 ? '' : 's') + ' away') + '</span>' +
       '</div>';
@@ -518,11 +497,113 @@
         '<td>' + esc(dash(e.location)) + '</td>' +
         '<td>' + esc(dash(e.country)) + '</td>' +
         '<td>' + esc(dash(e.entryType)) + '</td>' +
+        '<td>' + esc(dash(e.organiser)) + '</td>' +
         '<td>' + esc(dash(e.registrationStatus)) + '</td>' +
         '<td>' + esc(dash(e.plannedReps)) + '</td>' +
       '</tr>';
     }).join('');
     wireRowClicks(body, 'europe');
+  }
+
+  /* ==========================================================================
+     ====================  MONTH-WISE PLANNER (Gantt tab)  ==================
+     Groups all dated events chronologically by their Start Date month. Events
+     with no parseable date fall into a final "TBD / Date Not Confirmed" block.
+     ========================================================================== */
+  var PLANNER_FILTERS = { search: '', dataset: '', year: '' };
+
+  // Unified list across both datasets, each tagged with its origin + click key.
+  function plannerAllEvents() {
+    var list = [];
+    STATE.india.forEach(function (e) {
+      list.push({ which: 'india', dataset: 'India', key: indiaKey(e),
+        name: e.event, startDate: e.startDate, dateDisplay: e.dateDisplay,
+        dateText: e.dateText, context: e.cityState, status: e.status });
+    });
+    STATE.europe.forEach(function (e) {
+      list.push({ which: 'europe', dataset: 'UK & Europe', key: europeKey(e),
+        name: e.eventName, startDate: e.startDate, dateDisplay: e.dateDisplay,
+        dateText: e.dateText, context: e.country, status: e.registrationStatus });
+    });
+    return list;
+  }
+
+  function buildPlannerFilterOptions() {
+    var years = {};
+    plannerAllEvents().forEach(function (e) {
+      if (e.startDate) years[e.startDate.slice(0, 4)] = true;
+    });
+    fillSelect('pl_year', ['']. concat(Object.keys(years).sort()), labelAll('All Years'));
+  }
+
+  function filteredPlanner() {
+    var f = PLANNER_FILTERS;
+    return plannerAllEvents().filter(function (e) {
+      if (f.dataset && e.dataset !== f.dataset) return false;
+      if (f.search && (e.name || '').toLowerCase().indexOf(f.search.toLowerCase()) === -1) return false;
+      if (f.year && (!e.startDate || e.startDate.slice(0, 4) !== f.year)) return false;
+      return true;
+    });
+  }
+
+  function renderPlanner() {
+    var rows = filteredPlanner();
+    $('pl_count').textContent = rows.length + ' events';
+    var host = $('plannerBody');
+    $('pl_empty').hidden = rows.length > 0;
+    if (!rows.length) { host.innerHTML = ''; return; }
+
+    // Partition into dated (valid Start Date) and TBD (no parseable date).
+    var dated = [], tbd = [];
+    rows.forEach(function (e) { (e.startDate ? dated : tbd).push(e); });
+
+    // Group dated events by YYYY-MM, chronologically.
+    var groups = {};
+    dated.forEach(function (e) {
+      var k = e.startDate.slice(0, 7);
+      (groups[k] = groups[k] || []).push(e);
+    });
+    var monthKeys = Object.keys(groups).sort();
+
+    var html = monthKeys.map(function (mk) {
+      var evs = groups[mk].sort(function (a, b) { return a.startDate < b.startDate ? -1 : 1; });
+      return plannerMonthBlock(monthLabel(mk), evs);
+    }).join('');
+
+    if (tbd.length) {
+      html += plannerMonthBlock('TBD / Date Not Confirmed', tbd, true);
+    }
+    host.innerHTML = html;
+    wirePlannerClicks(host);
+  }
+
+  function plannerMonthBlock(title, evs, isTbd) {
+    var rows = evs.map(function (e) {
+      var dateCell = isTbd
+        ? (hasContent(e.dateText) ? esc(e.dateText) : (hasContent(e.dateDisplay) ? esc(e.dateDisplay) : 'TBD'))
+        : esc(e.dateDisplay);
+      var dsClass = e.which === 'india' ? 'ds-india' : 'ds-europe';
+      return '<tr data-which="' + esc(e.which) + '" data-key="' + esc(e.key) + '">' +
+        '<td class="pl-date">' + dateCell + '</td>' +
+        '<td class="pl-name">' + esc(e.name) + '</td>' +
+        '<td><span class="pill ' + dsClass + '">' + esc(e.dataset) + '</span>' +
+          (hasContent(e.context) ? ' <span class="pl-ctx">' + esc(e.context) + '</span>' : '') + '</td>' +
+        '<td>' + (hasContent(e.status) ? '<span class="pill pill-neutral">' + esc(e.status) + '</span>' : '—') + '</td>' +
+      '</tr>';
+    }).join('');
+    return '<div class="planner-month">' +
+      '<div class="planner-month-head"><h3>' + esc(title) + '</h3>' +
+        '<span class="count-badge">' + evs.length + ' Event' + (evs.length === 1 ? '' : 's') + '</span></div>' +
+      '<div class="table-scroll"><table class="data-table planner-table"><tbody>' + rows + '</tbody></table></div>' +
+    '</div>';
+  }
+
+  function wirePlannerClicks(container) {
+    container.querySelectorAll('tr').forEach(function (tr) {
+      tr.addEventListener('click', function () {
+        openByKey(tr.getAttribute('data-which'), tr.getAttribute('data-key'));
+      });
+    });
   }
 
   /* ==========================================================================
@@ -567,22 +648,16 @@
   function openIndiaDetail(e) {
     var html =
       detailItem('Event', e.event) +
-      detailItem('Dates', e.dateDisplay) +
+      detailItem('Start Date', e.startDate ? fmtShort(e.startDate) : (hasContent(e.dateText) ? e.dateText : '')) +
+      detailItem('End Date', e.endDate ? fmtShort(e.endDate) : '') +
       detailItem('City / State', e.cityState) +
-      detailItem('Type', e.type) +
+      detailItem('Event Type / Industry', e.eventType) +
       detailItem('Scale', e.scale) +
-      detailItem('Priority', e.priority) +
       detailItem('Status', e.status) +
+      detailItem('Organiser', e.organiser) +
       detailItem('Government Stakeholders to Target', e.govStakeholders) +
-      detailItem('Brand Stakeholders to Target', e.brandStakeholders) +
       detailItem('Strategic Use', e.strategicUse) +
-      detailItem('Delegate Cost', e.delegateCost) +
-      detailItem('Speaking Route', e.speakingRoute) +
-      detailItem('Demo / Exhibit Route', e.demoExhibitRoute) +
       detailItem('Relevance / Business Outcome', e.relevance) +
-      detailItem('Strategic Score', numOrDash(e.strategicScore) + (e.strategicScore != null ? ' / 100' : '')) +
-      detailItem('Access Score', numOrDash(e.accessScore) + (e.accessScore != null ? ' / 10' : '')) +
-      detailItem('Confidence', e.confidence) +
       detailItem('Sources', e.sources, { link: true });
     openDrawer(e.event, html);
   }
@@ -599,6 +674,7 @@
       detailItem('RVM Display', e.rvmDisplay) +
       detailItem('Relevance to RVM Business', e.relevanceRvm) +
       detailItem('RVM Relevance (dashboard classification)', e.rvmCategory) +
+      detailItem('Organiser', e.organiser) +
       detailItem('Planned Representatives', e.plannedReps) +
       detailItem('Registration Status', e.registrationStatus) +
       detailItem('Website', e.website, { link: true }) +
@@ -639,15 +715,15 @@
     // India
     bindInput('in_search', function (v) { INDIA_FILTERS.search = v; renderIndia(); });
     bindSelect('in_month', function (v) { INDIA_FILTERS.month = v; renderIndia(); });
-    bindSelect('in_priority', function (v) { INDIA_FILTERS.priority = v; renderIndia(); });
     bindSelect('in_status', function (v) { INDIA_FILTERS.status = v; renderIndia(); });
     bindSelect('in_city', function (v) { INDIA_FILTERS.city = v; renderIndia(); });
     bindSelect('in_type', function (v) { INDIA_FILTERS.type = v; renderIndia(); });
+    bindSelect('in_scale', function (v) { INDIA_FILTERS.scale = v; renderIndia(); });
     bindSelect('in_use', function (v) { INDIA_FILTERS.use = v; renderIndia(); });
-    bindSelect('in_confidence', function (v) { INDIA_FILTERS.confidence = v; renderIndia(); });
+    bindSelect('in_organiser', function (v) { INDIA_FILTERS.organiser = v; renderIndia(); });
     $('in_reset').addEventListener('click', function () {
-      INDIA_FILTERS = { search: '', month: '', priority: '', status: '', city: '', type: '', use: '', confidence: '' };
-      resetControls(['in_search', 'in_month', 'in_priority', 'in_status', 'in_city', 'in_type', 'in_use', 'in_confidence']);
+      INDIA_FILTERS = { search: '', month: '', status: '', city: '', type: '', scale: '', use: '', organiser: '' };
+      resetControls(['in_search', 'in_month', 'in_status', 'in_city', 'in_type', 'in_scale', 'in_use', 'in_organiser']);
       renderIndia();
     });
 
@@ -657,11 +733,22 @@
     bindSelect('eu_country', function (v) { EUROPE_FILTERS.country = v; renderEurope(); });
     bindSelect('eu_entry', function (v) { EUROPE_FILTERS.entry = v; renderEurope(); });
     bindSelect('eu_reg', function (v) { EUROPE_FILTERS.reg = v; renderEurope(); });
+    bindSelect('eu_organiser', function (v) { EUROPE_FILTERS.organiser = v; renderEurope(); });
     bindSelect('eu_rvm', function (v) { EUROPE_FILTERS.rvm = v; renderEurope(); });
     $('eu_reset').addEventListener('click', function () {
-      EUROPE_FILTERS = { search: '', month: '', country: '', entry: '', reg: '', rvm: '' };
-      resetControls(['eu_search', 'eu_month', 'eu_country', 'eu_entry', 'eu_reg', 'eu_rvm']);
+      EUROPE_FILTERS = { search: '', month: '', country: '', entry: '', reg: '', organiser: '', rvm: '' };
+      resetControls(['eu_search', 'eu_month', 'eu_country', 'eu_entry', 'eu_reg', 'eu_organiser', 'eu_rvm']);
       renderEurope();
+    });
+
+    // Month-wise planner (Gantt tab)
+    bindInput('pl_search', function (v) { PLANNER_FILTERS.search = v; renderPlanner(); });
+    bindSelect('pl_dataset', function (v) { PLANNER_FILTERS.dataset = v; renderPlanner(); });
+    bindSelect('pl_year', function (v) { PLANNER_FILTERS.year = v; renderPlanner(); });
+    $('pl_reset').addEventListener('click', function () {
+      PLANNER_FILTERS = { search: '', dataset: '', year: '' };
+      resetControls(['pl_search', 'pl_dataset', 'pl_year']);
+      renderPlanner();
     });
   }
   function bindInput(id, cb) { $(id).addEventListener('input', function () { cb(this.value); }); }
@@ -678,21 +765,26 @@
   }
   function emptyCard(msg) { return '<div class="empty-state" style="grid-column:1/-1">' + esc(msg) + '</div>'; }
   function hasContent(s) { return s != null && String(s).trim() !== '' && String(s).trim() !== '—'; }
-  function numOrDash(n) { return (n === null || n === undefined || n === '') ? '—' : n; }
-  function avg(arr) {
-    var nums = arr.filter(function (n) { return typeof n === 'number' && isFinite(n); });
-    if (!nums.length) return null;
-    return nums.reduce(function (a, b) { return a + b; }, 0) / nums.length;
-  }
   function uniqueSorted(arr, fn) {
     var set = {};
     arr.forEach(function (x) { var v = fn(x); if (hasContent(v)) set[v] = true; });
     return Object.keys(set).sort();
   }
-  function allUseTags(arr) {
+  // Distinct individual Strategic Use values across events (for the filter list).
+  function allUseValues(arr) {
     var set = {};
-    arr.forEach(function (e) { (e.strategicUseTags || []).forEach(function (t) { set[t] = true; }); });
+    arr.forEach(function (e) { (e.strategicUseTags || []).forEach(function (t) { if (hasContent(t)) set[t] = true; }); });
     return Object.keys(set).sort();
+  }
+  // Status comparison key: lowercase, trim, collapse whitespace (mirrors backend).
+  function statusKey(s) { return String(s == null ? '' : s).replace(/\s+/g, ' ').trim().toLowerCase(); }
+  // Render a cell that may contain a URL (optionally with surrounding text) as a
+  // clickable external link while preserving readable text; '—' when empty.
+  function linkOrText(text) {
+    if (!hasContent(text)) return '—';
+    var url = toUrl(text);
+    if (!url) return esc(text);
+    return '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(text) + '</a>';
   }
   function labelAll(allLabel) { return function (v) { return v === '' ? allLabel : v; }; }
   function fillSelect(id, values, labelFn) {
