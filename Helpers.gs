@@ -16,9 +16,15 @@
 
 /**
  * Open a spreadsheet + tab and return a normalised grid:
- *   { headers: [..], rows: [[..], ..] }
+ *   { headers: [..], rows: [[raw..], ..], display: [[text..], ..] }
+ * - `rows` holds RAW values (getValues) — real Date objects survive here, which
+ *   the date parser needs for accurate, timezone-safe day handling.
+ * - `display` holds DISPLAY values (getDisplayValues) — this is how Google Sheets
+ *   renders a cell, so multi-select dropdown chips come back as readable text
+ *   (e.g. "Exhibit, Speak") instead of an opaque object. Text/dropdown fields
+ *   should be read from `display`; dates from `rows`.
+ * - `rows[i]` and `display[i]` stay index-aligned after blank-row trimming.
  * - Dynamically detects the populated range (no hard-coded row/col counts).
- * - Trailing fully-empty rows are dropped.
  */
 function readSheetGrid(spreadsheetId, sheetName) {
   if (!spreadsheetId || spreadsheetId.indexOf('PASTE_') === 0) {
@@ -36,17 +42,24 @@ function readSheetGrid(spreadsheetId, sheetName) {
   var lastRow = sheet.getLastRow();
   var lastCol = sheet.getLastColumn();
   if (lastRow < 2 || lastCol < 1) {
-    return { headers: [], rows: [] };
+    return { headers: [], rows: [], display: [] };
   }
 
-  var values = sheet.getRange(1, 1, lastRow, lastCol).getValues();
+  var range = sheet.getRange(1, 1, lastRow, lastCol);
+  var values = range.getValues();
+  var displays = range.getDisplayValues();
   var headers = values[0];
-  var rows = values.slice(1);
 
-  // Trim rows that are entirely blank (keeps interior blanks handled per-cell).
-  rows = rows.filter(function (r) { return !isBlankRow(r); });
+  // Trim rows that are entirely blank, keeping raw + display index-aligned.
+  var rows = [];
+  var display = [];
+  for (var r = 1; r < values.length; r++) {
+    if (isBlankRow(values[r])) continue;
+    rows.push(values[r]);
+    display.push(displays[r]);
+  }
 
-  return { headers: headers, rows: rows };
+  return { headers: headers, rows: rows, display: display };
 }
 
 
@@ -84,6 +97,27 @@ function resolveColumn(headerIndex, desiredName) {
   return -1;
 }
 
+/**
+ * Resolve the first header that matches any name in `names` (in priority order),
+ * returning its column index or -1 if none match. Used for header aliases such
+ * as "Event Type / Industry" | "Event Type" | "Type" | "Industry", or
+ * "Organiser" | "Organisers" | "Organizer" | "Organizers". Exact normalised
+ * matches are preferred across all aliases before any fuzzy contains-match.
+ */
+function resolveColumnAlias(headerIndex, names) {
+  // Pass 1: exact normalised match on any alias.
+  for (var i = 0; i < names.length; i++) {
+    var key = normalizeHeader(names[i]);
+    if (key in headerIndex) return headerIndex[key];
+  }
+  // Pass 2: fall back to the forgiving contains-match, alias by alias.
+  for (var j = 0; j < names.length; j++) {
+    var idx = resolveColumn(headerIndex, names[j]);
+    if (idx !== -1) return idx;
+  }
+  return -1;
+}
+
 /** Normalise a header for matching: lowercase, collapse spaces/punctuation. */
 function normalizeHeader(h) {
   if (h === null || h === undefined) return '';
@@ -112,6 +146,18 @@ function cellText(row, colIndex) {
   if (v instanceof Date) return toIsoDate(v);
   var s = String(v).replace(/ /g, ' ').trim();
   return s;
+}
+
+/**
+ * Cleaned DISPLAY text for a cell (from getDisplayValues). Use this for
+ * text / dropdown / multi-select fields so the value comes back exactly as
+ * Google Sheets renders it. Missing column or blank cell -> ''.
+ */
+function cellDisplay(displayRow, colIndex) {
+  if (!displayRow || colIndex < 0 || colIndex >= displayRow.length) return '';
+  var v = displayRow[colIndex];
+  if (v === null || v === undefined) return '';
+  return String(v).replace(/ /g, ' ').trim();
 }
 
 /** True when every cell in a row is empty. */
@@ -337,40 +383,56 @@ function buildDateDisplay(startInfo, endInfo) {
  * DOMAIN CLASSIFIERS  (dashboard-derived, clearly NOT source data)
  * ------------------------------------------------------------------------- */
 
-/** Canonical strategic-use categories we recognise for India. */
-var STRATEGIC_USE_CANON = [
-  { tag: 'SPEAK',            keys: ['speak', 'speaker', 'speaking', 'keynote', 'panel'] },
-  { tag: 'DEMO',             keys: ['demo', 'demonstration'] },
-  { tag: 'EXHIBIT',          keys: ['exhibit', 'exhibition', 'booth', 'stand'] },
-  { tag: 'GOVT ACCESS',      keys: ['govt', 'government', 'ministry', 'policy', 'tourism drs'] },
-  { tag: 'BRAND ACCESS',     keys: ['brand'] },
-  { tag: 'PARTNERSHIP',      keys: ['partner', 'partnership', 'mou'] },
-  { tag: 'PUBLIC VISIBILITY',keys: ['public', 'visibility', 'awareness', 'pr '] },
-  { tag: 'HOST',             keys: ['host', 'hosting'] },
-  { tag: 'DELEGATE',         keys: ['delegate', 'delegation'] }
-];
+/* ---- INDIA: status normalisation (single canonical implementation) -------- */
 
 /**
- * Split a Strategic Use cell like "SPEAK / EXHIBIT / BRAND ACCESS" into a
- * de-duplicated array of canonical tags. Only tags actually present appear.
+ * Normalise a Status value into a comparison KEY only:
+ *   'In Progress' / ' in  progress ' / 'IN PROGRESS' -> 'in progress'
+ * Lowercase, trim, collapse internal whitespace. This is for KPI/filter
+ * comparisons; the ORIGINAL source label is what we display to users.
  */
-function splitStrategicUse(text) {
-  if (!text) return [];
-  var lower = String(text).toLowerCase();
-  var found = [];
-  STRATEGIC_USE_CANON.forEach(function (cat) {
-    var hit = cat.keys.some(function (k) { return lower.indexOf(k) !== -1; });
-    if (hit && found.indexOf(cat.tag) === -1) found.push(cat.tag);
-  });
-  return found;
+function normalizeStatusKey(text) {
+  if (text === null || text === undefined) return '';
+  return String(text).replace(/ /g, ' ')
+    .replace(/\s+/g, ' ').trim().toLowerCase();
 }
 
-/** Normalise priority text into P1/P2/P3 or 'Unassigned'. */
-function normalizePriority(text) {
-  if (!text) return 'Unassigned';
-  var m = String(text).toUpperCase().match(/P\s*([123])/);
-  if (m) return 'P' + m[1];
-  return 'Unassigned';
+/* ---- INDIA: Strategic Use multi-select parsing (single canonical impl) ----- */
+
+// The recognised Strategic Use selections. Order defines display order.
+var STRATEGIC_USE_VALUES = ['Delegation Only', 'Exhibit', 'Speak'];
+
+/**
+ * Parse a multi-select Strategic Use cell into structured, reliable data.
+ * The cell may hold one or several selections in any common representation:
+ *   "Exhibit, Speak"  |  "Speak\nExhibit"  |  "Delegation Only; Speak"  |  "Exhibit / Speak"
+ * Returns:
+ *   {
+ *     values: ['Exhibit','Speak'],   // recognised selections, canonical labels
+ *     canSpeak: true,                // contains Speak
+ *     canExhibit: true,              // contains Exhibit
+ *     delegationOnly: false          // contains Delegation Only
+ *   }
+ * Unrecognised tokens are preserved in `values` as-is (so a future option still
+ * appears), but no tags are derived or inferred from other columns.
+ */
+function parseStrategicUse(text) {
+  var out = { values: [], canSpeak: false, canExhibit: false, delegationOnly: false };
+  if (text === null || text === undefined || String(text).trim() === '') return out;
+
+  // Split on commas, semicolons, slashes, pipes and line breaks.
+  var tokens = String(text).split(/[,;/|\n\r]+/);
+  tokens.forEach(function (tok) {
+    var t = tok.replace(/ /g, ' ').replace(/\s+/g, ' ').trim();
+    if (!t) return;
+    var lower = t.toLowerCase();
+    var canonical = t; // default: keep the token as written
+    if (lower === 'speak' || lower.indexOf('speak') !== -1) { canonical = 'Speak'; out.canSpeak = true; }
+    else if (lower.indexOf('delegation') !== -1) { canonical = 'Delegation Only'; out.delegationOnly = true; }
+    else if (lower.indexOf('exhibit') !== -1) { canonical = 'Exhibit'; out.canExhibit = true; }
+    if (out.values.indexOf(canonical) === -1) out.values.push(canonical);
+  });
+  return out;
 }
 
 /** Classify UK entry text into Free | Paid | Mixed | Other. */

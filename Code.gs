@@ -86,70 +86,75 @@ function getDashboardData() {
 }
 
 /**
- * INDIA — read `Events List` and return an array of clean event objects.
- * Fields are located by HEADER NAME, so columns may be reordered later.
+ * INDIA — read the `India DRS Events` tab and return clean event objects.
+ *
+ * Only the retained fields of the revised data model are exposed. Removed
+ * fields (Priority, Brand Stakeholders, Delegate Cost, Speaking Route,
+ * Demo/Exhibit Route, Strategic Score, Access Score, Confidence) are NOT read
+ * or returned, so they can never surface in the UI — the columns can stay in
+ * the sheet untouched.
+ *
+ * Columns are located by HEADER NAME (with aliases), never by fixed position,
+ * so reordering columns in Google Sheets does not break the dashboard.
+ * Text/dropdown fields are read from DISPLAY values so multi-select Strategic
+ * Use comes back as readable text; dates are read from RAW values so day
+ * handling stays timezone-safe.
  */
 function getIndiaEvents() {
   var grid = readSheetGrid(CONFIG.INDIA_SPREADSHEET_ID, CONFIG.INDIA_SHEET_NAME);
   var headerIndex = buildHeaderIndex(grid.headers);
+  var alias = function (names) { return resolveColumnAlias(headerIndex, names); };
 
-  // Column resolver by fuzzy header name (case / spacing / punctuation safe).
-  var col = function (name) { return resolveColumn(headerIndex, name); };
-
-  var iEvent      = col('Event');
-  var iStart      = col('Start Date');
-  var iEnd        = col('End Date');
-  var iCity       = col('City / State');
-  var iType       = col('Type');
-  var iScale      = col('Scale');
-  var iPriority   = col('Priority');
-  var iStatus     = col('Status');
-  var iGov        = col('Government Stakeholders to Target');
-  var iBrand      = col('Brand Stakeholders to Target');
-  var iUse        = col('Strategic Use');
-  var iCost       = col('Delegate Cost');
-  var iSpeak      = col('Speaking Route');
-  var iDemo       = col('Demo / Exhibit Route');
-  var iRelevance  = col('Relevance / Business Outcome');
-  var iScore      = col('Strategic Score /100');
-  var iAccess     = col('Access /10');
-  var iConfidence = col('Confidence');
-  var iSources    = col('Sources');
+  var iEvent     = alias(['Event', 'Event Name']);
+  var iStart     = alias(['Start Date']);
+  var iEnd       = alias(['End Date']);
+  var iCity      = alias(['City / State', 'City/State', 'City']);
+  var iType      = alias(['Event Type / Industry', 'Event Type', 'Type', 'Industry']);
+  var iScale     = alias(['Scale']);
+  var iStatus    = alias(['Status']);
+  var iOrganiser = alias(['Organiser', 'Organisers', 'Organizer', 'Organizers']);
+  var iGov       = alias(['Government Stakeholders to Target', 'Government Stakeholders']);
+  var iUse       = alias(['Strategic Use']);
+  var iRelevance = alias(['Relevance / Business Outcome', 'Relevance / Business Outcomes', 'Relevance']);
+  var iSources   = alias(['Sources', 'Source']);
 
   var events = [];
   var seenKeys = {}; // for subtle duplicate flagging (Event + Start Date)
 
-  grid.rows.forEach(function (row) {
+  grid.rows.forEach(function (row, i) {
     if (isBlankRow(row)) return;
+    var disp = grid.display[i];
 
-    var eventName = cellText(row, iEvent);
+    var eventName = cellDisplay(disp, iEvent);
     if (!eventName) return; // an event with no name is not a real record
 
+    // Dates from RAW values (real Date objects) for accurate parsing.
     var startInfo = parseDateFlexible(cellRaw(row, iStart));
     var endInfo   = parseDateFlexible(cellRaw(row, iEnd));
 
+    // Strategic Use from DISPLAY value (multi-select safe).
+    var useText = cellDisplay(disp, iUse);
+    var use = parseStrategicUse(useText);
+
     var obj = {
       event:            eventName,
-      startDate:        startInfo.startISO,          // '' when unknown
+      startDate:        startInfo.startISO,   // '' when unknown / TBD
       endDate:          endInfo.startISO,
       dateDisplay:      buildDateDisplay(startInfo, endInfo),
-      cityState:        cellText(row, iCity),
-      type:             cellText(row, iType),
-      scale:            cellText(row, iScale),
-      priority:         normalizePriority(cellText(row, iPriority)),
-      status:           cellText(row, iStatus),
-      govStakeholders:  cellText(row, iGov),
-      brandStakeholders:cellText(row, iBrand),
-      strategicUse:     cellText(row, iUse),
-      strategicUseTags: splitStrategicUse(cellText(row, iUse)),
-      delegateCost:     cellText(row, iCost),
-      speakingRoute:    cellText(row, iSpeak),
-      demoExhibitRoute: cellText(row, iDemo),
-      relevance:        cellText(row, iRelevance),
-      strategicScore:   extractNumber(cellRaw(row, iScore)),   // number | null
-      accessScore:      extractNumber(cellRaw(row, iAccess)),  // handles "7.5 currently"
-      confidence:       cellText(row, iConfidence),
-      sources:          cellText(row, iSources),
+      dateText:         cellDisplay(disp, iStart), // raw display text (e.g. "TBD")
+      cityState:        cellDisplay(disp, iCity),
+      eventType:        cellDisplay(disp, iType),
+      scale:            cellDisplay(disp, iScale),
+      status:           cellDisplay(disp, iStatus),   // exact source label
+      organiser:        cellDisplay(disp, iOrganiser), // '' when blank/absent
+      govStakeholders:  cellDisplay(disp, iGov),
+      strategicUse:     useText,                       // exact source string
+      strategicUseTags: use.values,                    // parsed multi-select
+      canSpeak:         use.canSpeak,
+      canExhibit:       use.canExhibit,
+      delegationOnly:   use.delegationOnly,
+      relevance:        cellDisplay(disp, iRelevance),
+      sources:          cellDisplay(disp, iSources),
       duplicate:        false
     };
 
@@ -185,6 +190,8 @@ function getEuropeEvents() {
   var iRvmRel  = col('Relevance to RVM Business');
   var iReps    = col('Planned Representatives');
   var iRegStat = col('Registration Status');
+  var iOrganiser = resolveColumnAlias(headerIndex,
+                    ['Organiser', 'Organisers', 'Organizer', 'Organizers']); // new; may be -1
   var iWebsite = col('Website Link');
   var iSpeakers= col('List of Speakers');
   var iSponsors= col('List of Sponsors');
@@ -193,8 +200,9 @@ function getEuropeEvents() {
 
   var events = [];
 
-  grid.rows.forEach(function (row) {
+  grid.rows.forEach(function (row, i) {
     if (isBlankRow(row)) return;
+    var disp = grid.display[i];
 
     var name = cellText(row, iName);
     if (!name) return;
@@ -222,6 +230,7 @@ function getEuropeEvents() {
       rvmCategory:       classifyRvmCategory(relevanceRvm, theme), // dashboard-derived
       plannedReps:       cellText(row, iReps),
       registrationStatus:cellText(row, iRegStat),
+      organiser:         cellDisplay(disp, iOrganiser), // '' when blank/absent
       website:           cellText(row, iWebsite),
       speakers:          cellText(row, iSpeakers),
       sponsors:          cellText(row, iSponsors),

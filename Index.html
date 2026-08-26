@@ -19,6 +19,7 @@
   <nav class="mainnav" id="mainNav">
     <button class="nav-btn active" data-view="india">India</button>
     <button class="nav-btn" data-view="europe">UK &amp; Europe</button>
+    <button class="nav-btn" data-view="planner">Gantt</button>
   </nav>
   <div class="topbar-actions">
     <button class="btn btn-ghost" id="presentationBtn" title="Toggle presentation mode">
@@ -52,12 +53,12 @@
       <label class="fld"><span>Search Event</span>
         <input type="text" id="in_search" placeholder="Type to search…"></label>
       <label class="fld"><span>Month</span><select id="in_month"></select></label>
-      <label class="fld"><span>Priority</span><select id="in_priority"></select></label>
       <label class="fld"><span>Status</span><select id="in_status"></select></label>
       <label class="fld"><span>City / State</span><select id="in_city"></select></label>
-      <label class="fld"><span>Type</span><select id="in_type"></select></label>
+      <label class="fld"><span>Event Type / Industry</span><select id="in_type"></select></label>
+      <label class="fld"><span>Scale</span><select id="in_scale"></select></label>
       <label class="fld"><span>Strategic Use</span><select id="in_use"></select></label>
-      <label class="fld"><span>Confidence</span><select id="in_confidence"></select></label>
+      <label class="fld"><span>Organiser</span><select id="in_organiser"></select></label>
     </div>
     <button class="btn btn-ghost btn-reset" id="in_reset">Reset Filters</button>
   </section>
@@ -71,10 +72,10 @@
   <!-- CHARTS -->
   <section class="charts-grid">
     <div class="card chart-card"><h3>Events by Month</h3><div class="chart-wrap"><canvas id="in_chartMonth"></canvas></div></div>
-    <div class="card chart-card"><h3>Priority Distribution</h3><div class="chart-wrap"><canvas id="in_chartPriority"></canvas></div></div>
-    <div class="card chart-card wide"><h3>Strategic Score vs Access Score</h3><div class="chart-wrap tall"><canvas id="in_chartScatter"></canvas></div></div>
-    <div class="card chart-card"><h3>Strategic Use Distribution</h3><div class="chart-wrap"><canvas id="in_chartUse"></canvas></div></div>
-    <div class="card chart-card"><h3>Status Overview</h3><div class="chart-wrap"><canvas id="in_chartStatus"></canvas></div></div>
+    <div class="card chart-card"><h3>Events by Status</h3><div class="chart-wrap"><canvas id="in_chartStatus"></canvas></div></div>
+    <div class="card chart-card"><h3>Events by Strategic Use</h3><div class="chart-wrap"><canvas id="in_chartUse"></canvas></div></div>
+    <div class="card chart-card"><h3>Events by Event Type / Industry</h3><div class="chart-wrap"><canvas id="in_chartType"></canvas></div></div>
+    <div class="card chart-card wide"><h3>Events by City / State</h3><div class="chart-wrap"><canvas id="in_chartCity"></canvas></div></div>
   </section>
 
   <!-- MASTER TABLE -->
@@ -84,9 +85,10 @@
       <div class="table-scroll">
         <table class="data-table" id="in_table">
           <thead><tr>
-            <th>Event</th><th>Start</th><th>End</th><th>City / State</th><th>Type</th>
-            <th>Priority</th><th>Status</th><th>Strategic Use</th>
-            <th class="num">Strat.</th><th class="num">Access</th><th>Confidence</th>
+            <th>Event</th><th>Start Date</th><th>End Date</th><th>City / State</th>
+            <th>Event Type / Industry</th><th>Scale</th><th>Status</th><th>Organiser</th>
+            <th>Government Stakeholders to Target</th><th>Strategic Use</th>
+            <th>Relevance / Business Outcome</th><th>Sources</th>
           </tr></thead>
           <tbody id="in_tableBody"></tbody>
         </table>
@@ -109,6 +111,7 @@
       <label class="fld"><span>Country</span><select id="eu_country"></select></label>
       <label class="fld"><span>Entry Type</span><select id="eu_entry"></select></label>
       <label class="fld"><span>Registration Status</span><select id="eu_reg"></select></label>
+      <label class="fld"><span>Organiser</span><select id="eu_organiser"></select></label>
       <label class="fld"><span>RVM Relevance</span><select id="eu_rvm"></select></label>
     </div>
     <button class="btn btn-ghost btn-reset" id="eu_reset">Reset Filters</button>
@@ -134,13 +137,36 @@
         <table class="data-table" id="eu_table">
           <thead><tr>
             <th>Event Name</th><th>Date</th><th>Location</th><th>Country</th>
-            <th>Entry</th><th>Registration Status</th><th>Planned Representatives</th>
+            <th>Entry</th><th>Organiser</th><th>Registration Status</th><th>Planned Representatives</th>
           </tr></thead>
           <tbody id="eu_tableBody"></tbody>
         </table>
       </div>
       <div class="empty-state" id="eu_empty" hidden>No events match the selected filters.</div>
     </div>
+  </section>
+</main>
+
+<!-- ===================== MONTH-WISE PLANNER (Gantt tab) ===================== -->
+<main id="view-planner" class="view">
+  <section class="filters card filter-bar" id="plannerFilters">
+    <div class="filter-grid">
+      <label class="fld"><span>Search Event</span>
+        <input type="text" id="pl_search" placeholder="Type to search…"></label>
+      <label class="fld"><span>Dataset</span><select id="pl_dataset">
+        <option value="">India + UK &amp; Europe</option>
+        <option value="India">India only</option>
+        <option value="UK &amp; Europe">UK &amp; Europe only</option>
+      </select></label>
+      <label class="fld"><span>Year</span><select id="pl_year"></select></label>
+    </div>
+    <button class="btn btn-ghost btn-reset" id="pl_reset">Reset Filters</button>
+  </section>
+
+  <section class="block">
+    <h2 class="block-title">Month-wise Event Planner <span class="count-badge" id="pl_count"></span></h2>
+    <div id="plannerBody"></div>
+    <div class="empty-state" id="pl_empty" hidden>No events match the selected filters.</div>
   </section>
 </main>
 
