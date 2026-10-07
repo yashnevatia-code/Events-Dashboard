@@ -115,11 +115,18 @@ def illus2():
     retained  = '<path d="M-19-2L0-19 19-2"/><path d="M-14 0V19H14V0"/><path d="M-4 19v-10h8v10"/>'
     returned  = '<rect x="-16" y="-22" width="32" height="44" rx="5"/><path d="M-16-12H16" stroke-width="3"/><rect x="-9" y="-19" width="18" height="4" rx="2" fill="#fff" stroke="none"/><rect x="-9" y="-7" width="18" height="7" rx="2"/><circle cx="0" cy="11" r="5.5"/>'
     discarded = '<path d="M-16-10H16M-4-16h8"/><path d="M-11-10l2 28H9l2-28"/><path d="M-3-3v14M3-3v14"/>'
-    forgotten = ('<g transform="scale(1.3) translate(0 2)">'
-                 '<path d="M-25 18H25"/><path d="M-21 18C-17 5 -8-3 2-3 12-3 19 7 21 18"/>'
-                 '<path d="M-11 9l4 9M-1 5l6 13M9 9l3 9"/>'
-                 '<path d="M-7-4l-3-8 6-2 3 8"/><path d="M8-5c0-5 7-6 8 0"/>'
-                 '<path d="M-3-20c3-3-3-5 0-8M5-20c3-3-3-5 0-8" stroke-width="2.4"/></g>')
+    bag = ('<path d="M-14 1C-14-11-5-16 0-16 5-16 14-11 14 1 14 9 8 13 0 13-8 13-14 9-14 1z" fill="#f4f8f6"/>'
+           '<path d="M0-16l-4-6M0-16l5-5"/>')
+    def at(x, y, k, body, rot=0):
+        return f'<g transform="translate({x} {y}) rotate({rot}) scale({k})">{body}</g>'
+    bottle = '<path d="M-2-13h4v5c0 2 5 3 5 7v13h-14v-13c0-4 5-5 5-7z" fill="#f4f8f6"/><path d="M-5 2h10" stroke-width="2.2"/>'
+    can    = '<rect x="-6" y="-9" width="12" height="18" rx="2.5" fill="#f4f8f6"/><path d="M-6-4h12M-6 4h12" stroke-width="2.2"/>'
+    forgotten = ('<g transform="scale(.95) translate(0 2)" stroke-width="3.2">'
+                 + at(-27,-8,.95,bottle,-38) + at(30,-4,.95,can,24) + at(4,-3,1.12,bag)
+                 + at(-19,13,.95,bag) + at(22,14,.88,bag) + at(2,19,.6,bag)
+                 + '<path d="M-40 28H40"/>'
+                 '<path d="M-26-34q5-6 10 0 5-6 10 0M12-37q4-5 8 0 4-5 8 0" stroke-width="2.6"/>'
+                 '</g>')
     return f'''<svg viewBox="0 0 390 536" width="390" height="536" xmlns="http://www.w3.org/2000/svg">
   <circle cx="195" cy="116" r="92" fill="{MINT}" opacity=".75"/>
   {shadow(195,214,34)}
