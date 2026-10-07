@@ -31,6 +31,8 @@
   .sb{ font-weight:600 }
 
   .col{ position:absolute; left:var(--mx) }
+  .illus{ position:absolute; border-radius:24px; overflow:hidden; background:#EAF6F0 }
+  .illus svg{ display:block }
   .photo{ position:absolute; border-radius:24px; object-fit:cover; display:block }
 
   /* thin green accent rule */
@@ -52,6 +54,46 @@
 </style>
 </head>
 <body>
+<!--DEFS--><svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="glass" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity=".95"/>
+      <stop offset=".45" stop-color="#e4f0ec" stop-opacity=".75"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".95"/>
+    </linearGradient>
+    <symbol id="bottle" viewBox="0 0 100 262">
+      <path d="M41 16h18v20c0 14 29 22 29 50v156c0 12-9 20-21 20H33c-12 0-21-8-21-20V86c0-28 29-36 29-50z" fill="url(#glass)" stroke="#a9bab4" stroke-width="2.5"/>
+      <rect x="12" y="118" width="76" height="58" fill="#049769"/>
+      <path d="M50 129c-8 11-12 17-12 23a12 12 0 0 0 24 0c0-6-4-12-12-23z" fill="#fff"/>
+      <path d="M13 108h74M13 186h74" stroke="#a9bab4" stroke-width="2" opacity=".7"/>
+      <path d="M16 238c20 5 48 5 68 0" fill="none" stroke="#a9bab4" stroke-width="2" opacity=".7"/>
+      <path d="M23 96v140" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".85"/>
+      <rect x="36" y="31" width="28" height="4" rx="2" fill="#a9bab4"/>
+      <rect x="38" y="2" width="24" height="17" rx="4" fill="#049769"/>
+      <path d="M44 6v9M50 6v9M56 6v9" stroke="#fff" stroke-width="1.6" opacity=".5"/>
+    </symbol>
+    <symbol id="machine" viewBox="0 0 150 250">
+      <rect x="2" y="2" width="146" height="246" rx="16" fill="#fff" stroke="#c3d0ca" stroke-width="3"/>
+      <path d="M2 18A16 16 0 0 1 18 2h114a16 16 0 0 1 16 16v26H2z" fill="#049769"/>
+      <rect x="48" y="17" width="54" height="10" rx="5" fill="#fff" opacity=".9"/>
+      <rect x="18" y="60" width="114" height="48" rx="8" fill="#12302a"/>
+      <rect x="30" y="74" width="56" height="7" rx="3.5" fill="#049769"/>
+      <rect x="30" y="90" width="38" height="7" rx="3.5" fill="#6fd1ab" opacity=".6"/>
+      <circle cx="110" cy="84" r="10" fill="#049769"/>
+      <path d="M105 84l4 4 7-8" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="75" cy="170" r="42" fill="#e8eeeb" stroke="#c3d0ca" stroke-width="3"/>
+      <circle cx="75" cy="170" r="31" fill="#1d2b27"/>
+      <circle cx="75" cy="170" r="22" fill="#0d1613"/>
+      <path d="M52 156a26 26 0 0 1 30-14" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".25"/>
+      <rect x="16" y="228" width="118" height="9" rx="4.5" fill="#e3eae7"/>
+    </symbol>
+    <symbol id="coin" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="48" fill="#049769"/>
+      <circle cx="50" cy="50" r="38" fill="none" stroke="#fff" stroke-width="2.5" opacity=".55"/>
+      <text x="50" y="68" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="700" font-size="52" fill="#fff">₹</text>
+    </symbol>
+  </defs>
+</svg><!--/DEFS-->
 
 <!-- ─────────────── SLIDE 1 ─────────────── -->
 <section class="slide" id="s1">
@@ -63,7 +105,28 @@
     <p class="body" style="font-size:24px; width:450px">The gap between intention and action that a <span class="g sb">Deposit Refund Scheme</span> can help address.</p>
   </div>
 
-  <img class="photo" src="assets/gen-1.png" onerror="this.onerror=null;this.src='assets/photo-woman.png'" style="left:620px; top:235px; width:390px; height:536px" alt="">
+  <div class="illus" style="left:620px; top:225px; width:390px; height:500px"><!--ILLUS1--><svg viewBox="0 14 390 500" width="390" height="500" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="92" cy="318" r="104" fill="#D3ECE0" opacity=".75"/>
+  <path d="M26 446H364" stroke="#b9c9c3" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="92" cy="446" rx="50" ry="7" fill="#0b3d2e" opacity=".10"/><ellipse cx="302" cy="446" rx="56" ry="7" fill="#0b3d2e" opacity=".10"/>
+  <use href="#bottle" x="42" y="182" width="100" height="262"/>
+  <use href="#machine" x="252" y="276" width="100" height="167"/>
+  <!-- knowing: the idea -->
+  <g fill="none" stroke="#049769" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M92 62a24 24 0 0 0-14 43v9h28v-9a24 24 0 0 0-14-43z"/>
+    <path d="M82 124h20M85 133h14"/>
+    <path d="M92 40v-9M62 52l-6-6M122 52l6-6M50 88h-9M134 88h9"/>
+  </g>
+  <path d="M92 144v28" stroke="#049769" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+  <!-- intention: dashed path that never arrives -->
+  <path d="M140 84C176 40 226 54 244 100" fill="none" stroke="#049769" stroke-width="3.5" stroke-dasharray="3 11" stroke-linecap="round"/>
+  <circle cx="246" cy="110" r="11" fill="#fff" stroke="#049769" stroke-width="3.5"/>
+  <path d="M241 105l10 10M251 105l-10 10" stroke="#049769" stroke-width="3" stroke-linecap="round"/>
+  <!-- action: the solid arrow into the return point -->
+  <circle cx="318" cy="168" r="6" fill="#049769"/>
+  <path d="M318 174V252" stroke="#049769" stroke-width="4" stroke-linecap="round"/>
+  <path d="M306 240l12 14 12-14" fill="none" stroke="#049769" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg><!--/ILLUS1--></div>
 
   <div class="url">www.recykal.com</div>
   <div class="next"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
@@ -81,7 +144,17 @@
     <p class="body" style="font-size:23px; margin-top:18px">It can be <span class="g sb">retained</span>, <span class="g sb">returned</span>, <span class="g sb">discarded</span>, or simply <span class="g sb">forgotten</span>.</p>
   </div>
 
-  <img class="photo" src="assets/gen-2.png" onerror="this.onerror=null;this.src='assets/photo-floor.png'" style="left:620px; top:190px; width:390px; height:536px" alt="">
+  <div class="illus" style="left:620px; top:190px; width:390px; height:536px"><!--ILLUS2--><svg viewBox="0 0 390 536" width="390" height="536" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="195" cy="116" r="92" fill="#D3ECE0" opacity=".75"/>
+  <ellipse cx="195" cy="214" rx="34" ry="7" fill="#0b3d2e" opacity=".10"/>
+  <use href="#bottle" x="160" y="30" width="70" height="183"/>
+  <path d="M195 236v26" stroke="#049769" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M184 254l11 12 11-12" fill="none" stroke="#049769" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="104" cy="338" r="50" fill="#fff" stroke="#b3c0ba" stroke-width="3.5"/><g transform="translate(104 338)" fill="none" stroke="#8da09a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M-19-2L0-19 19-2"/><path d="M-14 0V19H14V0"/><path d="M-4 19v-10h8v10"/></g>
+  <circle cx="286" cy="338" r="50" fill="#049769" stroke="#049769" stroke-width="3.5"/><g transform="translate(286 338)" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M0-20V6M-10-4L0 6 10-4"/><path d="M-19 4V19H19V4"/></g>
+  <circle cx="104" cy="466" r="50" fill="#fff" stroke="#b3c0ba" stroke-width="3.5"/><g transform="translate(104 466)" fill="none" stroke="#8da09a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M-16-10H16M-4-16h8"/><path d="M-11-10l2 28H9l2-28"/><path d="M-3-3v14M3-3v14"/></g>
+  <circle cx="286" cy="466" r="50" fill="#f4f8f6" stroke="#c4d0cb" stroke-width="3.5" stroke-dasharray="5 7"/><g transform="translate(286 466)" fill="none" stroke="#b3c0ba" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="-15" cy="0" r="3.2" fill="#b3c0ba"/><circle cx="0" cy="0" r="3.2" fill="#b3c0ba"/><circle cx="15" cy="0" r="3.2" fill="#b3c0ba"/></g>
+</svg><!--/ILLUS2--></div>
 
   <div class="box line" style="top:782px; height:132px">
     <div class="ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
@@ -103,7 +176,19 @@
     <p class="body" style="font-size:23px">Instead of relying only on awareness or asking people to make the right choice, it <span class="g sb">builds a system around that choice.</span></p>
   </div>
 
-  <img class="photo" src="assets/gen-3.png" onerror="this.onerror=null;this.src='assets/photo-kiosk.png'" style="left:620px; top:190px; width:390px; height:536px" alt="">
+  <div class="illus" style="left:620px; top:190px; width:390px; height:536px"><!--ILLUS3--><svg viewBox="0 0 390 536" width="390" height="536" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="195" cy="296" r="120" fill="#D3ECE0" opacity=".6"/>
+  <circle cx="195" cy="296" r="140" fill="none" stroke="#049769" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+  <g transform="translate(316.2 226.0) rotate(60.0)"><circle r="17" fill="#049769"/><path d="M-5 -8l9 8-9 8" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(195.0 436.0) rotate(180.0)"><circle r="17" fill="#049769"/><path d="M-5 -8l9 8-9 8" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(73.8 226.0) rotate(300.0)"><circle r="17" fill="#049769"/><path d="M-5 -8l9 8-9 8" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <circle cx="195.0" cy="156.0" r="58" fill="#fff" stroke="#049769" stroke-width="3.5"/><circle cx="316.2" cy="366.0" r="58" fill="#fff" stroke="#049769" stroke-width="3.5"/><circle cx="73.8" cy="366.0" r="58" fill="#fff" stroke="#049769" stroke-width="3.5"/>
+  <use href="#bottle" x="175.0" y="106.0" width="40" height="104"/>
+  <use href="#machine" x="287.2" y="318.0" width="58" height="97"/>
+  <use href="#coin" x="39.8" y="332.0" width="68" height="68"/>
+  <g transform="translate(195 286) scale(1.5)" fill="none" stroke="#049769" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6">
+    <path d="M-16 -4a16 16 0 0 1 27-9M13-22v10h-10"/>
+    <path d="M16 4a16 16 0 0 1-27 9M-13 22v-10h10"/>
+  </g>
+</svg><!--/ILLUS3--></div>
 
   <div class="box fill" style="top:782px; height:132px">
     <div class="ico"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#049769" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></div>
@@ -124,13 +209,18 @@
     <div class="rule" style="margin:36px 0 0"></div>
   </div>
 
-  <img class="photo" src="assets/gen-4.png" onerror="this.remove();document.getElementById('arc').style.display='block'" style="left:var(--mx); top:450px; width:940px; height:280px; object-position:50% 55%" alt="">
-  <!-- fallback accent (only shown if gen-4.png is missing): dashed arc from knowing → doing -->
-  <svg id="arc" style="display:none; position:absolute; left:var(--mx); top:520px" width="940" height="120" viewBox="0 0 940 120" fill="none">
-    <circle cx="8" cy="100" r="8" fill="#049769"/>
-    <path d="M16 96 C 220 -10, 700 -10, 898 84" stroke="#049769" stroke-width="3" stroke-dasharray="4 11" stroke-linecap="round"/>
-    <path d="M884 66 L 918 90 L 880 104" stroke="#049769" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
+  <div class="illus" style="left:var(--mx); top:450px; width:940px; height:280px"><!--ILLUS4--><svg viewBox="0 0 940 280" width="940" height="280" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="98" cy="150" r="104" fill="#D3ECE0" opacity=".75"/>
+  <circle cx="842" cy="168" r="96" fill="#D3ECE0" opacity=".75"/>
+  <path d="M26 250H914" stroke="#b9c9c3" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="98" cy="250" rx="46" ry="7" fill="#0b3d2e" opacity=".10"/><ellipse cx="848" cy="250" rx="56" ry="7" fill="#0b3d2e" opacity=".10"/>
+  <use href="#bottle" x="60" y="50" width="76" height="199"/>
+  <use href="#machine" x="800" y="86" width="96" height="160"/>
+  <path d="M150 172C350 36 590 36 772 166" fill="none" stroke="#049769" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="150" cy="172" r="7" fill="#049769"/>
+  <g transform="translate(306.2 95.5)"><circle r="38" fill="#fff" stroke="#049769" stroke-width="3.5"/><g transform="translate(0 2)" fill="none" stroke="#049769" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M0-17a11 11 0 0 1 11 11c0 8-11 21-11 21s-11-13-11-21a11 11 0 0 1 11-11z"/><circle cy="-6" r="4"/></g></g><g transform="translate(470.0 70.0)"><circle r="38" fill="#fff" stroke="#049769" stroke-width="3.5"/><use href="#coin" x="-20" y="-20" width="40" height="40"/></g><g transform="translate(633.8 95.5)"><circle r="38" fill="#fff" stroke="#049769" stroke-width="3.5"/><g fill="none" stroke="#049769" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M-14-4a14 14 0 0 1 23-8M14-18v9h-9"/><path d="M14 4a14 14 0 0 1-23 8M-14 18v-9h9"/></g></g>
+  <g transform="translate(782.0 169.0) rotate(34.2)"><circle r="15" fill="#049769"/><path d="M-5 -8l9 8-9 8" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></g>
+</svg><!--/ILLUS4--></div>
 
   <div class="box fill" style="top:766px; height:132px">
     <div class="ico"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#049769" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
