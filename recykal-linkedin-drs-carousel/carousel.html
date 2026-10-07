@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Recykal – Knowing is not the same as doing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --drs:#049769;          /* DRS green */
+    --ink:#000000;
+    --paper:#ffffff;
+    --mx:70px;              /* side safe margin */
+  }
+  @page{ size:1080px 1080px; margin:0 }
+  *{ box-sizing:border-box; margin:0; padding:0 }
+  html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); -webkit-print-color-adjust:exact; print-color-adjust:exact }
+
+  .slide{ position:relative; width:1080px; height:1080px; overflow:hidden; background:var(--paper); page-break-after:always; break-after:page }
+  .slide:last-child{ page-break-after:auto; break-after:auto }
+
+  /* logo – top-left, consistent on every slide */
+  .logo{ position:absolute; left:var(--mx); top:52px; width:190px; height:auto }
+
+  /* typography scale (guidelines) */
+  .h1{ font-weight:800; font-size:52px; line-height:1.18; letter-spacing:-.2px }
+  .h1,.h2{ text-wrap:balance }
+  .h2{ font-weight:700; font-size:38px; line-height:1.22 }
+  .body{ font-weight:400; font-size:24px; line-height:1.5 }
+  .g{ color:var(--drs) }
+  .sb{ font-weight:600 }
+
+  .col{ position:absolute; left:var(--mx) }
+  .photo{ position:absolute; border-radius:24px; object-fit:cover; display:block }
+
+  /* thin green accent rule */
+  .rule{ width:64px; height:4px; border-radius:2px; background:var(--drs) }
+
+  /* highlight boxes */
+  .box{ position:absolute; left:var(--mx); right:var(--mx); border-radius:22px; display:flex; align-items:center; gap:26px; padding:0 36px }
+  .box.fill{ background:var(--drs); color:#fff }
+  .box.line{ border:3px solid var(--drs); background:#fff }
+  .box p{ font-weight:600; font-size:25px; line-height:1.42 }
+  .ico{ flex:none; width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center }
+  .fill .ico{ background:#fff }
+  .line .ico{ background:var(--drs) }
+
+  /* footer system */
+  .url{ position:absolute; left:var(--mx); bottom:54px; font-weight:500; font-size:16px }
+  .next{ position:absolute; right:var(--mx); bottom:36px; width:58px; height:58px; border-radius:50%; background:var(--drs); display:flex; align-items:center; justify-content:center }
+  .bar{ position:absolute; left:0; bottom:0; width:128px; height:8px; background:#000 }
+</style>
+</head>
+<body>
+
+<!-- ─────────────── SLIDE 1 ─────────────── -->
+<section class="slide" id="s1">
+  <img class="logo" src="assets/logo.png" alt="Recykal – Sustainable Circularity">
+
+  <div class="col" style="top:300px; width:520px">
+    <h1 class="h1">KNOWING IS NOT THE SAME AS <span class="g">DOING.</span></h1>
+    <div class="rule" style="margin:44px 0 36px"></div>
+    <p class="body" style="font-size:24px; width:450px">The gap between intention and action that a <span class="g sb">Deposit Refund Scheme</span> can help address.</p>
+  </div>
+
+  <img class="photo" src="assets/gen-1.png" onerror="this.onerror=null;this.src='assets/photo-woman.png'" style="left:620px; top:235px; width:390px; height:536px" alt="">
+
+  <div class="url">www.recykal.com</div>
+  <div class="next"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+  <div class="bar"></div>
+</section>
+
+<!-- ─────────────── SLIDE 2 ─────────────── -->
+<section class="slide" id="s2">
+  <img class="logo" src="assets/logo.png" alt="Recykal – Sustainable Circularity">
+
+  <div class="col" style="top:190px; width:510px">
+    <h2 class="h2" style="font-size:36px">Knowing that something should be recycled <span class="g">does not necessarily mean it will be.</span></h2>
+    <div class="rule" style="margin:30px 0 26px"></div>
+    <p class="body" style="font-size:23px">After consumption, what happens to packaging waste is shaped by the consumer’s choice.</p>
+    <p class="body" style="font-size:23px; margin-top:18px">It can be <span class="g sb">retained</span>, <span class="g sb">returned</span>, <span class="g sb">discarded</span>, or simply <span class="g sb">forgotten</span>.</p>
+  </div>
+
+  <img class="photo" src="assets/gen-2.png" onerror="this.onerror=null;this.src='assets/photo-floor.png'" style="left:620px; top:190px; width:390px; height:536px" alt="">
+
+  <div class="box line" style="top:782px; height:132px">
+    <div class="ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <p>That small moment can determine whether material <span class="g">moves back into the recovery system</span> or leaves it altogether.</p>
+  </div>
+
+  <div class="url">www.recykal.com</div>
+  <div class="next"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+  <div class="bar"></div>
+</section>
+
+<!-- ─────────────── SLIDE 3 ─────────────── -->
+<section class="slide" id="s3">
+  <img class="logo" src="assets/logo.png" alt="Recykal – Sustainable Circularity">
+
+  <div class="col" style="top:190px; width:510px">
+    <h2 class="h2" style="font-size:36px">This is where a <span class="g">Deposit Refund Scheme</span> introduces a different way of thinking about behaviour.</h2>
+    <div class="rule" style="margin:30px 0 26px"></div>
+    <p class="body" style="font-size:23px">Instead of relying only on awareness or asking people to make the right choice, it <span class="g sb">builds a system around that choice.</span></p>
+  </div>
+
+  <img class="photo" src="assets/gen-3.png" onerror="this.onerror=null;this.src='assets/photo-kiosk.png'" style="left:620px; top:190px; width:390px; height:536px" alt="">
+
+  <div class="box fill" style="top:782px; height:132px">
+    <div class="ico"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#049769" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></div>
+    <p>The return becomes a defined action, participation becomes repeatable, and the behaviour has a tangible outcome.</p>
+  </div>
+
+  <div class="url">www.recykal.com</div>
+  <div class="next"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+  <div class="bar"></div>
+</section>
+
+<!-- ─────────────── SLIDE 4 ─────────────── -->
+<section class="slide" id="s4">
+  <img class="logo" src="assets/logo.png" alt="Recykal – Sustainable Circularity">
+
+  <div class="col" style="top:180px; right:var(--mx)">
+    <h1 class="h1" style="font-size:52px">The challenge is <span class="g">not always convincing</span> people that recycling matters.</h1>
+    <div class="rule" style="margin:36px 0 0"></div>
+  </div>
+
+  <img class="photo" src="assets/gen-4.png" onerror="this.remove();document.getElementById('arc').style.display='block'" style="left:var(--mx); top:450px; width:940px; height:280px; object-position:50% 55%" alt="">
+  <!-- fallback accent (only shown if gen-4.png is missing): dashed arc from knowing → doing -->
+  <svg id="arc" style="display:none; position:absolute; left:var(--mx); top:520px" width="940" height="120" viewBox="0 0 940 120" fill="none">
+    <circle cx="8" cy="100" r="8" fill="#049769"/>
+    <path d="M16 96 C 220 -10, 700 -10, 898 84" stroke="#049769" stroke-width="3" stroke-dasharray="4 11" stroke-linecap="round"/>
+    <path d="M884 66 L 918 90 L 880 104" stroke="#049769" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+
+  <div class="box fill" style="top:766px; height:132px">
+    <div class="ico"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#049769" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+    <p>Sometimes, it is creating the conditions that help them act on what they already know.</p>
+  </div>
+
+  <div class="url">www.recykal.com</div>
+  <div class="bar"></div>
+</section>
+
+<script>
+  // ?s=N renders a single slide (used for PNG export); no param = all slides (used for PDF)
+  const n = new URLSearchParams(location.search).get('s');
+  if (n) document.querySelectorAll('.slide').forEach((el,i)=>{ if (String(i+1)!==n) el.remove(); });
+</script>
+</body>
+</html>
