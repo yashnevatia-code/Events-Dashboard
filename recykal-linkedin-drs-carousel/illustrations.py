@@ -67,43 +67,59 @@ LINE = f'fill="none" stroke="{G}" stroke-width="3.5" stroke-linecap="round" stro
 
 # ───────────────────────── slide 1: intention → gap → action ─────────────────────────
 def illus1():
-    return f'''<svg viewBox="0 14 390 500" width="390" height="500" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="92" cy="318" r="104" fill="{MINT}" opacity=".75"/>
-  <path d="M26 446H364" stroke="#b9c9c3" stroke-width="2" stroke-linecap="round"/>
-  {shadow(92,446,50)}{shadow(302,446,56)}
-  <use href="#bottle" x="42" y="182" width="100" height="262"/>
-  <use href="#machine" x="252" y="276" width="100" height="167"/>
+    return f'''<svg viewBox="0 0 460 660" width="460" height="660" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="106" cy="444" r="104" fill="{MINT}" opacity=".8"/>
+  <circle cx="360" cy="490" r="86" fill="{MINT}" opacity=".6"/>
+  <path d="M28 604H432" stroke="#b9c9c3" stroke-width="2" stroke-linecap="round"/>
+  {shadow(105,605,66)}{shadow(360,605,76)}
+  <use href="#bottle" x="40" y="262" width="130" height="341"/>
+  <use href="#machine" x="290" y="372" width="140" height="233"/>
   <!-- knowing: the idea -->
-  <g {LINE}>
+  <g transform="translate(105 122) scale(1.55) translate(-92 -88)" {LINE} stroke-width="3">
     <path d="M92 62a24 24 0 0 0-14 43v9h28v-9a24 24 0 0 0-14-43z"/>
     <path d="M82 124h20M85 133h14"/>
     <path d="M92 40v-9M62 52l-6-6M122 52l6-6M50 88h-9M134 88h9"/>
   </g>
-  <path d="M92 144v28" stroke="{G}" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
-  <!-- intention: dashed path that never arrives -->
-  <path d="M140 84C176 40 226 54 244 100" fill="none" stroke="{G}" stroke-width="3.5" stroke-dasharray="3 11" stroke-linecap="round"/>
-  <circle cx="246" cy="110" r="11" fill="#fff" stroke="{G}" stroke-width="3.5"/>
-  <path d="M241 105l10 10M251 105l-10 10" stroke="{G}" stroke-width="3" stroke-linecap="round"/>
+  <path d="M105 208v42" stroke="{G}" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+  <!-- intention: dashed path (through "recycle it") that never arrives -->
+  <path d="M188 112C228 28 348 28 382 128" fill="none" stroke="{G}" stroke-width="3.5" stroke-dasharray="3 12" stroke-linecap="round"/>
+  <g transform="translate(284 52)">
+    <circle r="34" fill="#fff" stroke="{G}" stroke-width="3.5"/>
+    <g transform="scale(.95)" {LINE} stroke-width="3.4">
+      <path d="M-13 -3a13 13 0 0 1 22-7M11-17v8h-8"/><path d="M13 3a13 13 0 0 1-22 7M-11 17v-8h8"/>
+    </g>
+  </g>
+  <circle cx="386" cy="142" r="13" fill="#fff" stroke="{G}" stroke-width="3.5"/>
+  <path d="M380 136l12 12M392 136l-12 12" stroke="{G}" stroke-width="3.2" stroke-linecap="round"/>
   <!-- action: the solid arrow into the return point -->
-  <circle cx="318" cy="168" r="6" fill="{G}"/>
-  <path d="M318 174V252" stroke="{G}" stroke-width="4" stroke-linecap="round"/>
-  <path d="M306 240l12 14 12-14" fill="none" stroke="{G}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="360" cy="236" r="7" fill="{G}"/>
+  <path d="M360 244V348" stroke="{G}" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M346 334l14 16 14-16" fill="none" stroke="{G}" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- the gap, measured on the ground -->
+  <g stroke="{G}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M186 572H274" stroke-dasharray="1 10"/>
+    <path d="M186 560v24M274 560v24"/>
+    <path d="M200 563l-12 9 12 9M260 563l12 9-12 9"/>
+  </g>
 </svg>'''
 
 # ───────────────────────── slide 2: the choice moment ─────────────────────────
 def illus2():
     def node(cx, cy, icon, state):
         if state == "go":      ring, fill, ic = G, G, "#fff"
-        elif state == "lost":  ring, fill, ic = "#c4d0cb", "#f4f8f6", "#b3c0ba"
+        elif state == "lost":  ring, fill, ic = "#b3c0ba", "#f4f8f6", "#8da09a"
         else:                  ring, fill, ic = "#b3c0ba", "#fff", "#8da09a"
         dash = ' stroke-dasharray="5 7"' if state == "lost" else ""
         body = f'<circle cx="{cx}" cy="{cy}" r="50" fill="{fill}" stroke="{ring}" stroke-width="3.5"{dash}/>'
         return body + f'<g transform="translate({cx} {cy})" fill="none" stroke="{ic}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">{icon}</g>'
     retained  = '<path d="M-19-2L0-19 19-2"/><path d="M-14 0V19H14V0"/><path d="M-4 19v-10h8v10"/>'
-    returned  = '<path d="M0-20V6M-10-4L0 6 10-4"/><path d="M-19 4V19H19V4"/>'
+    returned  = '<rect x="-16" y="-22" width="32" height="44" rx="5"/><path d="M-16-12H16" stroke-width="3"/><rect x="-9" y="-19" width="18" height="4" rx="2" fill="#fff" stroke="none"/><rect x="-9" y="-7" width="18" height="7" rx="2"/><circle cx="0" cy="11" r="5.5"/>'
     discarded = '<path d="M-16-10H16M-4-16h8"/><path d="M-11-10l2 28H9l2-28"/><path d="M-3-3v14M3-3v14"/>'
-    forgotten = '<circle cx="-15" cy="0" r="3.2" fill="currentColor"/><circle cx="0" cy="0" r="3.2" fill="currentColor"/><circle cx="15" cy="0" r="3.2" fill="currentColor"/>'
-    forgotten = forgotten.replace("currentColor", "#b3c0ba")
+    forgotten = ('<g transform="scale(1.3) translate(0 2)">'
+                 '<path d="M-25 18H25"/><path d="M-21 18C-17 5 -8-3 2-3 12-3 19 7 21 18"/>'
+                 '<path d="M-11 9l4 9M-1 5l6 13M9 9l3 9"/>'
+                 '<path d="M-7-4l-3-8 6-2 3 8"/><path d="M8-5c0-5 7-6 8 0"/>'
+                 '<path d="M-3-20c3-3-3-5 0-8M5-20c3-3-3-5 0-8" stroke-width="2.4"/></g>')
     return f'''<svg viewBox="0 0 390 536" width="390" height="536" xmlns="http://www.w3.org/2000/svg">
   <circle cx="195" cy="116" r="92" fill="{MINT}" opacity=".75"/>
   {shadow(195,214,34)}
