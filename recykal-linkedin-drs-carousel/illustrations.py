@@ -115,17 +115,21 @@ def illus2():
     retained  = '<path d="M-19-2L0-19 19-2"/><path d="M-14 0V19H14V0"/><path d="M-4 19v-10h8v10"/>'
     returned  = '<rect x="-16" y="-22" width="32" height="44" rx="5"/><path d="M-16-12H16" stroke-width="3"/><rect x="-9" y="-19" width="18" height="4" rx="2" fill="#fff" stroke="none"/><rect x="-9" y="-7" width="18" height="7" rx="2"/><circle cx="0" cy="11" r="5.5"/>'
     discarded = '<path d="M-16-10H16M-4-16h8"/><path d="M-11-10l2 28H9l2-28"/><path d="M-3-3v14M3-3v14"/>'
-    bag = ('<path d="M-14 1C-14-11-5-16 0-16 5-16 14-11 14 1 14 9 8 13 0 13-8 13-14 9-14 1z" fill="#f4f8f6"/>'
-           '<path d="M0-16l-4-6M0-16l5-5"/>')
-    def at(x, y, k, body, rot=0):
-        return f'<g transform="translate({x} {y}) rotate({rot}) scale({k})">{body}</g>'
-    bottle = '<path d="M-2-13h4v5c0 2 5 3 5 7v13h-14v-13c0-4 5-5 5-7z" fill="#f4f8f6"/><path d="M-5 2h10" stroke-width="2.2"/>'
-    can    = '<rect x="-6" y="-9" width="12" height="18" rx="2.5" fill="#f4f8f6"/><path d="M-6-4h12M-6 4h12" stroke-width="2.2"/>'
-    forgotten = ('<g transform="scale(.95) translate(0 2)" stroke-width="3.2">'
-                 + at(-27,-8,.95,bottle,-38) + at(30,-4,.95,can,24) + at(4,-3,1.12,bag)
-                 + at(-19,13,.95,bag) + at(22,14,.88,bag) + at(2,19,.6,bag)
-                 + '<path d="M-40 28H40"/>'
-                 '<path d="M-26-34q5-6 10 0 5-6 10 0M12-37q4-5 8 0 4-5 8 0" stroke-width="2.6"/>'
+    # landfill: dump truck tipping waste onto an angular heap, gulls overhead
+    forgotten = ('<g transform="scale(.88) translate(1 1)" stroke-width="3.4">'
+                 # heap (jagged, not round) with a few bits of litter
+                 '<path d="M8 27L16 7 23 12 30-7 37 4 43 27" fill="#f4f8f6"/>'
+                 '<path d="M24 22l5-6M34 22l3-6" stroke-width="2.6"/>'
+                 # tipping bed, hinged at the rear
+                 '<g transform="translate(5 19) rotate(28)"><rect x="-32" y="-15" width="32" height="15" rx="2" fill="#f4f8f6"/><path d="M-22-15v15M-11-15v15" stroke-width="2.2"/></g>'
+                 # waste sliding out of the bed
+                 '<path d="M9 13l4-3M13 20l5-2" stroke-width="3"/><rect x="9" y="3" width="6" height="6" rx="1" transform="rotate(25 12 6)" stroke-width="2.4"/>'
+                 # chassis, cab, wheels
+                 '<path d="M-43 19H7"/><path d="M-43 19V4h9l6 8v7" fill="#f4f8f6"/><path d="M-39 7h5l3 4h-8z" stroke-width="2.2"/>'
+                 '<circle cx="-35" cy="26" r="5.5" fill="#f4f8f6"/><circle cx="-12" cy="26" r="5.5" fill="#f4f8f6"/>'
+                 '<path d="M-43 32H44" stroke-width="3"/>'
+                 # gulls
+                 '<path d="M-10-26q4-5 8 0 4-5 8 0M16-33q3-4 6 0 3-4 6 0" stroke-width="2.6"/>'
                  '</g>')
     return f'''<svg viewBox="0 0 390 536" width="390" height="536" xmlns="http://www.w3.org/2000/svg">
   <circle cx="195" cy="116" r="92" fill="{MINT}" opacity=".75"/>
