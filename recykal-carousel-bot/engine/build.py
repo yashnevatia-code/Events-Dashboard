@@ -131,7 +131,7 @@ QA_JS = r"""
 def page_html(spec):
     fonts_css = (ASSETS / "fonts.css").read_text().replace("url('fonts/", f"url('{(ASSETS / 'fonts').as_uri()}/")
     css = (ROOT / "theme.css").read_text()
-    logo = (ASSETS / "logo.png").as_uri()
+    logo = (ASSETS / "logo.svg").as_uri()
     footer = spec.get("footer", "www.recykal.com")
     slides = spec["slides"]
     base = spec.get("_base")

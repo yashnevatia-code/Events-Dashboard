@@ -46,4 +46,4 @@ See `.claude/skills/recykal-carousel/SKILL.md` for the full spec reference and s
 ## Known limits
 
 * Visuals are vector illustrations, not photos. A real photo can be dropped in per slide with `"visual": {"image": "path.jpg", "kind": "card"}`.
-* The logo file is a small PNG (361×134); replace `engine/assets/logo.png` with a vector/large version when available.
+* The logo is the official vector SVG in `engine/assets/logo.svg`; replace that file if the brand logo changes.
