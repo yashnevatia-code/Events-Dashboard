@@ -1,0 +1,35 @@
+{
+  "slug": "drs-knowing-vs-doing",
+  "title": "Recykal – Knowing is not the same as doing",
+  "footer": "www.recykal.com",
+  "slides": [
+    {
+      "heading": "KNOWING IS NOT THE SAME AS **DOING.**",
+      "body": "The gap between intention and action that a **Deposit Refund Scheme** can help address.",
+      "visual": {"scene": "gap", "idea": "bulb", "waypoint": "recycle", "from": "bottle", "to": "machine"}
+    },
+    {
+      "heading": "Knowing that something should be recycled **does not necessarily mean it will be.**",
+      "body": [
+        "After consumption, what happens to packaging waste is shaped by the consumer’s choice.",
+        "It can be **retained**, **returned**, **discarded**, or simply **forgotten**."
+      ],
+      "visual": {"scene": "fork", "object": "bottle",
+                 "options": [{"icon": "home"}, {"icon": "machine", "state": "go"}, {"icon": "bin"}, {"icon": "landfill", "state": "lost"}]},
+      "callout": {"style": "line", "icon": "arrow", "text": "That small moment can determine whether material **moves back into the recovery system** or ultimately ends up in landfill."}
+    },
+    {
+      "heading": "This is where a **Deposit Refund Scheme** introduces a different way of thinking about behaviour.",
+      "body": "Instead of relying only on awareness or asking people to make the right choice, it **builds a system around that choice.**",
+      "visual": {"scene": "loop", "nodes": ["bottle", "machine", "coin"], "center": "repeat"},
+      "callout": {"style": "fill", "icon": "repeat", "text": "The return becomes a defined action, participation becomes repeatable, and the behaviour has a tangible outcome."}
+    },
+    {
+      "heading": "The challenge is **not always convincing** people that recycling matters.",
+      "visual": {"scene": "bridge", "from": "bottle", "to": "machine", "stops": ["pin", "rupee", "repeat"]},
+      "callout": {"style": "fill", "icon": "check", "text": "Sometimes, it is creating the conditions that help them act on what they already know."}
+    }
+  ],
+  "caption": "Knowing is not the same as doing.\n\nMost of us know packaging should be recycled. But after consumption, what happens next comes down to one small moment: the packaging can be retained, returned, discarded, or simply forgotten.\n\nThat moment can decide whether material moves back into the recovery system or ends up in landfill.\n\nThis is where a Deposit Refund Scheme (DRS) offers a different way of thinking about behaviour. Instead of relying only on awareness, it builds a system around the choice. The return becomes a defined action, participation becomes repeatable, and the behaviour has a tangible outcome.\n\nThe challenge is not always convincing people that recycling matters. Sometimes, it is creating the conditions that help them act on what they already know.\n\nSwipe through to see how.",
+  "hashtags": ["#DepositRefundScheme", "#DRS", "#CircularEconomy", "#Recycling", "#EPR", "#Recykal"]
+}

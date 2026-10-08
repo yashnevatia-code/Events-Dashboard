@@ -1,0 +1,42 @@
+[
+ {
+  "slide": 1,
+  "layout": "cover",
+  "heading_px": 52,
+  "body_px": 24,
+  "heading_lines": 3,
+  "callout_px": null,
+  "callout_lines": 0,
+  "problems": []
+ },
+ {
+  "slide": 2,
+  "layout": "split",
+  "heading_px": 36,
+  "body_px": 23,
+  "heading_lines": 4,
+  "callout_px": 24.5,
+  "callout_lines": 2,
+  "problems": []
+ },
+ {
+  "slide": 3,
+  "layout": "split",
+  "heading_px": 36,
+  "body_px": 23,
+  "heading_lines": 4,
+  "callout_px": 25,
+  "callout_lines": 2,
+  "problems": []
+ },
+ {
+  "slide": 4,
+  "layout": "statement",
+  "heading_px": 52,
+  "body_px": null,
+  "heading_lines": 3,
+  "callout_px": 25,
+  "callout_lines": 2,
+  "problems": []
+ }
+]
