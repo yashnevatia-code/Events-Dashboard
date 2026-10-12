@@ -6,7 +6,16 @@
     {
       "heading": "CIRCULARITY IS A SHARED **RESPONSIBILITY.**",
       "body": "Building a circular economy requires **more than one stakeholder** to play their part.",
-      "visual": {"scene": "ring", "nodes": ["factory", "people", "truck", "recycle"], "center": "globe"}
+      "visual": {
+        "scene": "ring",
+        "nodes": [
+          "factory",
+          "people",
+          "truck",
+          "recycle"
+        ],
+        "center": "globe"
+      }
     },
     {
       "heading": "THE CIRCLE CANNOT CLOSE IF **THE CONSUMER IS LEFT OUT.**",
@@ -14,21 +23,81 @@
         "Circularity does not end with packaging designed for recyclability or products reaching consumers.",
         "What happens after consumption **matters just as much.**"
       ],
-      "visual": {"scene": "ring_card", "nodes": ["factory", {"icon": "people", "state": "lost"}, "truck", "recycle"], "center": "globe"},
-      "callout": {"style": "line", "icon": "x", "text": "Without effective collection and consumer participation, recyclable packaging **can fail to reach recovery systems.**"}
+      "visual": {
+        "scene": "ring_card",
+        "nodes": [
+          "factory",
+          {
+            "icon": "people",
+            "state": "lost"
+          },
+          "truck",
+          "recycle"
+        ],
+        "center": "globe"
+      },
+      "callout": {
+        "style": "fill",
+        "icon": "x",
+        "text": "Without effective collection and consumer participation, recyclable packaging **can fail to reach recovery systems.**"
+      }
     },
     {
       "heading": "THIS IS WHERE **DRS** CAN MAKE A DIFFERENCE.",
       "body": "A Deposit Refund Scheme gives consumers a **defined route** to return eligible packaging, supported by a **refundable deposit.**",
-      "visual": {"scene": "ring_card", "nodes": [{"icon": "people", "state": "go"}, "machine", {"obj": "coin"}, "truck", "recycle"], "center": "repeat"},
-      "callout": {"style": "fill", "icon": "repeat", "text": "It can help turn responsible intentions into **repeatable actions**, connecting everyday consumer choices with organised collection and material recovery."}
+      "visual": {
+        "scene": "ring_card",
+        "nodes": [
+          "factory",
+          {
+            "icon": "people",
+            "state": "go"
+          },
+          "machine",
+          {
+            "icon": "rupee"
+          },
+          "truck",
+          "recycle"
+        ],
+        "center": "repeat"
+      },
+      "callout": {
+        "style": "fill",
+        "icon": "repeat",
+        "text": "It can help turn responsible intentions into **repeatable actions**, connecting everyday consumer choices with organised collection and material recovery."
+      }
     },
     {
       "heading": "CIRCULARITY WORKS WHEN **PARTICIPATION** BECOMES PART OF THE SYSTEM.",
-      "visual": {"scene": "track", "nodes": ["factory", {"icon": "people", "state": "go"}, "truck", "recycle"], "center": "globe"},
-      "callout": {"style": "fill", "icon": "check", "text": "Closing the loop is not only about designing packaging for another life. It is also about **enabling people** to help packaging reach the systems designed to recover its value."}
+      "body": "Closing the loop is not only about designing packaging for another life.",
+      "visual": {
+        "scene": "ring_card",
+        "nodes": [
+          "factory",
+          {
+            "icon": "people",
+            "state": "go"
+          },
+          "truck",
+          "recycle"
+        ],
+        "center": "globe"
+      },
+      "callout": {
+        "style": "fill",
+        "icon": "check",
+        "text": "It is also about **enabling people** to help packaging reach the systems designed to recover its value."
+      }
     }
   ],
   "caption": "Circularity is a shared responsibility.\n\nBuilding a circular economy requires more than one stakeholder to play their part. But the circle cannot close if the consumer is left out.\n\nCircularity does not end with packaging designed for recyclability or products reaching consumers. What happens after consumption matters just as much. Without effective collection and consumer participation, recyclable packaging can fail to reach recovery systems.\n\nThis is where a Deposit Refund Scheme (DRS) can make a difference. It gives consumers a defined route to return eligible packaging, supported by a refundable deposit, and can help turn responsible intentions into repeatable actions that connect everyday consumer choices with organised collection and material recovery.\n\nClosing the loop is not only about designing packaging for another life. It is also about enabling people to help packaging reach the systems designed to recover its value.\n\nSwipe through to see how participation becomes part of the system.",
-  "hashtags": ["#CircularEconomy", "#DepositRefundScheme", "#DRS", "#EPR", "#Recycling", "#Recykal"]
+  "hashtags": [
+    "#CircularEconomy",
+    "#DepositRefundScheme",
+    "#DRS",
+    "#EPR",
+    "#Recycling",
+    "#Recykal"
+  ]
 }

@@ -29,6 +29,9 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 
 .col{ position:absolute; left:var(--mx); top:190px; width:510px }
 .layout-cover .col{ top:520px; transform:translateY(-50%); width:450px }
+.layout-split .col{ top:458px; transform:translateY(-50%) }      /* centred on the 190-726 panel */
+.layout-split.nobox .col{ top:540px }                            /* centred on the taller 190-890 panel */
+.layout-split .col.top{ top:190px; transform:none }
 .layout-cover .body{ font-size:24px }
 .stack{ position:absolute; left:var(--mx); right:var(--mx); top:180px }
 .layout-text .stack{ top:450px; transform:translateY(-50%) }

@@ -74,7 +74,8 @@ def render_slide(i, n, s, footer, logo_uri):
         print(f"  note: slide {i}: cover-style slides (tall scene) have no callout box; callout skipped", file=sys.stderr)
     nobox = " nobox" if layout == "split" and not callout else ""
     if layout in ("cover", "split"):
-        main = f'<div class="col">{heading}{rule}{body}</div><div class="illus">{inner}</div>'
+        top = " top" if s.get("align") == "top" and layout == "split" else ""
+        main = f'<div class="col{top}">{heading}{rule}{body}</div><div class="illus">{inner}</div>'
     elif layout == "statement":
         main = f'<div class="stack">{heading}{rule}<div class="illus">{inner}</div></div>'
         if body:  # statement slides carry heading + visual (+ callout); body text would not fit

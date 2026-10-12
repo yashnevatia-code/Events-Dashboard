@@ -290,7 +290,8 @@ def ring(p):
 def ring_card(p):
     """Same circle in the card panel (3-6 stakeholders). Pairs with `ring` / `track` across slides."""
     n = len(p.get("nodes") or [])
-    return _ring(p, "card", 195, 268, 128 if n >= 5 else 120, 40 if n >= 5 else 46, 62, 15)
+    R, r, ch = (150, 42, 13) if n >= 6 else (128, 40, 14) if n == 5 else (120, 46, 15)
+    return _ring(p, "card", 195, 268, R, r, 62, ch)
 
 
 @scene("wide")

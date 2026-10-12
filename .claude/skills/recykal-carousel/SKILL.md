@@ -58,7 +58,7 @@ Icons not in the catalogue? Add one to `engine/library.py` (48x48 grid centred o
       "bullets": ["optional list, **highlights** allowed"],
       "visual": {"scene": "fork", "...": "scene params"},
       "callout": {"style": "line|fill", "icon": "arrow", "text": "box text with **highlight**"},
-      "heading_size": 36, "body_size": 23
+      "heading_size": 36, "body_size": 23, "align": "top"
     }
   ],
   "caption": "LinkedIn post text",
@@ -66,6 +66,7 @@ Icons not in the catalogue? Add one to `engine/library.py` (48x48 grid centred o
 }
 ```
 
+* Text next to a card panel is vertically centred on the panel (like cover slides). Add `"align": "top"` to a slide to pin it to the top instead.
 * Highlight with `**...**`. If the user already marks emphasis, keep it. If not, highlight one key phrase per heading and the phrase that carries the idea in the body/callout. Don't highlight whole sentences.
 * `callout` style: `line` (white box, green outline) for a reflective point; `fill` (solid green) for the payoff/CTA. Tall (cover) slides have no callout.
 * Wide-scene slides take heading + callout only (body text ignored). Put the sentence in the callout. Long copy can be split between `body` and `callout` without changing a word; tell the user which sentence went where.
