@@ -111,7 +111,7 @@ DEFS = f'''<svg width="0" height="0" style="position:absolute" aria-hidden="true
 ICONS = {
     "bulb":      '<path d="M0-14a11 11 0 0 0-6.4 20v4h12.8v-4A11 11 0 0 0 0-14z"/><path d="M-4 14h8M-3 18h6"/><path d="M0-18v-5M-14-13l-3-3M14-13l3-3M-19-3h-4M19-3h4"/>',
     "repeat":    '<path d="M-14-4a14 14 0 0 1 23-8M14-18v9h-9"/><path d="M14 4a14 14 0 0 1-23 8M-14 18v-9h9"/>',
-    "recycle":   '<g><path d="M-5-17A17 17 0 0 1 14-9"/><path d="M8-10l6 1-1 7"/></g><g transform="rotate(120)"><path d="M-5-17A17 17 0 0 1 14-9"/><path d="M8-10l6 1-1 7"/></g><g transform="rotate(240)"><path d="M-5-17A17 17 0 0 1 14-9"/><path d="M8-10l6 1-1 7"/></g>',
+    "recycle":   '<g transform="translate(0 2.4)"><path d="M6.91 -7.03L16.45 9.50L14.24 9.50"/><path d="M7.24 9.50L14.24 4.30L14.24 14.70z" fill="@C"/><g transform="rotate(120)"><path d="M6.91 -7.03L16.45 9.50L14.24 9.50"/><path d="M7.24 9.50L14.24 4.30L14.24 14.70z" fill="@C"/></g><g transform="rotate(240)"><path d="M6.91 -7.03L16.45 9.50L14.24 9.50"/><path d="M7.24 9.50L14.24 4.30L14.24 14.70z" fill="@C"/></g></g>',   # three chasing arrows (standard recycling symbol)
     "home":      '<path d="M-19-2L0-19 19-2"/><path d="M-14 0V19H14V0"/><path d="M-4 19v-10h8v10"/>',
     "bin":       '<path d="M-16-10H16M-4-16h8"/><path d="M-11-10l2 28H9l2-28"/><path d="M-3-3v14M3-3v14"/>',
     "landfill":  '<path d="M-24 21H24"/><path d="M3 21L8 8 12 11 16-2 20 6 24 21"/><path d="M-24 14V6h5l3 4v4"/><path d="M-24 14H-2"/><path d="M-2 11L-15 3.5l3.5-6.1L1.5 4.9z"/><circle cx="-19" cy="17.5" r="2.8"/><circle cx="-9" cy="17.5" r="2.8"/><path d="M-4-16q2-2.6 4 0 2-2.6 4 0M10-19q1.8-2.2 3.6 0 1.8-2.2 3.6 0"/>',
@@ -149,7 +149,7 @@ ICON_ALIASES = {"arrow": "arrow-right", "return": "machine", "reverse-vending": 
                 "location": "pin", "access": "pin", "loop": "repeat", "circular": "recycle", "policy": "doc",
                 "law": "scale", "community": "people", "world": "globe", "time": "clock"}
 
-ICON_SCALE = {"landfill": 1.7, "truck": 1.15, "factory": 1.1}   # icons that need more room to stay legible
+ICON_SCALE = {"landfill": 1.7, "recycle": 1.3, "truck": 1.15, "factory": 1.1}   # icons that need more room to stay legible
 
 def resolve_icon(name):
     name = ICON_ALIASES.get(name, name)
