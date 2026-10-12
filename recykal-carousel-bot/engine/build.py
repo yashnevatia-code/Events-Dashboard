@@ -25,7 +25,7 @@ def esc(s): return html.escape(str(s), quote=False)
 
 def emph(s, cls):
     """escape, then turn **phrase** into a green highlight span."""
-    return re.sub(r"\*\*(.+?)\*\*", lambda m: f'<span class="{cls}">{m.group(1)}</span>', esc(s))
+    return re.sub(r"\*\*(.+?)\*\*", lambda m: f'<span class="{cls}">{m.group(1)}</span>', esc(s), flags=re.S).replace("\n", "<br>")
 
 def paras(body):
     if not body: return []
@@ -73,9 +73,14 @@ def render_slide(i, n, s, footer, logo_uri):
     if layout == "cover" and s.get("callout"):
         print(f"  note: slide {i}: cover-style slides (tall scene) have no callout box; callout skipped", file=sys.stderr)
     nobox = " nobox" if layout == "split" and not callout else ""
+    nobox += " span" if s.get("heading_span") and layout == "split" else ""
     if layout in ("cover", "split"):
         top = " top" if s.get("align") == "top" and layout == "split" else ""
-        main = f'<div class="col{top}">{heading}{rule}{body}</div><div class="illus">{inner}</div>'
+        if s.get("heading_span") and layout == "split":     # headline across the full width, text + visual below it
+            inner = inner.replace('viewBox="0 0 390 536"', 'viewBox="0 84 390 368"')   # crop empty margins so the visual fills the shorter panel
+            main = f'<div class="hd">{heading}<div class="rule"></div></div><div class="col">{body}</div><div class="illus">{inner}</div>'
+        else:
+            main = f'<div class="col{top}">{heading}{rule}{body}</div><div class="illus">{inner}</div>'
     elif layout == "statement":
         main = f'<div class="stack">{heading}{rule}<div class="illus">{inner}</div></div>'
         if body:  # statement slides carry heading + visual (+ callout); body text would not fit
@@ -94,7 +99,8 @@ QA_JS = r"""
   const rect=(el,s)=>{const a=el.getBoundingClientRect(),b=s.getBoundingClientRect();return{l:a.left-b.left,t:a.top-b.top,r:a.right-b.left,b:a.bottom-b.top,h:a.height}};
   const fs=el=>parseFloat(getComputedStyle(el).fontSize);
   function viol(s){
-    const v=[], col=s.querySelector('.col,.stack'), box=s.querySelector('.box');
+    const v=[], col=s.querySelector('.col,.stack'), box=s.querySelector('.box'), hd=s.querySelector('.hd');
+    if(hd){ const b=rect(hd,s).b; if(b>318) v.push({k:'text-bottom',px:Math.round(b-318)}); }
     const limit = box ? rect(box,s).t-22 : 930;
     if(col){ const c=rect(col,s);
       if(c.b>limit) v.push({k:'text-bottom',px:Math.round(c.b-limit)});

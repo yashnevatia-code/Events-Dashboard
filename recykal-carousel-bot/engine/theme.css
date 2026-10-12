@@ -59,3 +59,10 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .url{ position:absolute; left:var(--mx); bottom:54px; font-weight:500; font-size:16px }
 .next{ position:absolute; right:var(--mx); bottom:36px; width:58px; height:58px; border-radius:50%; background:var(--drs); display:flex; align-items:center; justify-content:center }
 .bar{ position:absolute; left:0; bottom:0; width:128px; height:8px; background:#000 }
+
+/* headline across the full width (heading_span), copy + visual below it */
+.layout-split.span .hd{ position:absolute; left:var(--mx); top:150px; width:940px }
+.layout-split.span .hd .h2{ font-size:44px; line-height:1.2 }
+.layout-split.span .hd .rule{ margin:24px 0 0 }
+.layout-split.span .col{ top:528px; width:470px }
+.layout-split.span .illus{ left:560px; top:330px; width:450px; height:396px }
