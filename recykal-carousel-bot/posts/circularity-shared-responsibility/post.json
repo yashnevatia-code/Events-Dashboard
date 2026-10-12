@@ -18,7 +18,7 @@
       }
     },
     {
-      "heading": "THE CIRCLE CANNOT CLOSE IF **THE CONSUMER IS LEFT OUT.**",
+      "heading": "THE CIRCLE\nCANNOT CLOSE IF\n**THE CONSUMER\nIS LEFT OUT.**",
       "body": [
         "Circularity does not end with packaging designed for recyclability or products reaching consumers.",
         "What happens after consumption **matters just as much.**"
@@ -40,7 +40,8 @@
         "style": "fill",
         "icon": "x",
         "text": "Without effective collection and consumer participation, recyclable packaging **can fail to reach recovery systems.**"
-      }
+      },
+      "heading_size": 40
     },
     {
       "heading": "THIS IS WHERE **DRS** CAN MAKE A DIFFERENCE.",

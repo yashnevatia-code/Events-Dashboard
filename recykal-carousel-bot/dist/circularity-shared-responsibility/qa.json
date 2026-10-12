@@ -12,9 +12,9 @@
  {
   "slide": 2,
   "layout": "split",
-  "heading_px": 36,
+  "heading_px": 40,
   "body_px": 23,
-  "heading_lines": 3,
+  "heading_lines": 4,
   "callout_px": 25,
   "callout_lines": 2,
   "problems": []
