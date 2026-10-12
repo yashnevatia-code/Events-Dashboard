@@ -98,6 +98,7 @@ QA_JS = r"""
     if(col){ const c=rect(col,s);
       if(c.b>limit) v.push({k:'text-bottom',px:Math.round(c.b-limit)});
       if(c.t<150) v.push({k:'text-top',px:Math.round(150-c.t)}); }
+    const hh=s.querySelector('.h1,.h2'); if(hh && hh.scrollWidth>hh.clientWidth+1) v.push({k:'text-wide',px:hh.scrollWidth-hh.clientWidth});
     if(box){ const p=box.querySelector('p'), ph=p.getBoundingClientRect().height, lh=parseFloat(getComputedStyle(p).lineHeight);
       if(ph>box.clientHeight-24) v.push({k:'box-text',px:Math.round(ph-box.clientHeight+24)});
       else if(ph/lh>2.5 && fs(p)>22) v.push({k:'box-lines',px:0}); }
@@ -226,6 +227,9 @@ def library_sheet():
             "loop": {"scene": "loop", "nodes": ["bottle", "machine", "coin"]},
             "steps": {"scene": "steps", "steps": ["bottle", "truck", "factory", "recycle"]},
             "stat": {"scene": "stat", "value": 72, "caption": "of packaging is never recovered", "icon": "recycle"},
+            "ring": {"scene": "ring", "nodes": ["factory", "people", "truck", "recycle"]},
+            "ring_card (consumer missing)": {"scene": "ring_card", "nodes": ["factory", {"icon": "people", "state": "lost"}, "truck", "recycle"]},
+            "track": {"scene": "track", "nodes": ["factory", {"icon": "people", "state": "go"}, "truck", "recycle"]},
             "bridge": {"scene": "bridge"}, "flow": {"scene": "flow", "steps": ["bottle", "machine", "coin", "recycle"]}}
     cells.append("<h2>Scenes</h2><div class='row'>" + "".join(
         f'<figure class="sc"><div class="illus-demo">{S.render(v)[1]}</div><figcaption>{k}</figcaption></figure>' for k, v in demo.items()) + "</div></div>")

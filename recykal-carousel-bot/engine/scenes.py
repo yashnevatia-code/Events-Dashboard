@@ -13,7 +13,9 @@ Scenes only describe *what* is shown. Which one to use is decided by the idea of
   loop    a repeating cycle of 3-4 stages                                         card
   steps   an ordered process, top to bottom (3-4 steps)                           card
   stat    one number / percentage                                                 card
+  ring    3-6 stakeholders in a closed circle; one can be missing / highlighted   tall + card (ring_card)
   bridge  from A to B across a gap, with 2-4 enablers on the way                  wide
+  track   the same closed circle as a wide oval                                   wide
   flow    a left-to-right sequence of 3-5 stages                                  wide
 """
 import math
@@ -239,6 +241,83 @@ def flow(p):
         b.append(node(x, cy, r, it))
         if labels:
             b.append(_label(x, cy + r + 34, labels[i], size=23, anchor="middle", maxc=16))
+    return wrap("wide", "".join(b))
+
+
+# ───────────────────────── closed circles of stakeholders ─────────────────────────
+def _arc(cx, cy, R, a1, a2, color, dash="2 10", w=3.5):
+    x1, y1 = pt_on_circle(cx, cy, R, a1)
+    x2, y2 = pt_on_circle(cx, cy, R, a2)
+    return (f'<path d="M{x1:.1f} {y1:.1f}A{R} {R} 0 0 1 {x2:.1f} {y2:.1f}" fill="none" stroke="{color}" '
+            f'stroke-width="{w}" stroke-dasharray="{dash}" stroke-linecap="round"/>')
+
+
+def _ring(p, kind, cx, cy, R, r, center_size, chev_r):
+    """Nodes evenly spaced on a ring (first at the top), joined by direction arrows.
+    A node with {"state": "lost"} is treated as *missing*: faded, marked with an x, and the ring is broken around it."""
+    nodes = [_item(x) for x in _need(p, "nodes", 3, 6, "stakeholders")]
+    n = len(nodes)
+    angles = [-90 + i * 360 / n for i in range(n)]
+    lost = [it.get("state") == "lost" for it in nodes]
+    trim = math.degrees((r + 12) / R)
+    b = [halo(cx, cy, R + r - 12, .32), halo(cx, cy, R * .82, .6)] if kind == "tall" else [halo(cx, cy, R * .82, .6)]
+    for i in range(n):
+        a1, a2 = angles[i], angles[(i + 1) % n] + (360 if i == n - 1 else 0)
+        broken = lost[i] or lost[(i + 1) % n]
+        b.append(_arc(cx, cy, R, a1 + trim, a2 - trim, GREY_L if broken else G))
+        if not broken:
+            mid = (a1 + a2) / 2
+            b.append(chevron(*pt_on_circle(cx, cy, R, mid), mid + 90, chev_r))
+    for a, it in zip(angles, nodes):
+        x, y = pt_on_circle(cx, cy, R, a)
+        b.append(node(x, y, r, it))
+        if it.get("state") == "lost":
+            bx, by = x + r * .78, y - r * .78
+            b.append(f'<circle cx="{bx:.1f}" cy="{by:.1f}" r="{r * .27:.1f}" fill="#fff" stroke="{G}" stroke-width="3.2"/>'
+                     f'<path d="M{bx - r*.11:.1f} {by - r*.11:.1f}l{r*.22:.1f} {r*.22:.1f}M{bx + r*.11:.1f} {by - r*.11:.1f}l{-r*.22:.1f} {r*.22:.1f}" stroke="{G}" stroke-width="3" stroke-linecap="round"/>')
+    if p.get("center", "globe"):
+        b.append(icon(p.get("center", "globe"), cx, cy, size=center_size, sw=4.2 if kind == "tall" else 3.8))
+    return wrap(kind, "".join(b))
+
+
+@scene("tall")
+def ring(p):
+    """3-6 stakeholders in a closed circle (big, cover-style). Mark one {"state":"lost"} to show it missing, {"state":"go"} to highlight it."""
+    return _ring(p, "tall", 230, 330, 150, 58, 112, 17)
+
+
+@scene("card")
+def ring_card(p):
+    """Same circle in the card panel (3-6 stakeholders). Pairs with `ring` / `track` across slides."""
+    n = len(p.get("nodes") or [])
+    return _ring(p, "card", 195, 268, 128 if n >= 5 else 120, 40 if n >= 5 else 46, 62, 15)
+
+
+@scene("wide")
+def track(p):
+    """Wide closed loop (an oval track) with 3-6 stakeholders and an icon in the middle."""
+    nodes = [_item(x) for x in _need(p, "nodes", 3, 6, "stakeholders")]
+    n = len(nodes)
+    cx, cy, rx, ry = 470, 140, 372, 92
+    angs = {3: [-90, 30, 150], 4: [-135, -45, 45, 135], 5: [-90, -18, 54, 126, 198],
+            6: [-120, -60, 0, 60, 120, 180]}[n]
+    r = 46 if n <= 4 else 40
+    def P(a):
+        t = math.radians(a)
+        return cx + rx * math.cos(t), cy + ry * math.sin(t)
+    b = [f'<ellipse cx="{cx}" cy="{cy}" rx="{rx - 110}" ry="{ry - 24}" fill="{MINT}" opacity=".6"/>',
+         f'<ellipse cx="{cx}" cy="{cy}" rx="{rx}" ry="{ry}" fill="none" stroke="{G}" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>']
+    for i in range(n):
+        a1, a2 = angs[i], angs[(i + 1) % n] + (360 if i == n - 1 else 0)
+        mid = (a1 + a2) / 2
+        t = math.radians(mid)
+        x, y = P(mid)
+        b.append(chevron(x, y, math.degrees(math.atan2(ry * math.cos(t), -rx * math.sin(t))), 15))
+    for a, it in zip(angs, nodes):
+        x, y = P(a)
+        b.append(node(x, y, r, it))
+    if p.get("center", "globe"):
+        b.append(icon(p.get("center", "globe"), cx, cy, size=104, sw=4.4))
     return wrap("wide", "".join(b))
 
 

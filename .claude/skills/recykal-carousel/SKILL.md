@@ -12,7 +12,7 @@ The first post, `posts/drs-knowing-vs-doing/post.json`, is the reference for ton
 ## Workflow
 
 1. **Read the copy.** Keep the user's words exactly. Do not rewrite, shorten or "improve" it. If something cannot fit, say so and offer a trimmed version instead of silently editing.
-2. **Plan each slide**: pick a `scene` from the idea the slide expresses (table below). Slides should *flow*: reuse the same objects (bottle, machine...) across slides and let a later visual answer an earlier one (e.g. slide 1 shows a gap, the last slide bridges it).
+2. **Plan each slide**: pick a `scene` from the idea the slide expresses (table below). Slides should *flow*: reuse the same objects/icons across slides and let a later visual answer an earlier one (e.g. slide 1 shows a gap, the last slide bridges it; or a circle of stakeholders that is broken on slide 2 and complete on slide 4).
 3. **Write `recykal-carousel-bot/posts/<slug>/post.json`** (format below). Pick `slug` as short-kebab-case.
 4. **Build**: `python3 -I recykal-carousel-bot/engine/build.py recykal-carousel-bot/posts/<slug>/post.json`
    Output goes to `recykal-carousel-bot/dist/<slug>/`. The console prints per-slide QA; any `<-- CHECK` line means text still overflows after auto-shrink: fix it (shorter callout text is the user's call; you can lower `heading_size`/`body_size` or split the slide).
@@ -31,7 +31,10 @@ The first post, `posts/drs-knowing-vs-doing/post.json`, is the reference for ton
 | a repeating cycle (3-4 stages) | `loop` | card | `nodes`, `center` |
 | an ordered process, top to bottom | `steps` | card | `steps` (3-4), optional `labels` |
 | one number / percentage | `stat` | card | `value` (0-100), `text`, `caption`, `icon` |
+| stakeholders / roles sharing a system (closed circle; one can be missing `"state":"lost"` or highlighted `"state":"go"`) | `ring` | tall | `nodes` (3-6), `center` |
+| the same circle inside a card slide (e.g. "circle broken without X", "X restored") | `ring_card` | card | `nodes` (3-6), `center` |
 | from A to B with enablers in between | `bridge` | wide | `from`, `to`, `stops` (2-4) |
+| the closed circle as a wide oval ("the loop is complete") | `track` | wide | `nodes` (3-6), `center` |
 | a left-to-right sequence | `flow` | wide | `steps` (3-5), optional `labels` |
 | no visual needed (list, quote, closing) | omit `visual` | none | use `bullets` / big `heading` |
 | the user supplies a real photo | `{"image": "path.jpg", "kind": "card"}` | card/tall | |
@@ -65,7 +68,7 @@ Icons not in the catalogue? Add one to `engine/library.py` (48x48 grid centred o
 
 * Highlight with `**...**`. If the user already marks emphasis, keep it. If not, highlight one key phrase per heading and the phrase that carries the idea in the body/callout. Don't highlight whole sentences.
 * `callout` style: `line` (white box, green outline) for a reflective point; `fill` (solid green) for the payoff/CTA. Tall (cover) slides have no callout.
-* Wide-scene slides take heading + callout only (body text ignored). Put the sentence in the callout.
+* Wide-scene slides take heading + callout only (body text ignored). Put the sentence in the callout. Long copy can be split between `body` and `callout` without changing a word; tell the user which sentence went where.
 * Last slide has no next-arrow automatically. Footer URL is the same on every slide.
 * The engine auto-shrinks text to fit (heading min 28/40 px, body 19 px, callout 22 px) and reports what it did.
 
