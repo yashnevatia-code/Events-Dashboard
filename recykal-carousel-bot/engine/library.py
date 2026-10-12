@@ -111,6 +111,7 @@ DEFS = f'''<svg width="0" height="0" style="position:absolute" aria-hidden="true
 ICONS = {
     "bulb":      '<path d="M0-14a11 11 0 0 0-6.4 20v4h12.8v-4A11 11 0 0 0 0-14z"/><path d="M-4 14h8M-3 18h6"/><path d="M0-18v-5M-14-13l-3-3M14-13l3-3M-19-3h-4M19-3h4"/>',
     "repeat":    '<path d="M-14-4a14 14 0 0 1 23-8M14-18v9h-9"/><path d="M14 4a14 14 0 0 1-23 8M-14 18v-9h9"/>',
+    "repeat3":   '<path d="M-17.15 -6.93A18.5 18.5 0 0 1 4.48 -17.95M-2.27 -14.66L4.48 -17.95L0.07 -24.02"/><g transform="rotate(120)"><path d="M-17.15 -6.93A18.5 18.5 0 0 1 4.48 -17.95M-2.27 -14.66L4.48 -17.95L0.07 -24.02"/></g><g transform="rotate(240)"><path d="M-17.15 -6.93A18.5 18.5 0 0 1 4.48 -17.95M-2.27 -14.66L4.48 -17.95L0.07 -24.02"/></g>',   # like "repeat", with a third arrow
     "recycle":   '<g transform="translate(0 1.5)"><path d="M10.12 -2.97L17.75 10.25L13.49 10.25" fill="none" stroke="@C" stroke-opacity=".45" stroke-width="6.4" stroke-linejoin="round"/><path d="M2.13 -16.81L6.04 -10.05" fill="none" stroke="@C" stroke-width="6.4"/><path d="M9.23 -4.51L-0.63 -7.84L11.28 -14.72z" fill="@C"/><g transform="rotate(120)"><path d="M10.12 -2.97L17.75 10.25L13.49 10.25" fill="none" stroke="@C" stroke-opacity=".45" stroke-width="6.4" stroke-linejoin="round"/><path d="M2.13 -16.81L6.04 -10.05" fill="none" stroke="@C" stroke-width="6.4"/><path d="M9.23 -4.51L-0.63 -7.84L11.28 -14.72z" fill="@C"/></g><g transform="rotate(240)"><path d="M10.12 -2.97L17.75 10.25L13.49 10.25" fill="none" stroke="@C" stroke-opacity=".45" stroke-width="6.4" stroke-linejoin="round"/><path d="M2.13 -16.81L6.04 -10.05" fill="none" stroke="@C" stroke-width="6.4"/><path d="M9.23 -4.51L-0.63 -7.84L11.28 -14.72z" fill="@C"/></g></g>',   # standard recycling symbol: three folded chasing arrows; one hue, folds in a lighter tint
     "home":      '<path d="M-19-2L0-19 19-2"/><path d="M-14 0V19H14V0"/><path d="M-4 19v-10h8v10"/>',
     "bin":       '<path d="M-16-10H16M-4-16h8"/><path d="M-11-10l2 28H9l2-28"/><path d="M-3-3v14M3-3v14"/>',
@@ -149,7 +150,7 @@ ICON_ALIASES = {"arrow": "arrow-right", "return": "machine", "reverse-vending": 
                 "location": "pin", "access": "pin", "loop": "repeat", "circular": "recycle", "policy": "doc",
                 "law": "scale", "community": "people", "world": "globe", "time": "clock"}
 
-ICON_SCALE = {"landfill": 1.7, "recycle": 1.5, "truck": 1.15, "factory": 1.1}   # icons that need more room to stay legible
+ICON_SCALE = {"landfill": 1.7, "recycle": 1.5, "repeat3": 1.0, "truck": 1.15, "factory": 1.1}   # icons that need more room to stay legible
 
 def resolve_icon(name):
     name = ICON_ALIASES.get(name, name)
