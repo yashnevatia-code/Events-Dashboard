@@ -61,11 +61,11 @@
           "truck",
           "recycle"
         ],
-        "center": "repeat"
+        "center": "globe"
       },
       "callout": {
         "style": "fill",
-        "icon": "repeat",
+        "icon": "recycle",
         "text": "It can help turn responsible intentions into **repeatable actions**, connecting everyday consumer choices with organised collection and material recovery."
       }
     },
