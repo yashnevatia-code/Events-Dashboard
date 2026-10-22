@@ -68,7 +68,10 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
     layout = {"tall": "cover", "card": "split", "col": "split", "wide": "statement", "band": "journey", "top": "etop", "bottom": "ebottom", "bg": "bgphoto", None: "text"}[kind]
     hsize = s.get("heading_size")
     hcls = "h2" if layout == "split" else "h1"
-    hstyle = f' style="font-size:{hsize}px"' if hsize else ""
+    hs = []
+    if hsize: hs.append(f'font-size:{hsize}px')
+    if s.get("heading_width"): hs.append(f'width:{s["heading_width"]}px;max-width:none')    # let a short headline run wider than the body column
+    hstyle = f' style="{";".join(hs)}"' if hs else ""
     bs = []
     if s.get("body_size"): bs.append(f'font-size:{s["body_size"]}px')
     if s.get("text_width"): bs.append(f'max-width:{s["text_width"]}px')       # bg-photo layout: keep copy clear of the photo subject

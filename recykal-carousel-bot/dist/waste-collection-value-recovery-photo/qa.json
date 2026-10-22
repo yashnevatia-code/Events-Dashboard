@@ -24,7 +24,7 @@
   "layout": "bgphoto",
   "heading_px": 40,
   "body_px": 24,
-  "heading_lines": 3,
+  "heading_lines": 2,
   "callout_px": null,
   "callout_lines": 0,
   "problems": []
