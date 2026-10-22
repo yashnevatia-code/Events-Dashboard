@@ -15,9 +15,9 @@
   "slides": [
     {
       "heading": "FROM WASTE COLLECTION\nTO VALUE RECOVERY:\n**BUILDING A BETTER\nPATHWAY**",
-      "heading_size": 40,
-      "body_size": 24,
-      "text_width": 590,
+      "heading_size": 44,
+      "body_size": 26,
+      "text_width": 640,
       "body": "Packaging can **retain value** beyond the product it carries. But littering, improper disposal and gaps in collection systems can\n**prevent it from reaching recovery channels.**",
       "visual": {
         "image": "images/slide-1.jpg",
@@ -35,8 +35,8 @@
     },
     {
       "heading": "A DEPOSIT REFUND\nSCHEME CREATES\n**A STRUCTURED\nRETURN PATHWAY.**",
-      "heading_size": 40,
-      "body_size": 24,
+      "heading_size": 44,
+      "body_size": 26,
       "text_width": 440,
       "body": [
         "A Deposit Refund Scheme (DRS) uses a **nominal refundable deposit** to encourage the return of DRS-eligible empty packaging.",
@@ -50,9 +50,9 @@
     },
     {
       "heading": "MATERIAL QUALITY MATTERS\n**FOR RECOVERY.**",
-      "heading_size": 40,
-      "body_size": 24,
-      "text_width": 400,
+      "heading_size": 44,
+      "body_size": 26,
+      "text_width": 360,
       "body": [
         "How packaging is collected and handled affects its **suitability for recycling.**",
         "Contamination and poor handling can reduce **material quality** and limit the value that can ultimately be recovered."
@@ -62,7 +62,7 @@
         "kind": "bg"
       },
       "veil_end": 56,
-      "heading_width": 680
+      "heading_width": 720
     },
     {
       "heading": "BUILDING A BETTER\nPATHWAY MEANS\n**KEEPING MATERIAL\nVALUE IN\nCIRCULATION.**",
