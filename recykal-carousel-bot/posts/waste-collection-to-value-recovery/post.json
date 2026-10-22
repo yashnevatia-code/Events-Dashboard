@@ -41,9 +41,6 @@
         "scene": "converge",
         "nodes": [
           {
-            "icon": "rupee"
-          },
-          {
             "icon": "machine",
             "state": "go"
           },
@@ -55,7 +52,7 @@
           }
         ]
       },
-      "body_size": 28
+      "body_size": 30
     },
     {
       "heading": "MATERIAL QUALITY MATTERS\n**FOR RECOVERY.**",
@@ -80,7 +77,7 @@
           "coin"
         ]
       },
-      "body_size": 28
+      "body_size": 30
     },
     {
       "heading": "BUILDING A BETTER PATHWAY MEANS\n**KEEPING MATERIAL VALUE**\n**IN CIRCULATION.**",
@@ -109,7 +106,25 @@
         "end": {
           "icon": "globe",
           "state": "go"
-        }
+        },
+        "groups": [
+          {
+            "span": [
+              0,
+              1
+            ],
+            "label": "DRS · RETURN & COLLECTION",
+            "style": "go"
+          },
+          {
+            "span": [
+              2,
+              4
+            ],
+            "label": "SORTING · PROCESSING · RECYCLING",
+            "style": "plain"
+          }
+        ]
       },
       "callout": {
         "style": "fill",

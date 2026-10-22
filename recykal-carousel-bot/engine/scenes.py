@@ -442,19 +442,21 @@ def trail(p):
 
 @scene("band")
 def converge(p):
-    """Scattered items are drawn onto one solid road that runs through the given stages (3-4 nodes)."""
-    nodes = [_item(x) for x in (p.get("nodes") or [{"icon": "rupee"}, {"icon": "machine", "state": "go"}, {"icon": "truck"}, {"icon": "recycle"}])]
+    """Items on separate lanes merge into ONE structured road that runs through 2-4 stages. Each item carries a small
+    badge (default: the deposit coin). The first stage is the gate everything passes through (make it {"state": "go"})."""
+    nodes = [_item(x) for x in (p.get("nodes") or [{"icon": "machine", "state": "go"}, {"icon": "truck"}, {"icon": "recycle"}])]
     n = len(nodes)
-    xs = {3: [380, 640, 920], 4: [330, 545, 760, 965]}[n]
-    radii = [50 if it.get("state") == "go" else 36 for it in nodes]
-    x1, y1 = xs[0] - radii[0], _y(xs[0])
-    b = [_road("solid")]
-    for (bx, by, rot) in ((58, 46, -14), (112, 212, 10), (214, 36, 8)):
-        b.append(f'<path d="M{bx} {by + 6}C{bx + 70} {by + 6} {x1 - 70} {y1:.1f} {x1:.1f} {y1:.1f}" fill="none" stroke="{G}" stroke-width="3.2" stroke-dasharray="2 9" stroke-linecap="round"/>')
-        b.append(f'<g transform="rotate({rot} {bx} {by})">{fit(p.get("object", "bottle"), bx - 24, by - 46, 48, 92, align="center")}</g>')
+    xs = {2: [540, 880], 3: [520, 740, 950], 4: [480, 650, 820, 980]}[n]
+    radii = [58 if it.get("state") == "go" else 40 for it in nodes]
+    ym = _y(330)
+    lane = lambda y0: f"M74 {y0}C210 {y0} 240 {ym:.1f} 340 {ym:.1f}"
+    b = [_road_d(lane(50), "solid", 22), _road_d(lane(230), "solid", 22), _road("solid")]
+    obj = p.get("object", "bottle")
+    for ly in (50, _y(70), 230):
+        b.append(fit(obj, 86, ly - 38, 40, 76, align="center"))
+        b.append(f'<circle cx="132" cy="{ly - 32:.1f}" r="15" fill="#fff"/>' + fit(p.get("badge", "coin"), 120, ly - 44, 24, 24, align="center"))
     for i in range(n - 1):
-        mid = (xs[i] + radii[i] + xs[i + 1] - radii[i + 1]) / 2
-        b.append(_road_chevron(mid))
+        b.append(_road_chevron((xs[i] + radii[i] + xs[i + 1] - radii[i + 1]) / 2))
     for x, r, it in zip(xs, radii, nodes):
         b.append(node(x, _y(x), r, it))
     return wrap("band", "".join(b))
@@ -487,22 +489,35 @@ def lanes(p):
 
 @scene("band")
 def circuit(p):
-    """The finished journey: 5 stages on the road, ending in a big node, with a return line that closes the circle."""
+    """The finished journey: 3-5 stages on the road that flows into a ring (circulation). Optional `groups` bracket stages:
+    [{"span": [0, 1], "label": "DRS", "style": "go"}, {"span": [2, 4], "label": "SORTING · PROCESSING", "style": "plain"}]."""
     nodes = [_item(x) for x in _need(p, "nodes", 3, 5, "stages")]
     end = _item(p.get("end", {"icon": "globe", "state": "go"}))
     n = len(nodes)
-    xs = [110 + i * (830 - 110) / (n - 1) for i in range(n)]
-    xe = 985
-    b = [_road("solid", -30, xe), ]
+    xs = [108 + i * (715 - 108) / (n - 1) for i in range(n)]
+    xe, R = 922, 74
+    ye = _y(xe)
+    r = 38
+    b = [_road("solid", -30, xe - R + 6)]
     for i in range(n - 1):
         b.append(_road_chevron((xs[i] + xs[i + 1]) / 2))
-    b.append(_road_chevron((xs[-1] + xe) / 2))
-    ye, y0 = _y(xe), _y(xs[0])
-    b.append(f'<path d="M{xe} {ye + 62:.1f}C{xe} 268 {xe - 60} 268 {xe - 110} 268H{xs[0] + 90}C{xs[0]} 268 {xs[0]} 250 {xs[0]} {y0 + 48:.1f}" fill="none" stroke="{G}" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>')
-    b.append(chevron(560, 268, 180, 15))
+    b.append(_road_chevron((xs[-1] + xe - R) / 2))
+    b.append(halo(xe, ye, R - 8, .55))
+    b.append(f'<circle cx="{xe}" cy="{ye:.1f}" r="{R}" fill="none" stroke="{G}" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>')
+    for a in (-30, 90, 210):
+        cx, cy = pt_on_circle(xe, ye, R, a)
+        b.append(chevron(cx, cy, a + 90, 14))
     for x, it in zip(xs, nodes):
-        b.append(node(x, _y(x), 42, it))
-    b.append(node(xe, ye, 58, end))
+        b.append(node(x, _y(x), r, it))
+    b.append(node(xe, ye, 40, end))
+    for g in (p.get("groups") or []):
+        i0, i1 = g["span"]
+        x0, x1 = xs[i0] - r, xs[i1] + r
+        col = G if g.get("style", "plain") == "go" else GREY
+        yb = 236
+        b.append(f'<path d="M{x0:.1f} {yb - 9}V{yb}H{x1:.1f}V{yb - 9}" fill="none" stroke="{col}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>')
+        b.append(f'<text x="{(x0 + x1) / 2:.1f}" y="{yb + 27}" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="700" '
+                 f'font-size="15" letter-spacing=".6" fill="{col if col == G else "#444"}">{g["label"]}</text>')
     return wrap("band", "".join(b))
 
 
