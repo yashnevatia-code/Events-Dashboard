@@ -6,23 +6,13 @@
   "slides": [
     {
       "heading": "FROM WASTE COLLECTION\nTO VALUE RECOVERY:\n**BUILDING A BETTER PATHWAY**",
-      "heading_size": 42,
+      "heading_size": 40,
       "body": "Packaging can **retain value** beyond the product it carries. But littering, improper disposal and gaps in collection systems can **prevent it from reaching recovery channels.**",
       "visual": {
-        "scene": "trail",
-        "start": "bottle",
-        "leaks": [
-          {
-            "icon": "bottle"
-          },
-          {
-            "icon": "bin"
-          },
-          {
-            "icon": "truck"
-          }
-        ],
-        "end": "recycle"
+        "image": "images/slide-1.jpg",
+        "kind": "top",
+        "height": 440,
+        "position": "50% 62%"
       },
       "callout": {
         "style": "fill",
@@ -31,100 +21,39 @@
       }
     },
     {
-      "heading": "A DEPOSIT REFUND SCHEME CREATES\n**A STRUCTURED RETURN PATHWAY.**",
-      "heading_size": 40,
+      "heading": "A DEPOSIT REFUND\nSCHEME CREATES\n**A STRUCTURED\nRETURN PATHWAY.**",
+      "heading_size": 44,
       "body": [
         "A Deposit Refund Scheme (DRS) uses a **nominal refundable deposit** to encourage the return of DRS-eligible empty packaging.",
         "This helps channel packaging into **organised collection systems**, where it can move towards recycling."
       ],
       "visual": {
-        "scene": "converge",
-        "nodes": [
-          {
-            "icon": "machine",
-            "state": "go"
-          },
-          {
-            "icon": "truck"
-          },
-          {
-            "icon": "recycle"
-          }
-        ]
-      },
-      "body_size": 30
+        "image": "images/slide-2.jpg",
+        "kind": "tall",
+        "position": "100% 50%"
+      }
     },
     {
       "heading": "MATERIAL QUALITY MATTERS\n**FOR RECOVERY.**",
-      "heading_size": 52,
+      "heading_size": 48,
       "body": [
         "How packaging is collected and handled affects its **suitability for recycling.**",
         "Contamination and poor handling can reduce **material quality** and limit the value that can ultimately be recovered."
       ],
       "visual": {
-        "scene": "lanes",
-        "start": "bottle",
-        "good": [
-          {
-            "icon": "recycle"
-          },
-          "coin"
-        ],
-        "bad": [
-          {
-            "icon": "recycle"
-          },
-          "coin"
-        ]
-      },
-      "body_size": 30
+        "image": "images/slide-3.jpg",
+        "kind": "bottom",
+        "position": "50% 66%"
+      }
     },
     {
-      "heading": "BUILDING A BETTER PATHWAY MEANS\n**KEEPING MATERIAL VALUE**\n**IN CIRCULATION.**",
-      "heading_size": 42,
+      "heading": "BUILDING A BETTER\nPATHWAY MEANS\n**KEEPING MATERIAL VALUE\nIN CIRCULATION.**",
+      "heading_size": 36,
       "body": "DRS helps strengthen the **return and collection** of eligible packaging. Effective sorting, processing and recycling help turn collected material into a **usable resource.**",
       "visual": {
-        "scene": "circuit",
-        "nodes": [
-          {
-            "icon": "machine",
-            "state": "go"
-          },
-          {
-            "icon": "truck"
-          },
-          {
-            "icon": "funnel"
-          },
-          {
-            "icon": "factory"
-          },
-          {
-            "icon": "recycle"
-          }
-        ],
-        "end": {
-          "icon": "globe",
-          "state": "go"
-        },
-        "groups": [
-          {
-            "span": [
-              0,
-              1
-            ],
-            "label": "DRS · RETURN & COLLECTION",
-            "style": "go"
-          },
-          {
-            "span": [
-              2,
-              4
-            ],
-            "label": "SORTING · PROCESSING · RECYCLING",
-            "style": "plain"
-          }
-        ]
+        "image": "images/slide-4.jpg",
+        "kind": "card",
+        "position": "50% 50%"
       },
       "callout": {
         "style": "fill",

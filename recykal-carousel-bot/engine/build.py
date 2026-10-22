@@ -86,7 +86,10 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
         else:
             main = f'<div class="col{top}">{heading}{rule}{body}</div><div class="illus">{inner}</div>'
     elif layout in ("etop", "ebottom"):       # photo-led editorial layouts: full-bleed photo, copy on white above/below it
-        main = f'<div class="illus">{inner}</div><div class="stack">{heading}{rule}{body}</div>'
+        ph = int((v or {}).get("height", 520)) if layout == "etop" else None   # optional shorter photo on "top" slides
+        sty_i = f' style="height:{ph}px"' if ph else ""
+        sty_s = f' style="top:{ph + 40}px"' if ph else ""
+        main = f'<div class="illus"{sty_i}>{inner}</div><div class="stack"{sty_s}>{heading}{rule}{body}</div>'
     elif layout == "journey":
         rule_j = '<div class="rule"></div>' if heading else ""
         main = f'<div class="stack">{heading}{rule_j}</div><div class="illus">{inner}</div>' + (f'<div class="jbody">{body}</div>' if body else "")

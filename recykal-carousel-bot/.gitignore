@@ -1,3 +1,4 @@
 dist/*/index.html
 dist/_library.html
 __pycache__/
+posts/*/images/_candidates/

@@ -37,7 +37,7 @@ def main(path):
         icons = "".join(f"<tr><td class='in'>{e(n)}</td><td>{e(m)}</td></tr>" for n, m in s["icons"])
         pages.append(f'''<section class="pg"><div class="kick">SLIDE {i} OF {len(slides)}</div><h2>{e(s["title"])}</h2>
           <img class="slide" src="{p.as_uri()}"><div class="cols"><div><h3>What it communicates</h3><p>{e(s["says"])}</p>
-          <h3>What the picture shows</h3><ul>{li(s["shows"])}</ul></div><div><h3>Icon by icon</h3><table>{icons}</table></div></div></section>''')
+          <h3>What the picture shows</h3><ul>{li(s["shows"])}</ul></div><div><h3>{e(d.get("table_title", "Icon by icon"))}</h3><table>{icons}</table></div></div></section>''')
     css = """@page{size:A4;margin:0} *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:Poppins,sans-serif;color:#111;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     .pg{width:794px;height:1123px;padding:38px 46px;page-break-after:always;overflow:hidden} .pg:last-child{page-break-after:auto}

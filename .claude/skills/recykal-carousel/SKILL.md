@@ -63,7 +63,8 @@ Workflow for every carousel:
 2. Write an art direction that is shared by the whole carousel (light, colour grade, lens, setting, how people appear) and a shot list: one specific, different, realistic image per slide. No repeated subject, composition or metaphor; the images should progress with the narrative (e.g. problem -> return -> quality -> recovery). Save it as `posts/<slug>/art-direction.md` and show it to the user before generating if they have not approved a shot list.
 3. Generate each image with OpenArt (`openart_model_form_get` then `openart_generate_image`; `nano-banana-2-1` text2image, 2K, about 30 credits per image). Aspect ratio per layout below. Poll with `openart_creation_get`.
 4. Download the image into `posts/<slug>/images/slide-N.png` (the URL is in the result; it is on `cdn.openart.ai`), then **look at it** (Read the file). Check: realism (no AI look, no warped hands/objects, no gibberish text), contextual accuracy, composition for the layout, consistency with the other images. Re-prompt (max 2-3 attempts) if generic, artificial, repetitive, misleading or disconnected from the copy.
-5. Put it in the spec as `"visual": {"image": "images/slide-N.png", "kind": "top|bottom|tall|card", "position": "50% 40%"}` and build as usual.
+5. Harmonise the series with `python3 engine/photo_prepare.py in.png posts/<slug>/images/slide-N.jpg --sat 0.8-0.92 [--warm -6..6]`: a mild grade only (mute oversaturated or colour-cast images so all slides share one palette) plus a sensible JPEG size. Keep raw downloads in `posts/<slug>/images/_candidates/` (git-ignored).
+6. Put it in the spec as `"visual": {"image": "images/slide-N.jpg", "kind": "top|bottom|tall|card", "height": 440, "position": "50% 40%"}` (`height` only for `top`: a shorter photo leaves room for a callout box)` and build as usual.
 
 Photo layouts (`kind`) and what to generate:
 

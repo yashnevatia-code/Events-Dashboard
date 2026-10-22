@@ -23,3 +23,8 @@ Layout variety: top / tall / bottom / card, so no two slides share a composition
 
 ## Cost and review
 About 30 credits per image at 2K (nano-banana-2-1); up to 2-3 attempts per slide if a result is generic, artificial or misleading.
+
+## Outcome (generated and reviewed)
+All four shots were generated once with OpenArt (nano-banana-2-1, 2K) and accepted after review: no warped objects, no readable text or brands, modest and believable scenes, one shared look. A light unified grade was applied with `engine/photo_prepare.py` (saturation 0.92 / 0.84 and cooler / 0.78 / 0.90) because slide 2 was warm and slide 3's crates strongly saturated.
+Layouts used: 1 `top` (photo 440px high, with callout), 2 `tall`, 3 `bottom`, 4 `card` (with callout).
+Credits used: about 120 (4 images, no re-takes).

@@ -92,5 +92,5 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .layout-etop .rule, .layout-ebottom .rule{ margin:22px 0 22px }
 .layout-etop .body, .layout-ebottom .body{ font-size:24px }
 .layout-etop .box{ top:792px }
-.layout-ebottom .illus{ left:0; top:560px; width:1080px; height:410px; border-radius:28px; background:#e9eeeb }
+.layout-ebottom .illus{ left:0; top:556px; width:1080px; height:392px; border-radius:28px; background:#e9eeeb }
 .layout-ebottom .stack{ top:165px }
