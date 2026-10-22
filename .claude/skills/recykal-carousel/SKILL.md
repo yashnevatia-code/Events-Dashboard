@@ -33,13 +33,17 @@ The first post, `posts/drs-knowing-vs-doing/post.json`, is the reference for ton
 | one number / percentage | `stat` | card | `value` (0-100), `text`, `caption`, `icon` |
 | stakeholders / roles sharing a system (closed circle; one can be missing `"state":"lost"` or highlighted `"state":"go"`) | `ring` | tall | `nodes` (3-6), `center` |
 | the same circle inside a card slide (e.g. "circle broken without X", "X restored") | `ring_card` | card | `nodes` (3-6), `center` |
+| a journey / route through 3-5 stages ("pathway", "return route") | `pathway` | col | `nodes` (3-5) |
+| two outcomes side by side (done well vs done badly; before / after) | `compare` | col | `good`, `bad` (3 items each; the `bad` column is shown faded with an x) |
 | from A to B with enablers in between | `bridge` | wide | `from`, `to`, `stops` (2-4) |
 | the closed circle as a wide oval ("the loop is complete") | `track` | wide | `nodes` (3-6), `center` |
 | a left-to-right sequence | `flow` | wide | `steps` (3-5), optional `labels` |
 | no visual needed (list, quote, closing) | omit `visual` | none | use `bullets` / big `heading` |
 | the user supplies a real photo | `{"image": "path.jpg", "kind": "card"}` | card/tall | |
 
-Panel decides the layout: **tall** = cover-style (text centred on the left, no callout), **card** = text + panel + callout box, **wide** = heading, wide panel, callout box.
+Panel decides the layout: **tall** = cover-style (text centred on the left, no callout), **card** = text + panel + callout box, **col** = tall card with no callout box (text centred beside a 390x700 panel), **wide** = heading, wide panel, callout box.
+A closing/bold line from the user's copy usually becomes the `fill` callout box; use `col` scenes when a slide has two paragraphs and nothing to put in a box.
+Line breaks: put `\n` in a heading to control where it breaks. Break so the green phrase starts at the beginning of a line (a colour change mid-line looks accidental).
 Slide items are objects (`bottle can glass machine coin crate bag kiosk`, full colour) or icons (`python3 engine/build.py --library` renders the catalogue to `dist/_library.png`; look at it).
 In a `{"icon": "machine"}` entry the line icon is used; a bare `"machine"` gives the illustration; `{"obj": "machine"}` forces the illustration.
 Icons not in the catalogue? Add one to `engine/library.py` (48x48 grid centred on 0,0, stroke-only), re-render the catalogue and check it. Same for a new object or scene. Keep new work in the same language: thin green outlines, mint halos, circular nodes, chevron arrows.

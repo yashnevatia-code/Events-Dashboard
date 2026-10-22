@@ -57,7 +57,7 @@ def render_slide(i, n, s, footer, logo_uri):
     kind, inner = (None, "")
     if v:
         kind, inner = visual_html(v)
-    layout = {"tall": "cover", "card": "split", "wide": "statement", None: "text"}[kind]
+    layout = {"tall": "cover", "card": "split", "col": "split", "wide": "statement", None: "text"}[kind]
     hsize = s.get("heading_size")
     hcls = "h2" if layout == "split" else "h1"
     hstyle = f' style="font-size:{hsize}px"' if hsize else ""
@@ -72,6 +72,9 @@ def render_slide(i, n, s, footer, logo_uri):
     callout = callout_html(s["callout"]) if s.get("callout") and layout != "cover" else ""
     if layout == "cover" and s.get("callout"):
         print(f"  note: slide {i}: cover-style slides (tall scene) have no callout box; callout skipped", file=sys.stderr)
+    if kind == "col" and callout:
+        print(f"  note: slide {i}: tall-card scenes ('{(v or {}).get('scene')}') have no callout box; callout skipped", file=sys.stderr)
+        callout = ""
     nobox = " nobox" if layout == "split" and not callout else ""
     nobox += " span" if s.get("heading_span") and layout == "split" else ""
     if layout in ("cover", "split"):

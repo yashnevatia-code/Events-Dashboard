@@ -4,6 +4,7 @@
   tall  460x660   cover-style slide   (text left, big illustration right)
   card  390x536   split-style slide   (text left, illustration right, callout box below)
   wide  940x280   statement slide     (heading on top, wide illustration, callout box below)
+  col   390x700   tall card, no callout box (text left, tall illustration right, nothing below)
 
 Scenes only describe *what* is shown. Which one to use is decided by the idea of the slide:
 
@@ -14,6 +15,8 @@ Scenes only describe *what* is shown. Which one to use is decided by the idea of
   steps   an ordered process, top to bottom (3-4 steps)                           card
   stat    one number / percentage                                                 card
   ring    3-6 stakeholders in a closed circle; one can be missing / highlighted   tall + card (ring_card)
+  pathway a winding journey through 3-5 stages, top to bottom                       col
+  compare two routes side by side: handled well (green) vs handled badly (faded)   col
   bridge  from A to B across a gap, with 2-4 enablers on the way                  wide
   track   the same closed circle as a wide oval                                   wide
   flow    a left-to-right sequence of 3-5 stages                                  wide
@@ -22,7 +25,7 @@ import math
 import library as L
 from library import G, MINT, GREY, GREY_L, halo, shadow, chevron, node, fit, icon, pt_on_circle
 
-KINDS = {"tall": (460, 660), "card": (390, 536), "wide": (940, 280)}
+KINDS = {"tall": (460, 660), "card": (390, 536), "wide": (940, 280), "col": (390, 700)}
 SCENES = {}
 
 
@@ -320,6 +323,62 @@ def track(p):
     if p.get("center", "globe"):
         b.append(icon(p.get("center", "globe"), cx, cy, size=104, sw=4.4))
     return wrap("wide", "".join(b))
+
+
+# ───────────────────────────── tall cards (no callout box) ─────────────────────────────
+def _x_badge(x, y, rr):
+    return (f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{rr:.1f}" fill="#fff" stroke="{G}" stroke-width="3.2"/>'
+            f'<path d="M{x - rr*.4:.1f} {y - rr*.4:.1f}l{rr*.8:.1f} {rr*.8:.1f}M{x + rr*.4:.1f} {y - rr*.4:.1f}l{-rr*.8:.1f} {rr*.8:.1f}" stroke="{G}" stroke-width="3" stroke-linecap="round"/>')
+
+
+def _check_badge(x, y, rr):
+    return (f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{rr:.1f}" fill="{G}"/>'
+            f'<path d="M{x - rr*.45:.1f} {y:.1f}l{rr*.3:.1f} {rr*.32:.1f}l{rr*.6:.1f} {-rr*.62:.1f}" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>')
+
+
+@scene("col")
+def pathway(p):
+    """A winding route through 3-5 stages (top to bottom), each joined by a dotted path and a direction arrow."""
+    nodes = [_item(x) for x in _need(p, "nodes", 3, 5, "stages")]
+    n = len(nodes)
+    r = 58 if n <= 4 else 50
+    y0, y1 = r + 36, 700 - r - 36
+    ys = [y0 + i * (y1 - y0) / (n - 1) for i in range(n)]
+    xs = [112 if i % 2 == 0 else 278 for i in range(n)]
+    b = [halo(195, 350, 178, .4)]
+    for i in range(n - 1):
+        (xa, ya), (xb, yb) = (xs[i], ys[i]), (xs[i + 1], ys[i + 1])
+        dy = (yb - ya) * .5
+        c1, c2 = (xa, ya + dy), (xb, yb - dy)
+        b.append(f'<path d="M{xa} {ya:.1f}C{c1[0]} {c1[1]:.1f} {c2[0]} {c2[1]:.1f} {xb} {yb:.1f}" fill="none" stroke="{G}" '
+                 f'stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>')
+        dx = .75 * (c1[0] - xa) + 1.5 * (c2[0] - c1[0]) + .75 * (xb - c2[0])
+        dyy = .75 * (c1[1] - ya) + 1.5 * (c2[1] - c1[1]) + .75 * (yb - c2[1])
+        b.append(chevron((xa + xb) / 2, (ya + yb) / 2, math.degrees(math.atan2(dyy, dx)), 16))
+    for x, y, it in zip(xs, ys, nodes):
+        b.append(node(x, y, r, it))
+    return wrap("col", "".join(b))
+
+
+@scene("col")
+def compare(p):
+    """Two routes side by side. `good`: 3 items (green). `bad`: 3 items (faded, marked with an x)."""
+    good = [_item(x) for x in _need(p, "good", 3, 3, "items")]
+    bad = [_item(x) for x in _need(p, "bad", 3, 3, "items")]
+    xs, r, ys = (104, 286), 52, (116, 350, 584)
+    b = [f'<path d="M195 36V664" stroke="#c9dcd3" stroke-width="2.5" stroke-dasharray="3 9" stroke-linecap="round"/>']
+    for x, col_items, ok in ((xs[0], good, True), (xs[1], bad, False)):
+        col = G if ok else GREY_L
+        for i in range(2):
+            ya, yb = ys[i] + r, ys[i + 1] - r
+            b.append(f'<path d="M{x} {ya + 4}V{yb - 4}" stroke="{col}" stroke-width="3.5" stroke-dasharray="2 9" stroke-linecap="round"/>')
+            b.append(chevron(x, (ya + yb) / 2, 90, 15, col))
+        for y, it in zip(ys, col_items):
+            it = dict(it)
+            if not ok: it.setdefault("state", "lost")
+            b.append(node(x, y, r, it))
+        b.append(_check_badge(x + r * .78, ys[0] - r * .78, 15) if ok else _x_badge(x + r * .78, ys[0] - r * .78, 15))
+    return wrap("col", "".join(b))
 
 
 def render(visual):

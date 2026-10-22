@@ -142,13 +142,14 @@ ICONS = {
     "scale":     '<path d="M0-18V18M-10 18H10M-18-12H18"/><path d="M-18-12l-8 14h16zM18-12l-8 14h16z"/>',
     "dots":      '<circle cx="-15" r="3" fill="@C"/><circle r="3" fill="@C"/><circle cx="15" r="3" fill="@C"/>',
     "x":         '<path d="M-12-12l24 24M12-12l-24 24"/>',
+    "funnel":    '<path d="M-19-16H19L6 1v15l-12 6V1z"/>',
     "phone":     '<rect x="-11" y="-20" width="22" height="40" rx="5"/><path d="M-3 14h6"/>',
 }
 ICON_ALIASES = {"arrow": "arrow-right", "return": "machine", "reverse-vending": "machine", "rvm": "machine",
                 "refund": "rupee", "money": "rupee", "idea": "bulb", "knowing": "bulb", "retain": "home",
                 "discard": "bin", "waste": "bin", "forgotten": "dots", "tick": "check", "growth": "chart-up",
                 "location": "pin", "access": "pin", "loop": "repeat", "circular": "recycle", "policy": "doc",
-                "law": "scale", "community": "people", "world": "globe", "time": "clock"}
+                "law": "scale", "sorting": "funnel", "sort": "funnel", "community": "people", "world": "globe", "time": "clock"}
 
 ICON_SCALE = {"landfill": 1.7, "recycle": 1.5, "repeat3": 1.0, "truck": 1.15, "factory": 1.1}   # icons that need more room to stay legible
 
@@ -185,9 +186,9 @@ def is_object(name): return name in OBJECTS
 def shadow(cx, cy, rx):
     return f'<ellipse cx="{cx}" cy="{cy}" rx="{rx}" ry="7" fill="#0b3d2e" opacity=".10"/>'
 
-def chevron(x, y, deg, r=14):
-    """green disc with a white chevron pointing along `deg` (0 = right)."""
-    return (f'<g transform="translate({x:.1f} {y:.1f}) rotate({deg:.1f})"><circle r="{r}" fill="{G}"/>'
+def chevron(x, y, deg, r=14, color=G):
+    """coloured disc (green by default) with a white chevron pointing along `deg` (0 = right)."""
+    return (f'<g transform="translate({x:.1f} {y:.1f}) rotate({deg:.1f})"><circle r="{r}" fill="{color}"/>'
             f'<path d="M-5 -8l9 8-9 8" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></g>')
 
 def node(cx, cy, r, item, state="idle"):
