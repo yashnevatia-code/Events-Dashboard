@@ -5,13 +5,12 @@
   "progress": true,
   "slides": [
     {
-      "heading": "FROM WASTE COLLECTION\nTO VALUE RECOVERY:\n**BUILDING A BETTER PATHWAY**",
-      "heading_size": 40,
+      "heading": "FROM WASTE\nCOLLECTION TO\nVALUE RECOVERY:\n**BUILDING A BETTER\nPATHWAY**",
+      "heading_size": 36,
       "body": "Packaging can **retain value** beyond the product it carries. But littering, improper disposal and gaps in collection systems can **prevent it from reaching recovery channels.**",
       "visual": {
         "image": "images/slide-1.jpg",
-        "kind": "top",
-        "height": 440,
+        "kind": "card",
         "position": "50% 62%"
       },
       "callout": {
@@ -34,16 +33,16 @@
       }
     },
     {
-      "heading": "MATERIAL QUALITY MATTERS\n**FOR RECOVERY.**",
-      "heading_size": 48,
+      "heading": "MATERIAL QUALITY\nMATTERS\n**FOR RECOVERY.**",
+      "heading_size": 44,
       "body": [
         "How packaging is collected and handled affects its **suitability for recycling.**",
         "Contamination and poor handling can reduce **material quality** and limit the value that can ultimately be recovered."
       ],
       "visual": {
         "image": "images/slide-3.jpg",
-        "kind": "bottom",
-        "position": "50% 66%"
+        "kind": "tall",
+        "position": "40% 50%"
       }
     },
     {

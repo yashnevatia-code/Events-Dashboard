@@ -1,10 +1,10 @@
 [
  {
   "slide": 1,
-  "layout": "etop",
-  "heading_px": 40,
-  "body_px": 22,
-  "heading_lines": 3,
+  "layout": "split",
+  "heading_px": 36,
+  "body_px": 23,
+  "heading_lines": 5,
   "callout_px": 25,
   "callout_lines": 2,
   "problems": []
@@ -21,10 +21,10 @@
  },
  {
   "slide": 3,
-  "layout": "ebottom",
-  "heading_px": 48,
+  "layout": "cover",
+  "heading_px": 44,
   "body_px": 24,
-  "heading_lines": 2,
+  "heading_lines": 3,
   "callout_px": null,
   "callout_lines": 0,
   "problems": []

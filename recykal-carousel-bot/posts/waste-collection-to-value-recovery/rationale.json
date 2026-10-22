@@ -1,81 +1,129 @@
 {
-  "slug": "waste-collection-to-value-recovery",
-  "title": "From waste collection to value recovery: why each photograph was chosen",
-  "table_title": "Details and accuracy checks",
-  "overview": [
-    "The carousel follows the material along its journey in four different realistic scenes: packaging leaking out of the system, a return handover, how well it is collected and handled, and what processing turns it into. Each photograph was generated for that slide's exact message and checked by eye before use."
-  ],
-  "rules": [
-    "One shared look: documentary editorial photography, soft natural daylight, 35mm eye-level perspective, shallow depth of field, Indian urban, retail and industrial settings, plain unbranded packaging, nothing legible in the image.",
-    "A light, consistent colour grade was applied to all four so they read as one series (slightly muted, true greens). Slide 2 was cooled and slide 3's strongly saturated crates were toned down.",
-    "Four different compositions, so no two slides repeat a layout or subject: full-bleed street scene on top (1), portrait handover (2), wide sorting table (3), close-up macro (4).",
-    "All text sits on white outside the photographs, so nothing competes with the images."
-  ],
-  "weak_spots": [
-    "Slide 2 is a generic, plain return handover. It deliberately avoids a branded kiosk or machine, so it does not imply one specific scheme design; the cost is that it can read as an ordinary shop counter without the headline.",
-    "Photographs are AI-generated. They were checked for warped hands, objects and unreadable gibberish, but a final human look before publishing is sensible, especially at full size on slide 2 (hands) and slide 3 (wrappers).",
-    "The images illustrate stages; they do not show that any particular packaging is recycled. Collection (2), sorting and handling (3) and processing (4) are kept visually separate on purpose."
-  ],
-  "slides": [
-    {
-      "title": "Slide 1 – Value is at risk after consumption",
-      "says": "Packaging can retain value, but littering, improper disposal and gaps in collection stop it reaching recovery channels. The fix is a more organised collection system and a clear pathway to material recovery.",
-      "shows": [
-        "A low, kerb-level view of an ordinary city street early in the morning: a handful of empty bottles and cans resting against the kerb beside a storm drain grating.",
-        "The street recedes into soft focus with passers-by and parked scooters: this is everyday leakage, not a dump.",
-        "The litter sits lower-left; the logo plate and heading sit on white around it."
-      ],
-      "icons": [
-        ["Littering", "Packaging lying loose at the kerb, outside any system."],
-        ["Improper disposal", "Items next to a drain instead of in a collection stream."],
-        ["Gaps in collection", "An ordinary street with no collection point in sight."],
-        ["Kept modest", "A few items only. No heaps, smoke or landfill drama."]
-      ]
-    },
-    {
-      "title": "Slide 2 – A Deposit Refund Scheme creates a structured return pathway",
-      "says": "A DRS uses a nominal refundable deposit to encourage the return of eligible empty packaging, channelling it into organised collection systems where it can move towards recycling.",
-      "shows": [
-        "A customer hands empty bottles across a plain counter to an attendant: the act of returning.",
-        "Behind the counter, stacked crates of collected empties: organised collection rather than loose packaging.",
-        "The warm shop interior contrasts with the cooler street of slide 1: from loose to handed in."
-      ],
-      "icons": [
-        ["Hands in the foreground", "The return is a deliberate, repeatable action."],
-        ["Crates of empties", "Collected packaging held in an organised way."],
-        ["No machine, no signage", "Keeps the scene generic and avoids implying one scheme design."],
-        ["Deposit", "Carried by the copy; the image only shows the return handover."]
-      ]
-    },
-    {
-      "title": "Slide 3 – Collection quality decides how much value is recovered",
-      "says": "How packaging is collected and handled affects its suitability for recycling. Contamination and poor handling reduce material quality and limit the value that can ultimately be recovered.",
-      "shows": [
-        "Gloved hands sort bottles at a table between two crates, seen from the front and slightly above.",
-        "Left crate: clean, empty, dry bottles. Right crate: bottles with visible residue and food-soiled wrappers.",
-        "Same table, same worker: the only difference is how the material was collected and handled."
-      ],
-      "icons": [
-        ["Clean crate (left)", "Material that stays suitable for recycling."],
-        ["Soiled crate (right)", "Contamination and poor handling that reduce quality."],
-        ["Worker's hands", "Handling and sorting: the human step that shapes quality."],
-        ["Modest contrast", "Obvious at a glance but not exaggerated."]
-      ]
-    },
-    {
-      "title": "Slide 4 – Every stage keeps material value in circulation",
-      "says": "A better pathway keeps material value in circulation. DRS strengthens the return and collection of eligible packaging; sorting, processing and recycling turn it into a usable resource. The goal is for the value to find its way back into the economy.",
-      "shows": [
-        "A gloved hand holds a scoop of clean shredded PET flakes inside a recycling plant, flakes falling into a bin below.",
-        "The washing and processing line stands soft in the background: this is processing, clearly after collection and sorting.",
-        "The flakes are the 'usable resource' of the copy: material that has kept its value."
-      ],
-      "icons": [
-        ["Clean PET flakes", "Recovered material, shown as a usable resource."],
-        ["Plant in the background", "Processing and recycling, distinct from collection (slides 2 and 3)."],
-        ["Falling flakes", "Material moving on to its next use."],
-        ["No claim of completeness", "Shows a processing stage, not that every collected item is recycled."]
-      ]
-    }
-  ]
+ "slug": "waste-collection-to-value-recovery",
+ "title": "From waste collection to value recovery: why each photograph was chosen",
+ "table_title": "Details and accuracy checks",
+ "overview": [
+  "The carousel follows the material along its journey in four different realistic scenes: packaging leaking out of the system, a return handover, how well it is collected and handled, and what processing turns it into. Each photograph was generated for that slide's exact message and checked by eye before use."
+ ],
+ "rules": [
+  "One shared look: documentary editorial photography, soft natural daylight, 35mm eye-level perspective, shallow depth of field, Indian urban, retail and industrial settings, plain unbranded packaging, nothing legible in the image.",
+  "A light, consistent colour grade was applied to all four so they read as one series (slightly muted, true greens). Slide 2 was cooled and slide 3's strongly saturated crates were toned down.",
+  "Four different subjects and crops, so no two slides repeat: a kerbside street scene (1), a portrait handover (2), a top-down sorting table (3), a close-up macro (4). Every photograph sits as a rounded portrait beside the copy, in the same frame as the reference carousels.",
+  "All text and the logo sit on white outside the photographs, so nothing competes with the images."
+ ],
+ "weak_spots": [
+  "Slide 2 is a generic, plain return handover. It deliberately avoids a branded kiosk or machine, so it does not imply one specific scheme design; the cost is that it can read as an ordinary shop counter without the headline.",
+  "Photographs are AI-generated. They were checked for warped hands, objects and unreadable gibberish, but a final human look before publishing is sensible, especially slide 2 (hands) and slide 3 (gloves and wrappers).",
+  "The images illustrate stages; they do not show that any particular packaging is recycled. Collection (2), sorting and handling (3) and processing (4) are kept visually separate on purpose."
+ ],
+ "slides": [
+  {
+   "title": "Slide 1 – Value is at risk after consumption",
+   "says": "Packaging can retain value, but littering, improper disposal and gaps in collection stop it reaching recovery channels. The fix is a more organised collection system and a clear pathway to material recovery.",
+   "shows": [
+    "A low, portrait view of an ordinary city street: a few empty bottles and cans resting against the kerb beside a storm drain grating.",
+    "The street recedes into soft focus with scooters and passers-by: everyday leakage, not a dump.",
+    "The photograph sits as a rounded portrait beside the heading, with the logo on white."
+   ],
+   "icons": [
+    [
+     "Littering",
+     "Packaging lying loose at the kerb, outside any system."
+    ],
+    [
+     "Improper disposal",
+     "Items next to a drain instead of in a collection stream."
+    ],
+    [
+     "Gaps in collection",
+     "An ordinary street with no collection point in sight."
+    ],
+    [
+     "Kept modest",
+     "A few items only. No heaps, smoke or landfill drama."
+    ]
+   ]
+  },
+  {
+   "title": "Slide 2 – A Deposit Refund Scheme creates a structured return pathway",
+   "says": "A DRS uses a nominal refundable deposit to encourage the return of eligible empty packaging, channelling it into organised collection systems where it can move towards recycling.",
+   "shows": [
+    "A customer hands empty bottles across a plain counter to an attendant: the act of returning.",
+    "Behind the counter, stacked crates of collected empties: organised collection rather than loose packaging.",
+    "The warm shop interior contrasts with the cooler street of slide 1: from loose to handed in."
+   ],
+   "icons": [
+    [
+     "Hands in the foreground",
+     "The return is a deliberate, repeatable action."
+    ],
+    [
+     "Crates of empties",
+     "Collected packaging held in an organised way."
+    ],
+    [
+     "No machine, no signage",
+     "Keeps the scene generic and avoids implying one scheme design."
+    ],
+    [
+     "Deposit",
+     "Carried by the copy; the image only shows the return handover."
+    ]
+   ]
+  },
+  {
+   "title": "Slide 3 – Collection quality decides how much value is recovered",
+   "says": "How packaging is collected and handled affects its suitability for recycling. Contamination and poor handling reduce material quality and limit the value that can ultimately be recovered.",
+   "shows": [
+    "Gloved hands sort bottles at a table between two crates, seen from the front and slightly above.",
+    "Left crate: clean, empty, dry bottles. Right crate: bottles with visible residue and food-soiled wrappers.",
+    "Same table, same worker: the only difference is how the material was collected and handled."
+   ],
+   "icons": [
+    [
+     "Clean crate (left)",
+     "Material that stays suitable for recycling."
+    ],
+    [
+     "Soiled crate (right)",
+     "Contamination and poor handling that reduce quality."
+    ],
+    [
+     "Worker's hands",
+     "Handling and sorting: the human step that shapes quality."
+    ],
+    [
+     "Modest contrast",
+     "Obvious at a glance but not exaggerated."
+    ]
+   ]
+  },
+  {
+   "title": "Slide 4 – Every stage keeps material value in circulation",
+   "says": "A better pathway keeps material value in circulation. DRS strengthens the return and collection of eligible packaging; sorting, processing and recycling turn it into a usable resource. The goal is for the value to find its way back into the economy.",
+   "shows": [
+    "A gloved hand holds a scoop of clean shredded PET flakes inside a recycling plant, flakes falling into a bin below.",
+    "The washing and processing line stands soft in the background: this is processing, clearly after collection and sorting.",
+    "The flakes are the 'usable resource' of the copy: material that has kept its value."
+   ],
+   "icons": [
+    [
+     "Clean PET flakes",
+     "Recovered material, shown as a usable resource."
+    ],
+    [
+     "Plant in the background",
+     "Processing and recycling, distinct from collection (slides 2 and 3)."
+    ],
+    [
+     "Falling flakes",
+     "Material moving on to its next use."
+    ],
+    [
+     "No claim of completeness",
+     "Shows a processing stage, not that every collected item is recycled."
+    ]
+   ]
+  }
+ ]
 }
