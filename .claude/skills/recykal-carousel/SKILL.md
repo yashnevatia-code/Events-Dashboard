@@ -64,16 +64,18 @@ Workflow for every carousel:
 3. Generate each image with OpenArt (`openart_model_form_get` then `openart_generate_image`; `nano-banana-2-1` text2image, 2K, about 30 credits per image). Aspect ratio per layout below. Poll with `openart_creation_get`.
 4. Download the image into `posts/<slug>/images/slide-N.png` (the URL is in the result; it is on `cdn.openart.ai`), then **look at it** (Read the file). Check: realism (no AI look, no warped hands/objects, no gibberish text), contextual accuracy, composition for the layout, consistency with the other images. Re-prompt (max 2-3 attempts) if generic, artificial, repetitive, misleading or disconnected from the copy.
 5. Harmonise the series with `python3 engine/photo_prepare.py in.png posts/<slug>/images/slide-N.jpg --sat 0.8-0.92 [--warm -6..6]`: a mild grade only (mute oversaturated or colour-cast images so all slides share one palette) plus a sensible JPEG size. Keep raw downloads in `posts/<slug>/images/_candidates/` (git-ignored).
-6. Put it in the spec as `"visual": {"image": "images/slide-N.jpg", "kind": "top|bottom|tall|card", "height": 440, "position": "50% 40%"}` (`height` only for `top`: a shorter photo leaves room for a callout box)` and build as usual.
+6. Put it in the spec as `"visual": {"image": "images/slide-N.jpg", "kind": "tall|card|col", "position": "50% 40%"}` (`position` sets the crop focus)` and build as usual.
 
-Photo layouts (`kind`) and what to generate:
+Photo layouts (`kind`) and what to generate. **Use contained, rounded photos beside the copy, as in the reference carousels (text left, photo right, nothing running edge to edge, logo always on white). The user disliked full-bleed horizontal photos ("top"/"bottom") and a logo sitting on a photo, so do not use `top` or `bottom` unless explicitly asked.**
 
 | kind | layout | image area | generate | note |
 |---|---|---|---|---|
-| `top` | photo full-bleed above the copy | 1080x520 | 21:9 | keep the subject in the central 80%; the top-left corner sits behind the logo plate, keep it calm |
-| `bottom` | copy above, photo full-bleed below | 1080x410 | 21:9 | subject centred; best for wide, side-by-side comparisons |
-| `tall` | text left, tall photo right (cover style, no callout) | 460x660 | 3:4 | good for people / single-subject portraits |
-| `card` | text left, photo right, callout box below | 390x536 | 3:4 | smaller: use a simple, bold subject |
+| `tall` | text left, tall photo right (cover style, no callout) | 460x660 | 3:4 portrait | the default for slides without a callout box |
+| `card` | text left, photo right, callout box below | 390x536 | 3:4 portrait | use when the slide has a bold closing line; simple, bold subject |
+| `col` | text left, taller narrow photo right, no callout | 390x700 | 3:4 portrait (crops sides slightly) | when two paragraphs need the room |
+| `top` / `bottom` | full-bleed photo above / below the copy | 1080x520 / 1080x392 | 21:9 | avoid (see above) |
+
+Always compose for **portrait** (3:4) so the photo is generated for its frame: stack the story vertically (foreground / midground / background) instead of side-by-side wide scenes.
 
 Copy always sits on white, outside the photo, so the photo needs no empty area for text. Never ask for text, labels, logos, brand marks or watermarks in the image; ask for plain unbranded packaging.
 
