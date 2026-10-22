@@ -1,0 +1,86 @@
+{
+  "slug": "waste-collection-value-recovery-photo",
+  "title": "Recykal – From waste collection to value recovery (photo-base)",
+  "footer": "www.recykal.com",
+  "progress": true,
+  "caption": "From waste collection to value recovery: building a better pathway.\n\nPackaging can retain value beyond the product it carries. But littering, improper disposal and gaps in collection systems can prevent it from reaching recovery channels. Recovering that value requires a more organised collection system and a clear pathway to material recovery.\n\nA Deposit Refund Scheme (DRS) creates a structured return pathway. It uses a nominal refundable deposit to encourage the return of DRS-eligible empty packaging, helping channel it into organised collection systems, where it can move towards recycling.\n\nMaterial quality matters for recovery. How packaging is collected and handled affects its suitability for recycling, and contamination and poor handling can reduce material quality and limit the value that can ultimately be recovered.\n\nBuilding a better pathway means keeping material value in circulation. DRS helps strengthen the return and collection of eligible packaging, while effective sorting, processing and recycling help turn collected material into a usable resource.\n\nThe goal: help packaging's material value find its way back into the economy.\n\nFollow the pathway, slide by slide.",
+  "hashtags": [
+    "#CircularEconomy",
+    "#DepositRefundScheme",
+    "#DRS",
+    "#EPR",
+    "#Recycling",
+    "#Recykal"
+  ],
+  "slides": [
+    {
+      "heading": "FROM WASTE COLLECTION\nTO VALUE RECOVERY:\n**BUILDING A BETTER\nPATHWAY**",
+      "heading_size": 40,
+      "body_size": 24,
+      "text_width": 590,
+      "body": "Packaging can **retain value** beyond the product it carries. But littering, improper disposal and gaps in collection systems can\n**prevent it from reaching recovery channels.**",
+      "visual": {
+        "image": "images/slide-1.jpg",
+        "kind": "bg",
+        "zoom": 1.14,
+        "origin": "100% 100%",
+        "shift_x": 148,
+        "shift_y": -150
+      },
+      "callout": {
+        "style": "fill",
+        "icon": "arrow",
+        "text": "Recovering that value requires a more organised collection system and **a clear pathway to material recovery.**"
+      }
+    },
+    {
+      "heading": "A DEPOSIT REFUND\nSCHEME CREATES\n**A STRUCTURED\nRETURN PATHWAY.**",
+      "heading_size": 40,
+      "body_size": 24,
+      "text_width": 440,
+      "body": [
+        "A Deposit Refund Scheme (DRS) uses a **nominal refundable deposit** to encourage the return of DRS-eligible empty packaging.",
+        "This helps channel packaging into **organised collection systems**, where it can move towards recycling."
+      ],
+      "visual": {
+        "image": "images/slide-2.jpg",
+        "kind": "bg"
+      },
+      "veil_end": 64
+    },
+    {
+      "heading": "MATERIAL QUALITY\nMATTERS\n**FOR RECOVERY.**",
+      "heading_size": 40,
+      "body_size": 24,
+      "text_width": 400,
+      "body": [
+        "How packaging is collected and handled affects its **suitability for recycling.**",
+        "Contamination and poor handling can reduce **material quality** and limit the value that can ultimately be recovered."
+      ],
+      "visual": {
+        "image": "images/slide-3.jpg",
+        "kind": "bg"
+      },
+      "veil_end": 56
+    },
+    {
+      "heading": "BUILDING A BETTER\nPATHWAY MEANS\n**KEEPING MATERIAL\nVALUE IN\nCIRCULATION.**",
+      "heading_size": 40,
+      "body_size": 24,
+      "text_width": 430,
+      "body": "DRS helps strengthen the **return and collection** of eligible packaging. Effective sorting, processing and recycling help turn collected material into a **usable resource.**",
+      "visual": {
+        "image": "images/slide-4.jpg",
+        "kind": "bg",
+        "zoom": 1.12,
+        "origin": "100% 100%",
+        "shift_y": -120
+      },
+      "callout": {
+        "style": "fill",
+        "icon": "target",
+        "text": "The goal: help packaging's material value **find its way back into the economy.**"
+      }
+    }
+  ]
+}

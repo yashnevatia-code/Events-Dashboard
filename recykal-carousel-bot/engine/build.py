@@ -53,6 +53,9 @@ def visual_html(v):
         if v.get("position"): st.append(f'object-position:{v["position"]}')
         if v.get("zoom") or v.get("shift_x") or v.get("shift_y"):      # pan / zoom a full-bleed photo (kind "bg")
             st.append(f'transform:translate({v.get("shift_x", 0)}px,{v.get("shift_y", 0)}px) scale({v.get("zoom", 1)});transform-origin:{v.get("origin", "50% 50%")}')
+        if v.get("shift_y"):   # panned up: let the photo's bottom edge dissolve instead of ending hard
+            m = "linear-gradient(180deg,#000 0,#000 calc(100% - 120px),transparent 100%)"
+            st.append(f"-webkit-mask-image:{m};mask-image:{m}")
         pos = f' style="{";".join(st)}"' if st else ""
         return v.get("kind", "card"), f'<img src="{path.as_uri()}" alt=""{pos}>'
     return S.render(v)
@@ -66,7 +69,16 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
     hsize = s.get("heading_size")
     hcls = "h2" if layout == "split" else "h1"
     hstyle = f' style="font-size:{hsize}px"' if hsize else ""
-    bstyle = f' style="font-size:{s["body_size"]}px"' if s.get("body_size") else ""
+    bs = []
+    if s.get("body_size"): bs.append(f'font-size:{s["body_size"]}px')
+    if s.get("text_width"): bs.append(f'max-width:{s["text_width"]}px')       # bg-photo layout: keep copy clear of the photo subject
+    bstyle = f' style="{";".join(bs)}"' if bs else ""
+    sstyle = f' style="width:{s["text_width"]}px"' if s.get("text_width") else ""
+    vstyle = ""
+    if s.get("veil_end"):        # where the white fade behind the copy ends (% of width); narrower = more of the photo stays clear
+        e = float(s["veil_end"]); stops = [(0, 1), (.42 * e, .97), (.66 * e, .8), (.87 * e, .2), (e, 0)]
+        g = ",".join(f"rgba(255,255,255,{a}) {x:.0f}%" for x, a in stops)
+        vstyle = f' style="background:linear-gradient(90deg,{g}),linear-gradient(180deg,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 190px)"'
     heading = f'<h1 class="{hcls}"{hstyle}>{emph(s["heading"], "g")}</h1>' if s.get("heading") else ""
     body = ""
     if s.get("body"):
@@ -95,7 +107,7 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
         sty_s = f' style="top:{ph + 40}px"' if ph else ""
         main = f'<div class="illus"{sty_i}>{inner}</div><div class="stack"{sty_s}>{heading}{rule}{body}</div>'
     elif layout == "bgphoto":       # realistic full-bleed photo as the base layer, copy on a white veil, DRS green callout
-        main = f'<div class="bgimg">{inner}</div><div class="veil"></div><div class="stack">{heading}{rule}{body}</div>'
+        main = f'<div class="bgimg">{inner}</div><div class="veil"{vstyle}></div><div class="veil2"></div><div class="stack"{sstyle}>{heading}{rule}{body}</div>'
     elif layout == "journey":
         rule_j = '<div class="rule"></div>' if heading else ""
         main = f'<div class="stack">{heading}{rule_j}</div><div class="illus">{inner}</div>' + (f'<div class="jbody">{body}</div>' if body else "")
