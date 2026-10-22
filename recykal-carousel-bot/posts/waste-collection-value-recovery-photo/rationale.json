@@ -9,13 +9,13 @@
   "Photographic base, DRS brand system: the photography treatment follows the EPR posts; colours, type and footer stay DRS.",
   "All copy sits on a white fade over the photograph, on the left. The logo, headline and body never sit on the image itself.",
   "Each photograph was generated with its subject on the right and a bright, quiet area on the left, so the fade is soft and the subject is never washed out. Fade width and text width are set per slide.",
-  "Four different settings (street, supermarket entrance, collection centre, recycling plant) so no two slides repeat a scene. A light, shared colour grade ties them together.",
+  "Four different settings (street, supermarket entrance, collection centre, and a recycling-plant bench) so no two slides repeat a scene. A light, shared colour grade ties them together; slide 4 is the darkest because clear plastic needs a darker backdrop to stay visible.",
   "Strong text/image separation: black headline, green highlight phrases at the start of lines, body 24px, and the green call-out box is solid, so it is readable over any photo."
  ],
  "weak_spots": [
   "Photographs are AI-generated. They were checked for warped hands, objects and gibberish text, but a final human look at full size is sensible, especially slide 2 (hands, bottle, machine lettering) and slide 3 (gloves).",
   "Slide 2 shows a generic, unbranded reverse vending machine (RVM) with 'DRS' and 'Deposit Refund Scheme' lettering. It is one common type of return point and not any specific scheme's hardware; a DRS can also use manual return points.",
-  "The images illustrate stages. They do not show that any particular packaging is recycled. Collection (2), handling (3) and processing (4) are kept visually separate on purpose."
+  "The images illustrate stages. They do not show that any particular packaging is recycled into a bottle. The new bottle on slide 4 is generic and could be read as bottle-to-bottle recycling, which the copy does not claim; if that is a concern, swap it for another recycled-material product."
  ],
  "slides": [
   {
@@ -89,20 +89,24 @@
   },
   {
    "title": "Slide 4 – Building a better pathway keeps material value in circulation",
-   "says": "DRS helps strengthen the return and collection of eligible packaging. Effective sorting, processing and recycling help turn collected material into a usable resource. The goal is for material value to find its way back into the economy.",
+   "says": "DRS helps strengthen the return and collection of eligible packaging. Effective sorting, processing and recycling help turn collected material into a usable resource. The goal is for packaging's material value to find its way back into the economy.",
    "shows": [
-    "A gloved hand holds a metal scoop of clean, washed PET flakes in front of soft-focus recycling equipment.",
-    "This is the end of the pathway: material that has become a usable resource.",
-    "It is the lightest and cleanest image in the series, closing the narrative."
+    "Three stages on one bench, read left to right: a used, empty bottle that has been crushed by hand but is clean, as a consumer would return it; a clean mound of processed flakes; and a new, clear bottle standing behind them.",
+    "The used bottle is deliberately not dirty: packaging coming back through a DRS comes straight from the consumer.",
+    "A dark, softly blurred plant backdrop sits behind the objects so the clear plastic keeps its edges and highlights; it fades to white on the copy side."
    ],
    "icons": [
     [
-     "Clean flakes",
-     "Processed material, kept distinct from collection."
+     "Used bottle",
+     "Crushed, clean, with the same teal cap as the litter on slide 1, so the story comes full circle."
     ],
     [
-     "Soft-focus plant",
-     "Context without claiming a specific facility."
+     "Flakes",
+     "The processing step in the middle, so the 'new' bottle is not shown as the same bottle returning."
+    ],
+    [
+     "New bottle",
+     "Material value back in use. Kept plain and generic."
     ],
     [
      "Target icon",

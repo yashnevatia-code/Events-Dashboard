@@ -72,20 +72,21 @@
       "heading": "BUILDING A BETTER\nPATHWAY MEANS\n**KEEPING MATERIAL\nVALUE IN\nCIRCULATION.**",
       "heading_size": 40,
       "body_size": 24,
-      "text_width": 430,
+      "text_width": 400,
       "body": "DRS helps strengthen the **return and collection** of eligible packaging. Effective sorting, processing and recycling help turn collected material into a **usable resource.**",
       "visual": {
         "image": "images/slide-4.jpg",
         "kind": "bg",
-        "zoom": 1.12,
+        "zoom": 0.85,
         "origin": "100% 100%",
-        "shift_y": -120
+        "shift_y": -180
       },
       "callout": {
         "style": "fill",
         "icon": "target",
         "text": "The goal: help packaging's material value **find its way back into the economy.**"
-      }
+      },
+      "veil_end": 52
     }
   ]
 }
