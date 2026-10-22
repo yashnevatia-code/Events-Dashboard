@@ -76,7 +76,7 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
     sstyle = f' style="width:{s["text_width"]}px"' if s.get("text_width") else ""
     vstyle = ""
     if s.get("veil_end"):        # where the white fade behind the copy ends (% of width); narrower = more of the photo stays clear
-        e = float(s["veil_end"]); stops = [(0, 1), (.42 * e, .97), (.66 * e, .8), (.87 * e, .2), (e, 0)]
+        e = float(s["veil_end"]); stops = [(0, 1), (.2 * e, .99), (.4 * e, .95), (.55 * e, .82), (.7 * e, .55), (.85 * e, .24), (e, 0)]
         g = ",".join(f"rgba(255,255,255,{a}) {x:.0f}%" for x, a in stops)
         vstyle = f' style="background:linear-gradient(90deg,{g}),linear-gradient(180deg,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 190px)"'
     heading = f'<h1 class="{hcls}"{hstyle}>{emph(s["heading"], "g")}</h1>' if s.get("heading") else ""

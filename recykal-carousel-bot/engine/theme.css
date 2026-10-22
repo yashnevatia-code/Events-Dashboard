@@ -100,15 +100,22 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .layout-bgphoto .bgimg{ position:absolute; inset:0; z-index:0; background:#fff }
 .layout-bgphoto .bgimg img{ width:100%; height:100%; object-fit:cover; display:block }
 .layout-bgphoto .veil{ position:absolute; inset:0; z-index:1;
-  background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.97) 32%,rgba(255,255,255,.8) 50%,rgba(255,255,255,.2) 66%,rgba(255,255,255,0) 76%),
+  background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.99) 15%,rgba(255,255,255,.95) 30%,rgba(255,255,255,.82) 42%,rgba(255,255,255,.55) 53%,rgba(255,255,255,.24) 65%,rgba(255,255,255,0) 76%),
              linear-gradient(180deg,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 190px) }
 .layout-bgphoto .veil2{ position:absolute; inset:0; z-index:1; pointer-events:none;     /* footer fade, only under the copy side so the photo subject is not washed out */
-  background:linear-gradient(0deg,#fff 0,#fff 60px,rgba(255,255,255,.7) 100px,rgba(255,255,255,0) 170px);
-  -webkit-mask-image:linear-gradient(90deg,#000 0,#000 50%,transparent 74%); mask-image:linear-gradient(90deg,#000 0,#000 50%,transparent 74%) }
-.layout-bgphoto .dots{ background:#fff; padding:9px 12px; border-radius:16px }
+  background:linear-gradient(0deg,#fff 0,#fff 52px,rgba(255,255,255,.88) 78px,rgba(255,255,255,.5) 110px,rgba(255,255,255,.18) 145px,rgba(255,255,255,0) 175px) }
+
 .layout-bgphoto .logo, .layout-bgphoto .stack, .layout-bgphoto .box, .layout-bgphoto .url, .layout-bgphoto .next, .layout-bgphoto .dots, .layout-bgphoto .bar{ z-index:3 }
 .layout-bgphoto .stack{ top:190px; right:auto; width:600px }
 .layout-bgphoto .h1{ font-size:44px; line-height:1.2 }
 .layout-bgphoto .body{ font-size:26px; max-width:600px }
 .layout-bgphoto .box{ top:782px }
 .layout-bgphoto .body{ text-wrap:pretty }
+
+/* finish: depth on the callout, tighter headline, calmer body rhythm, slightly stronger rule */
+.layout-bgphoto .h1{ letter-spacing:-.3px; line-height:1.17 }
+.layout-bgphoto .body{ line-height:1.5; color:#101010 }
+.layout-bgphoto .rule{ width:76px; height:5px; margin:30px 0 28px }
+.layout-bgphoto .box.fill{ box-shadow:0 14px 34px rgba(4,151,105,.28), 0 2px 6px rgba(0,0,0,.08) }
+.layout-bgphoto .logo{ filter:drop-shadow(0 0 14px rgba(255,255,255,.9)) }
+.layout-bgphoto .next{ box-shadow:0 8px 20px rgba(4,151,105,.3) }
