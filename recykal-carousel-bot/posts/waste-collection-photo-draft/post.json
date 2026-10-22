@@ -1,0 +1,31 @@
+{
+  "slug": "waste-collection-photo-draft",
+  "draft": true,
+  "title": "Recykal – From waste collection to value recovery (photo-base draft)",
+  "footer": "www.recykal.com",
+  "slides": [
+    {
+      "heading": "FROM WASTE COLLECTION\nTO VALUE RECOVERY:\n**BUILDING A BETTER\nPATHWAY**",
+      "body": "Packaging can **retain value** beyond the product it carries. But littering, improper disposal and gaps in collection systems can\n**prevent it from reaching recovery channels.**",
+      "visual": {
+        "image": "images/slide-1.jpg",
+        "kind": "bg",
+        "position": "50% 50%",
+        "zoom": 1.14,
+        "origin": "100% 100%",
+        "shift_y": -150,
+        "shift_x": 148
+      },
+      "callout": {
+        "style": "fill",
+        "icon": "arrow",
+        "text": "Recovering that value requires a more organised collection system and **a clear pathway to material recovery.**"
+      },
+      "heading_size": 44,
+      "body_size": 25
+    }
+  ],
+  "caption": "",
+  "hashtags": [],
+  "progress": true
+}

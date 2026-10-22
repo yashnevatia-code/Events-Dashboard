@@ -94,3 +94,17 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .layout-etop .box{ top:792px }
 .layout-ebottom .illus{ left:0; top:556px; width:1080px; height:392px; border-radius:28px; background:#e9eeeb }
 .layout-ebottom .stack{ top:165px }
+
+/* photo-base layout (kind "bg"): realistic full-bleed photo, white veil behind the copy (logo, heading, body stay on white),
+   DRS green callout and the standard DRS footer. Photographic treatment follows the EPR posts; the brand system stays DRS. */
+.layout-bgphoto .bgimg{ position:absolute; inset:0; z-index:0; background:#fff }
+.layout-bgphoto .bgimg img{ width:100%; height:100%; object-fit:cover; display:block; -webkit-mask-image:linear-gradient(180deg,#000 0,#000 calc(100% - 120px),transparent 100%); mask-image:linear-gradient(180deg,#000 0,#000 calc(100% - 120px),transparent 100%) }
+.layout-bgphoto .veil{ position:absolute; inset:0; z-index:1;
+  background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.97) 32%,rgba(255,255,255,.8) 50%,rgba(255,255,255,.2) 66%,rgba(255,255,255,0) 76%),
+             linear-gradient(0deg,#fff 0,#fff 60px,rgba(255,255,255,.7) 100px,rgba(255,255,255,0) 170px),
+             linear-gradient(180deg,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 190px) }
+.layout-bgphoto .logo, .layout-bgphoto .stack, .layout-bgphoto .box, .layout-bgphoto .url, .layout-bgphoto .next, .layout-bgphoto .dots, .layout-bgphoto .bar{ z-index:3 }
+.layout-bgphoto .stack{ top:190px; right:auto; width:600px }
+.layout-bgphoto .h1{ font-size:44px; line-height:1.2 }
+.layout-bgphoto .body{ font-size:26px; max-width:600px }
+.layout-bgphoto .box{ top:782px }

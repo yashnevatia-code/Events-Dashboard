@@ -49,7 +49,11 @@ def visual_html(v):
             path = (v.get("_base") or pathlib.Path.cwd()) / path
         if not path.exists():
             raise FileNotFoundError(f"image not found: {path}")
-        pos = f' style="object-position:{v["position"]}"' if v.get("position") else ""
+        st = []
+        if v.get("position"): st.append(f'object-position:{v["position"]}')
+        if v.get("zoom") or v.get("shift_x") or v.get("shift_y"):      # pan / zoom a full-bleed photo (kind "bg")
+            st.append(f'transform:translate({v.get("shift_x", 0)}px,{v.get("shift_y", 0)}px) scale({v.get("zoom", 1)});transform-origin:{v.get("origin", "50% 50%")}')
+        pos = f' style="{";".join(st)}"' if st else ""
         return v.get("kind", "card"), f'<img src="{path.as_uri()}" alt=""{pos}>'
     return S.render(v)
 
@@ -58,7 +62,7 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
     kind, inner = (None, "")
     if v:
         kind, inner = visual_html(v)
-    layout = {"tall": "cover", "card": "split", "col": "split", "wide": "statement", "band": "journey", "top": "etop", "bottom": "ebottom", None: "text"}[kind]
+    layout = {"tall": "cover", "card": "split", "col": "split", "wide": "statement", "band": "journey", "top": "etop", "bottom": "ebottom", "bg": "bgphoto", None: "text"}[kind]
     hsize = s.get("heading_size")
     hcls = "h2" if layout == "split" else "h1"
     hstyle = f' style="font-size:{hsize}px"' if hsize else ""
@@ -90,6 +94,8 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
         sty_i = f' style="height:{ph}px"' if ph else ""
         sty_s = f' style="top:{ph + 40}px"' if ph else ""
         main = f'<div class="illus"{sty_i}>{inner}</div><div class="stack"{sty_s}>{heading}{rule}{body}</div>'
+    elif layout == "bgphoto":       # realistic full-bleed photo as the base layer, copy on a white veil, DRS green callout
+        main = f'<div class="bgimg">{inner}</div><div class="veil"></div><div class="stack">{heading}{rule}{body}</div>'
     elif layout == "journey":
         rule_j = '<div class="rule"></div>' if heading else ""
         main = f'<div class="stack">{heading}{rule_j}</div><div class="illus">{inner}</div>' + (f'<div class="jbody">{body}</div>' if body else "")
@@ -197,7 +203,7 @@ def validate(spec):
     errs = []
     if not spec.get("slug"): errs.append("missing 'slug'")
     sl = spec.get("slides") or []
-    if not (2 <= len(sl) <= 12): errs.append(f"need 2-12 slides, got {len(sl)}")
+    if not ((1 if spec.get("draft") else 2) <= len(sl) <= 12): errs.append(f"need 2-12 slides, got {len(sl)}")
     for i, s in enumerate(sl, 1):
         if not (s.get("heading") or s.get("body") or s.get("bullets")): errs.append(f"slide {i}: no text")
         if s.get("callout") and not s["callout"].get("text"): errs.append(f"slide {i}: callout needs text")
