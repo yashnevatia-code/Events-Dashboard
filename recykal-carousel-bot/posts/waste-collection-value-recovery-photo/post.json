@@ -62,7 +62,11 @@
         "kind": "bg"
       },
       "veil_end": 56,
-      "heading_width": 720
+      "heading_width": 720,
+      "veil_low": 0.2,
+      "veil_low_from": 60,
+      "veil_low_to": 78,
+      "ground": 1
     },
     {
       "heading": "BUILDING A BETTER\nPATHWAY MEANS\n**KEEPING MATERIAL\nVALUE IN\nCIRCULATION.**",

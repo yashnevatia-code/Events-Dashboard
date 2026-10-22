@@ -77,11 +77,16 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
     if s.get("text_width"): bs.append(f'max-width:{s["text_width"]}px')       # bg-photo layout: keep copy clear of the photo subject
     bstyle = f' style="{";".join(bs)}"' if bs else ""
     sstyle = f' style="width:{s["text_width"]}px"' if s.get("text_width") else ""
+    ground = f'<div class="ground" style="opacity:{s["ground"]}"></div>' if s.get("ground") else ""     # soft floor shadow where the photo is blown out
     vstyle = ""
+    if s.get("veil_low") is not None:    # ease the white fade off below the copy so more of the photo shows in the lower-left
+        m = f"linear-gradient(180deg,#000 0,#000 {s.get('veil_low_from', 62)}%,rgba(0,0,0,{s['veil_low']}) {s.get('veil_low_to', 82)}%)"
+        vstyle = f' style="-webkit-mask-image:{m};mask-image:{m}"'
     if s.get("veil_end"):        # where the white fade behind the copy ends (% of width); narrower = more of the photo stays clear
         e = float(s["veil_end"]); stops = [(0, 1), (.2 * e, .99), (.4 * e, .95), (.55 * e, .82), (.7 * e, .55), (.85 * e, .24), (e, 0)]
         g = ",".join(f"rgba(255,255,255,{a}) {x:.0f}%" for x, a in stops)
-        vstyle = f' style="background:linear-gradient(90deg,{g}),linear-gradient(180deg,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 190px)"'
+        extra = vstyle[8:-1] + ";" if vstyle else ""
+        vstyle = f' style="{extra}background:linear-gradient(90deg,{g}),linear-gradient(180deg,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 190px)"'
     heading = f'<h1 class="{hcls}"{hstyle}>{emph(s["heading"], "g")}</h1>' if s.get("heading") else ""
     body = ""
     if s.get("body"):
@@ -110,7 +115,7 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
         sty_s = f' style="top:{ph + 40}px"' if ph else ""
         main = f'<div class="illus"{sty_i}>{inner}</div><div class="stack"{sty_s}>{heading}{rule}{body}</div>'
     elif layout == "bgphoto":       # realistic full-bleed photo as the base layer, copy on a white veil, DRS green callout
-        main = f'<div class="bgimg">{inner}</div><div class="veil"{vstyle}></div><div class="veil2"></div><div class="stack"{sstyle}>{heading}{rule}{body}</div>'
+        main = f'<div class="bgimg">{inner}</div><div class="veil"{vstyle}></div><div class="veil2"></div>{ground}<div class="stack"{sstyle}>{heading}{rule}{body}</div>'
     elif layout == "journey":
         rule_j = '<div class="rule"></div>' if heading else ""
         main = f'<div class="stack">{heading}{rule_j}</div><div class="illus">{inner}</div>' + (f'<div class="jbody">{body}</div>' if body else "")
