@@ -1,0 +1,92 @@
+{
+  "slug": "waste-collection-to-value-recovery",
+  "title": "From waste collection to value recovery: why each slide looks the way it does",
+  "overview": [
+    "One idea runs through the carousel: the word \"pathway\" in the copy becomes a literal road. It enters every slide at the same height it left the previous one, so swiping feels like travelling along the pathway, and what happens to the road tells the story."
+  ],
+  "rules": [
+    "Solid green means in the system and working. Faded grey, dashed, with a x means lost or at risk.",
+    "The road's own condition is the plot: faint and unfinished (slide 1), solid and structured (slide 2), split by quality (slide 3), closed into a ring (slide 4).",
+    "Round nodes on the road are stages. A filled green node is the stage the slide is about; outlined nodes are the other stages.",
+    "The dots in the footer show where you are in the journey. Direction arrows on the road show the direction of travel.",
+    "Only words from your copy appear inside the images (the slide 4 bracket labels). No numbers or claims were added."
+  ],
+  "weak_spots": [
+    "The machine icon is a stylised return unit; on its own it can read as a generic kiosk. It relies on the slide text (slide 2) or the bracket label (slide 4) to be understood.",
+    "The bottle outline and the bin on slide 1 are symbols without labels and depend on the body text to be read correctly.",
+    "The funnel for sorting is a convention, not a literal picture of a sorting line."
+  ],
+  "slides": [
+    {
+      "title": "Slide 1 – Value leaks when the pathway is not organised",
+      "says": "Packaging can retain value beyond the product it carries, but littering, improper disposal and gaps in collection stop it reaching recovery channels. The fix is a more organised collection system and a clear pathway to material recovery.",
+      "shows": [
+        "The road is thin, pale and dashed: there is no structure yet.",
+        "It starts with a bottle, the packaging that carries the value.",
+        "Three branches drop off the road to faded, dashed nodes marked with a x: value leaking out, one branch per cause named in the copy.",
+        "At the far right a faded recycling symbol is the recovery channel the packaging does not reach.",
+        "The footer dots start at the first position: the beginning of the journey."
+      ],
+      "icons": [
+        ["Bottle (outline)", "Littering: packaging dropped outside any system."],
+        ["Bin", "Improper disposal."],
+        ["Truck (faded)", "Gaps in collection systems: collection exists but is not reaching the packaging."],
+        ["x badge", "Lost: not reaching recovery."],
+        ["Recycling symbol (faded)", "The recovery channel that is not being reached."],
+        ["Arrow in green box", "Moving forward: closing the gaps."]
+      ]
+    },
+    {
+      "title": "Slide 2 – A Deposit Refund Scheme turns scattered returns into one structured route",
+      "says": "A DRS uses a nominal refundable deposit to encourage return of eligible empty packaging, channelling it into organised collection systems where it can move towards recycling.",
+      "shows": [
+        "Three bottles, each on its own lane: individual, unorganised returns.",
+        "The lanes merge into one road: scattered returns being channelled into a single route. This is the picture of \"structured\".",
+        "The road is now solid green: the pathway has structure.",
+        "One large filled node, the machine, is the gate every bottle passes through. Truck and recycling follow it."
+      ],
+      "icons": [
+        ["Rupee coin on each bottle", "The nominal refundable deposit attached to each package."],
+        ["Machine (large, filled green)", "The return point. The biggest and only filled node because it is the DRS stage."],
+        ["Truck", "Organised collection systems."],
+        ["Recycling symbol", "\"Where it can move towards recycling\"."],
+        ["Arrow discs on the road", "Direction of travel."]
+      ]
+    },
+    {
+      "title": "Slide 3 – Collection quality decides how much value is recovered",
+      "says": "How packaging is collected and handled affects its suitability for recycling. Contamination and poor handling reduce material quality and limit the value that can ultimately be recovered.",
+      "shows": [
+        "After the bottle the road splits into two lanes. It is the same bottle either way: the only difference is how it is handled.",
+        "Top lane (tick): solid green, recycling, then a large rupee coin, and it rejoins the main road to continue to slide 4.",
+        "Bottom lane (x): faded and dashed, recycling, then a tiny faded coin, then a dead end.",
+        "Coin size is the message: value recovered."
+      ],
+      "icons": [
+        ["Tick badge", "Well handled."],
+        ["x badge", "Contaminated or poorly handled."],
+        ["Recycling symbol, solid vs faded", "Recycling happens in both lanes but works less well on poor material."],
+        ["Rupee coin, large vs small", "The value that can ultimately be recovered."],
+        ["x at the end of the lower lane", "Material that does not make it back into the system."]
+      ]
+    },
+    {
+      "title": "Slide 4 – Every stage keeps material value in circulation",
+      "says": "A better pathway keeps material value in circulation. DRS strengthens the return and collection of eligible packaging, then sorting, processing and recycling turn it into a usable resource. The goal is for the value to find its way back into the economy.",
+      "shows": [
+        "Five stages along the same road, grouped by two brackets: green \"DRS · RETURN & COLLECTION\" (what DRS strengthens) and grey \"SORTING · PROCESSING · RECYCLING\" (what happens next).",
+        "The road ends in a ring, not a dead end: circulation.",
+        "The first stage is filled green because it is the part DRS strengthens."
+      ],
+      "icons": [
+        ["Machine (filled green)", "The DRS return stage."],
+        ["Truck", "Collection."],
+        ["Funnel", "Sorting: separating and filtering material."],
+        ["Factory", "Processing."],
+        ["Recycling symbol", "Recycling."],
+        ["Globe inside a ring with arrows", "The economy, and the loop that keeps value circulating."],
+        ["Target in green box", "The goal."]
+      ]
+    }
+  ]
+}
