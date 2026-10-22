@@ -119,3 +119,6 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .layout-bgphoto .box.fill{ box-shadow:0 14px 34px rgba(4,151,105,.28), 0 2px 6px rgba(0,0,0,.08) }
 .layout-bgphoto .logo{ filter:drop-shadow(0 0 14px rgba(255,255,255,.9)) }
 .layout-bgphoto .next{ box-shadow:0 8px 20px rgba(4,151,105,.3) }
+
+/* bg-photo slides without a callout box: centre the copy in the space between logo and footer (y 150-930) */
+.layout-bgphoto.nobox .stack{ top:150px; height:780px; display:flex; flex-direction:column; justify-content:center }

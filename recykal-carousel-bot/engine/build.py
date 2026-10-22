@@ -92,7 +92,7 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
     if kind == "col" and callout:
         print(f"  note: slide {i}: tall-card scenes ('{(v or {}).get('scene')}') have no callout box; callout skipped", file=sys.stderr)
         callout = ""
-    nobox = " nobox" if layout == "split" and not callout else ""
+    nobox = " nobox" if layout in ("split", "bgphoto") and not callout else ""
     nobox += " span" if s.get("heading_span") and layout == "split" else ""
     if layout in ("cover", "split"):
         top = " top" if s.get("align") == "top" and layout == "split" else ""
