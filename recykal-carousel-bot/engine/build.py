@@ -49,7 +49,8 @@ def visual_html(v):
             path = (v.get("_base") or pathlib.Path.cwd()) / path
         if not path.exists():
             raise FileNotFoundError(f"image not found: {path}")
-        return v.get("kind", "card"), f'<img src="{path.as_uri()}" alt="">'
+        pos = f' style="object-position:{v["position"]}"' if v.get("position") else ""
+        return v.get("kind", "card"), f'<img src="{path.as_uri()}" alt=""{pos}>'
     return S.render(v)
 
 def render_slide(i, n, s, footer, logo_uri, progress=False):
@@ -57,7 +58,7 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
     kind, inner = (None, "")
     if v:
         kind, inner = visual_html(v)
-    layout = {"tall": "cover", "card": "split", "col": "split", "wide": "statement", "band": "journey", None: "text"}[kind]
+    layout = {"tall": "cover", "card": "split", "col": "split", "wide": "statement", "band": "journey", "top": "etop", "bottom": "ebottom", None: "text"}[kind]
     hsize = s.get("heading_size")
     hcls = "h2" if layout == "split" else "h1"
     hstyle = f' style="font-size:{hsize}px"' if hsize else ""
@@ -84,6 +85,8 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
             main = f'<div class="hd">{heading}<div class="rule"></div></div><div class="col">{body}</div><div class="illus">{inner}</div>'
         else:
             main = f'<div class="col{top}">{heading}{rule}{body}</div><div class="illus">{inner}</div>'
+    elif layout in ("etop", "ebottom"):       # photo-led editorial layouts: full-bleed photo, copy on white above/below it
+        main = f'<div class="illus">{inner}</div><div class="stack">{heading}{rule}{body}</div>'
     elif layout == "journey":
         rule_j = '<div class="rule"></div>' if heading else ""
         main = f'<div class="stack">{heading}{rule_j}</div><div class="illus">{inner}</div>' + (f'<div class="jbody">{body}</div>' if body else "")
@@ -119,8 +122,10 @@ QA_JS = r"""
       const hj=s.querySelector('.h1'); if(hj && hj.scrollWidth>hj.clientWidth+1) v.push({k:'text-wide',px:1});
       return v;
     }
-    const limit = box ? rect(box,s).t-22 : 930;
-    if(col){ const c=rect(col,s);
+    const limit = s.dataset.layout==='ebottom' ? 548 : (box ? rect(box,s).t-22 : 930);
+    const fixed = col && getComputedStyle(col).display==='flex';
+    if(fixed){ const ch=[...col.children]; if(ch.length){ const H=ch[ch.length-1].getBoundingClientRect().bottom-ch[0].getBoundingClientRect().top; if(H>col.clientHeight+1) v.push({k:'text-bottom',px:Math.round(H-col.clientHeight)}); } }
+    else if(col){ const c=rect(col,s);
       if(c.b>limit) v.push({k:'text-bottom',px:Math.round(c.b-limit)});
       if(c.t<150) v.push({k:'text-top',px:Math.round(150-c.t)}); }
     const hh=s.querySelector('.h1,.h2'); if(hh && hh.scrollWidth>hh.clientWidth+1) v.push({k:'text-wide',px:hh.scrollWidth-hh.clientWidth});

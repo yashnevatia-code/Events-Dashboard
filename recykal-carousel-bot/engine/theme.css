@@ -28,13 +28,13 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .body + .bul{ margin-top:18px }
 
 .col{ position:absolute; left:var(--mx); top:190px; width:510px }
-.layout-cover .col{ top:520px; transform:translateY(-50%); width:450px }
-.layout-split .col{ top:458px; transform:translateY(-50%) }      /* centred on the 190-726 panel */
-.layout-split.nobox .col{ top:540px }                            /* centred on the taller 190-890 panel */
-.layout-split .col.top{ top:190px; transform:none }
+.layout-cover .col{ top:150px; height:740px; width:450px; display:flex; flex-direction:column; justify-content:center }
+.layout-split .col{ top:150px; height:616px; display:flex; flex-direction:column; justify-content:center }      /* centred on the 190-726 panel (centre y=458) */
+.layout-split.nobox .col{ top:150px; height:780px }                /* centred on the taller 190-890 panel (centre y=540) */
+.layout-split .col.top{ top:190px; height:auto; display:block }
 .layout-cover .body{ font-size:24px }
 .stack{ position:absolute; left:var(--mx); right:var(--mx); top:180px }
-.layout-text .stack{ top:450px; transform:translateY(-50%) }
+.layout-text .stack{ top:150px; height:600px; display:flex; flex-direction:column; justify-content:center }
 .layout-text .body, .layout-text .bul{ font-size:28px }
 .layout-statement .illus{ position:relative; width:940px; height:280px; margin-top:0 }
 
@@ -64,7 +64,7 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .layout-split.span .hd{ position:absolute; left:var(--mx); top:150px; width:940px }
 .layout-split.span .hd .h2{ font-size:44px; line-height:1.2 }
 .layout-split.span .hd .rule{ margin:24px 0 0 }
-.layout-split.span .col{ top:528px; width:470px }
+.layout-split.span .col{ top:330px; height:396px; width:470px }
 .layout-split.span .illus{ left:560px; top:330px; width:450px; height:396px }
 
 /* journey layout: heading on top, a full-bleed road band in the middle, copy + callout underneath */
@@ -83,3 +83,14 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .dots span.on{ width:28px; border-radius:5px; background:var(--drs) }
 
 .jbody .body{ text-wrap:pretty }
+
+/* photo-led editorial layouts: kind "top" = full-bleed photo above the copy, kind "bottom" = copy above a full-bleed photo */
+.layout-etop .illus{ left:0; top:0; width:1080px; height:520px; border-radius:0 0 28px 28px; background:#e9eeeb }
+.layout-etop .logo{ z-index:5; left:56px; top:38px; width:190px; padding:14px; box-sizing:content-box; background:#fff; border-radius:18px }
+.layout-etop .stack{ top:560px }
+.layout-etop .h1, .layout-ebottom .h1{ font-size:44px }
+.layout-etop .rule, .layout-ebottom .rule{ margin:22px 0 22px }
+.layout-etop .body, .layout-ebottom .body{ font-size:24px }
+.layout-etop .box{ top:792px }
+.layout-ebottom .illus{ left:0; top:560px; width:1080px; height:410px; border-radius:28px; background:#e9eeeb }
+.layout-ebottom .stack{ top:165px }

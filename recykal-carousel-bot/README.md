@@ -43,7 +43,11 @@ See `.claude/skills/recykal-carousel/SKILL.md` for the full spec reference and s
 * New scene: add a function to `engine/scenes.py` with `@scene("tall"|"card"|"wide")`; it is picked up automatically.
 * Tweak the look (spacing, sizes): `engine/theme.css`. Change it once and every post built afterwards follows. Rebuild old posts with `--all`.
 
+## Photography-led carousels
+
+The default visual direction is realistic photography generated with OpenArt (see `.claude/skills/recykal-carousel/SKILL.md`, section *Visual direction*). Image slots: `kind` top / bottom / tall / card (`visual.image`, optional `visual.position`). Vector scenes are still available for when they are asked for. Downloading generated images needs `cdn.openart.ai` to be reachable.
+
 ## Known limits
 
-* Visuals are vector illustrations, not photos. A real photo can be dropped in per slide with `"visual": {"image": "path.jpg", "kind": "card"}`.
+* Vector scenes are available but photography is the default; see above.
 * The logo is the official vector SVG in `engine/assets/logo.svg`; replace that file if the brand logo changes.

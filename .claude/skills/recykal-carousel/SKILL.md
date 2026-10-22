@@ -52,6 +52,40 @@ Slide items are objects (`bottle can glass machine coin crate bag kiosk`, full c
 In a `{"icon": "machine"}` entry the line icon is used; a bare `"machine"` gives the illustration; `{"obj": "machine"}` forces the illustration.
 Icons not in the catalogue? Add one to `engine/library.py` (48x48 grid centred on 0,0, stroke-only), re-render the catalogue and check it. Same for a new object or scene. Keep new work in the same language: thin green outlines, mint halos, circular nodes, chevron arrows.
 
+## Visual direction: realistic photography (standing instruction from the user)
+
+Carousels are **photography-led**. Do not use the flat vector scenes (gap, fork, ring, journey bands...) unless the user explicitly asks for them. If a photographic image does not work for a slide, try a different photographic composition first.
+
+**Principle: the visual is derived from the meaning of the slide, not the other way round.**
+
+Workflow for every carousel:
+1. Read ALL the copy. Write the core message of each slide in one line, and how the slides connect.
+2. Write an art direction that is shared by the whole carousel (light, colour grade, lens, setting, how people appear) and a shot list: one specific, different, realistic image per slide. No repeated subject, composition or metaphor; the images should progress with the narrative (e.g. problem -> return -> quality -> recovery). Save it as `posts/<slug>/art-direction.md` and show it to the user before generating if they have not approved a shot list.
+3. Generate each image with OpenArt (`openart_model_form_get` then `openart_generate_image`; `nano-banana-2-1` text2image, 2K, about 30 credits per image). Aspect ratio per layout below. Poll with `openart_creation_get`.
+4. Download the image into `posts/<slug>/images/slide-N.png` (the URL is in the result; it is on `cdn.openart.ai`), then **look at it** (Read the file). Check: realism (no AI look, no warped hands/objects, no gibberish text), contextual accuracy, composition for the layout, consistency with the other images. Re-prompt (max 2-3 attempts) if generic, artificial, repetitive, misleading or disconnected from the copy.
+5. Put it in the spec as `"visual": {"image": "images/slide-N.png", "kind": "top|bottom|tall|card", "position": "50% 40%"}` and build as usual.
+
+Photo layouts (`kind`) and what to generate:
+
+| kind | layout | image area | generate | note |
+|---|---|---|---|---|
+| `top` | photo full-bleed above the copy | 1080x520 | 21:9 | keep the subject in the central 80%; the top-left corner sits behind the logo plate, keep it calm |
+| `bottom` | copy above, photo full-bleed below | 1080x410 | 21:9 | subject centred; best for wide, side-by-side comparisons |
+| `tall` | text left, tall photo right (cover style, no callout) | 460x660 | 3:4 | good for people / single-subject portraits |
+| `card` | text left, photo right, callout box below | 390x536 | 3:4 | smaller: use a simple, bold subject |
+
+Copy always sits on white, outside the photo, so the photo needs no empty area for text. Never ask for text, labels, logos, brand marks or watermarks in the image; ask for plain unbranded packaging.
+
+Prompt shape: `Documentary editorial photograph, <specific scene and action>, <Indian urban/retail/industrial setting>, soft natural daylight, 35mm lens, shallow depth of field, natural muted colour grade, realistic skin, hands and materials, unbranded plain packaging, no text, no logos, no watermark.` Keep the same style sentence in every prompt of a carousel so the series matches.
+
+Accuracy rules (the content explains DRS and material recovery):
+* Show only processes, equipment and activities that fit the slide. Do not invent scheme-specific infrastructure or imply a process is universal; prefer generic return points / collection counters over branded kiosks.
+* Never suggest that returning or collecting packaging means it has been recycled. Keep collection, sorting, processing and recycling visually distinct.
+* Show contamination or littering realistically and modestly (a handful of items, not apocalyptic piles).
+* No misleading depictions of how a Deposit Refund Scheme works.
+
+If the images cannot be downloaded (`cdn.openart.ai` blocked by the environment: curl returns 403), STOP. Tell the user the host must be allowed (cloud environment menu in the title bar > Edit > Network access > add `cdn.openart.ai` under Allowed domains, or a broader level). Do not generate images you cannot review, and do not silently fall back to vector scenes or mocked images.
+
 ## Spec format
 
 ```json
