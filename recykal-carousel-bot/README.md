@@ -50,4 +50,4 @@ The default visual direction is realistic photography generated with OpenArt (se
 ## Known limits
 
 * Vector scenes are available but photography is the default; see above.
-* The logo is the official vector SVG in `engine/assets/logo.svg`; replace that file if the brand logo changes.
+* The logo block, `www.recykal.com` footer and bottom bar come from the official Recykal social template, `engine/assets/template.svg` (1080x1080, 50 px margin). The engine inlines it on every slide; replace that file if the template changes. `engine/assets/logo.svg` is no longer used by the slides.

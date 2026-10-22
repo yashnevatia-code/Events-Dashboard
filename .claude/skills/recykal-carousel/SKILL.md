@@ -66,7 +66,21 @@ Workflow for every carousel:
 5. Harmonise the series with `python3 engine/photo_prepare.py in.png posts/<slug>/images/slide-N.jpg --sat 0.8-0.92 [--warm -6..6]`: a mild grade only (mute oversaturated or colour-cast images so all slides share one palette) plus a sensible JPEG size. Keep raw downloads in `posts/<slug>/images/_candidates/` (git-ignored).
 6. Put it in the spec as `"visual": {"image": "images/slide-N.jpg", "kind": "tall|card|col", "position": "50% 40%"}` (`position` sets the crop focus)` and build as usual.
 
-Photo layouts (`kind`) and what to generate. **Use contained, rounded photos beside the copy, as in the reference carousels (text left, photo right, nothing running edge to edge, logo always on white). The user disliked full-bleed horizontal photos ("top"/"bottom") and a logo sitting on a photo, so do not use `top` or `bottom` unless explicitly asked.**
+**Current preferred photo treatment: the photo-base layout (`"kind": "bg"`), see the next section.** The contained rounded photos below (`tall`/`card`/`col`) still work and are used by older posts. Do not use `top`/`bottom` (full-bleed strips above/below the copy; the user disliked them).
+
+### Photo-base layout (`kind: "bg"`)
+
+A realistic square photo is the base layer of the slide (the look of Recykal's EPR posts), but the brand system stays DRS: DRS green `#049769`, uppercase Poppins headings, solid green callout, the template footer. Do NOT use the EPR blue, a contact-details CTA bar or title-case headings.
+
+* Copy sits on a white fade (the "veil") on the left; logo, headline and body are never on the image itself. The photo subject sits in the right ~45-55%.
+* Generate each image **1:1, 2K**, with the subject confined to the right half and a very bright, hazy, near-white, empty left side (ask for it in the prompt). Keep subjects out of y 782-914 on slides with a callout (the box covers it): pan the photo up with `shift_y`.
+* Clear plastic needs a **darker backdrop** behind it or it disappears into the white fade; transparent objects against a pale background are invisible.
+* Slide fields: `"visual": {"image": "images/slide-N.jpg", "kind": "bg", "zoom": 1.14, "origin": "100% 100%", "shift_x": 148, "shift_y": -150}` (pan/zoom the photo; a panned photo's bottom edge fades out automatically); `"text_width": 410` (copy column width, keep it clear of the subject), `"heading_width": 720` (let a short two-line headline run wider than the body), `"veil_end": 56` (where the white fade ends, % of width; smaller keeps more of the photo clear), `"veil_low": 0.2` (+ optional `veil_low_from`/`veil_low_to`) eases the fade off below the copy, `"ground": 1` adds a soft floor shadow where the photo is blown out.
+* Spacing standard (agreed with the user): headline starts at y=202 on every slide (68 px under the logo block), heading to rule 30 px, rule to body 28 px, gap between body paragraphs 26 px, headline 40-44 px, body 24-26 px. Text left edge = 50 px = the logo's left edge. Callout box top y=782. Check with a measurement, not by eye.
+* Headlines: prefer 2-4 lines; do not split a short headline over three lines if two fit (reading flow). Green highlight phrases start at the beginning of a line (use `\n`).
+* Callout text can be broken with `\n` so the underlined phrase starts a line.
+
+### Contained photos (`tall` / `card` / `col`)
 
 | kind | layout | image area | generate | note |
 |---|---|---|---|---|
@@ -116,12 +130,12 @@ If the images cannot be downloaded (`cdn.openart.ai` blocked by the environment:
 * Highlight with `**...**`. If the user already marks emphasis, keep it. If not, highlight one key phrase per heading and the phrase that carries the idea in the body/callout. Don't highlight whole sentences.
 * `callout` style: `line` (white box, green outline) for a reflective point; `fill` (solid green) for the payoff/CTA. Tall (cover) slides have no callout.
 * Wide-scene slides take heading + callout only (body text ignored). Put the sentence in the callout. Long copy can be split between `body` and `callout` without changing a word; tell the user which sentence went where.
-* Last slide has no next-arrow automatically. Footer URL is the same on every slide.
+* Last slide has no next-arrow automatically. The logo block, the `www.recykal.com` footer and the bottom bar come from the official Recykal social template (`engine/assets/template.svg`, applied to every slide automatically; the `footer` field is no longer used).
 * The engine auto-shrinks text to fit (heading min 28/40 px, body 19 px, callout 22 px) and reports what it did.
 
 ## Brand rules (from the Recykal social guidelines)
 
-Canvas 1080x1080, safe margins 70 px. Poppins only (max 3 weights). Core palette green/black/white; DRS green `#049769` is the accent for highlights, icons, arrows, outlines and CTA boxes. No extra colours, no shadows or effects on the logo, no photos with heavy filters. White space is part of the design: do not fill it just to fill it. Same system, different layouts.
+Canvas 1080x1080, **follow the Recykal social template (`engine/assets/template.svg`): logo block top-left at x=50 y=50 (229 px wide), `www.recykal.com` footer at x=50 (about y 987-1012), black 227x10 bar at x=50 on the bottom edge. Content margin is 50 px, aligned with the logo. All posts, old and new, use it.** Poppins only (max 3 weights). Core palette green/black/white; DRS green `#049769` is the accent for highlights, icons, arrows, outlines and CTA boxes. No extra colours, no shadows or effects on the logo, no photos with heavy filters. White space is part of the design: do not fill it just to fill it. Same system, different layouts.
 
 ## Never
 

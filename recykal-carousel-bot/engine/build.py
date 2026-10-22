@@ -20,6 +20,17 @@ ASSETS = ROOT / "assets"
 ARROW = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 
 
+def _template_chrome():
+    """Logo block, www.recykal.com footer and bottom bar, taken verbatim from the Recykal social template (assets/template.svg)."""
+    svg = (ASSETS / "template.svg").read_text()
+    inner = svg.split('<rect class="cls-1" y="0" width="1080" height="1080"/>')[1].rsplit("</svg>", 1)[0]
+    end_rect = inner.index("/>", inner.index('<rect x="158.62"')) + 2          # footer url paths + bar come first, the logo group last
+    inner = inner[:end_rect] + inner[end_rect:].replace("<g>", '<g class="logo-g">', 1)
+    return f'<svg class="chrome" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" aria-label="Recykal – Sustainable Circularity, www.recykal.com">{inner}</svg>'
+
+TEMPLATE_CHROME = _template_chrome()
+
+
 # ───────────────────────────── text helpers ─────────────────────────────
 def esc(s): return html.escape(str(s), quote=False)
 
@@ -130,9 +141,8 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
     if progress:
         dots = '<div class="dots' + (" last" if last else "") + '">' + "".join(f'<span class="{"on" if k + 1 == i else ""}"></span>' for k in range(n)) + "</div>"
     return (f'<section class="slide layout-{layout}{nobox}" data-layout="{layout}">'
-            f'<img class="logo" src="{logo_uri}" alt="Recykal – Sustainable Circularity">'
-            f'{main}{callout}<div class="url">{esc(footer)}</div>{dots}'
-            f'{"" if last else f"<div class=next>{ARROW}</div>"}<div class="bar"></div></section>')
+            f'{main}{callout}{dots}'
+            f'{"" if last else f"<div class=next>{ARROW}</div>"}{TEMPLATE_CHROME}</section>')
 
 
 QA_JS = r"""
