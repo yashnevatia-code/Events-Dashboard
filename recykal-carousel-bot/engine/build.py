@@ -245,6 +245,10 @@ def build(spec_path):
         print(f"  slide {r['slide']}: {r['layout']:<9} heading {r['heading_px']}px/{r['heading_lines']}L  body {r['body_px']}px  callout {r['callout_px']}px/{r['callout_lines']}L{flag}")
         for pr in [x for x in r["problems"] if x["k"] != "box-lines"]: print(f"      ! {pr['k']} still over by {pr['px']}px after auto-shrink: shorten the copy")
     if len(spec.get("hashtags", [])) > 8: print("  note: more than 8 hashtags; LinkedIn favours 3-5")
+    rat = spec_path.parent / "rationale.json"
+    if rat.exists():       # keep the design-rationale PDF in step with the slides
+        subprocess.run([sys.executable, "-I", str(ROOT / "rationale.py"), str(rat)], check=True, capture_output=True)
+        print(f"  + design rationale PDF")
     return out
 
 
