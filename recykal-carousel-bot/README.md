@@ -51,3 +51,7 @@ The default visual direction is realistic photography generated with OpenArt (se
 
 * Vector scenes are available but photography is the default; see above.
 * The logo block, `www.recykal.com` footer and bottom bar come from the official Recykal social template, `engine/assets/template.svg` (1080x1080, 50 px margin). The engine inlines it on every slide; replace that file if the template changes. `engine/assets/logo.svg` is no longer used by the slides.
+
+## PDF export notes
+
+Photo slides (`"kind": "bg"`) are flattened for the PDF: the photo, white fade, ground shadow and callout shadow are rendered by Chromium at 2x into one 2160 px JPEG per slide, and only the text, logo block and callout stay vector on top. CSS masks, filters and blurred shadows otherwise turn into stacks of transparency groups that browser PDF viewers (Edge, Chrome) draw slowly and at low resolution, which showed up as soft, pixelated or blank pages. Check with `pdfimages -list <pdf>`: one 2160 px image per photo page and no `smask` entries is correct. Needs Pillow.

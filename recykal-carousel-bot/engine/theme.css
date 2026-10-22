@@ -129,3 +129,8 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 /* Recykal social template chrome: logo block (top-left), www.recykal.com footer and the 227x10 bar, all on the 50px margin */
 .chrome{ position:absolute; left:0; top:0; width:1080px; height:1080px; z-index:6; pointer-events:none }
 .layout-etop .logo-g{ filter:drop-shadow(0 0 14px rgba(255,255,255,.9)) }
+
+/* flattened photo backgrounds (PDF export): a single plain image, no masks/filters/blurs for the viewer to rasterise */
+.flat{ position:absolute; left:0; top:0; width:1080px; height:1080px; z-index:0; display:block }
+.slide.flatbg .box{ box-shadow:none }
+.slide.flatbg .logo-g{ filter:none }

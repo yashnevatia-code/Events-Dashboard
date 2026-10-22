@@ -9,6 +9,10 @@ Outputs (dist/<slug>/):  <slug>-linkedin-carousel.pdf  slide-N.png (1080x1080)  
 Needs: Chromium (PLAYWRIGHT_BROWSERS_PATH or CHROME env var) and poppler-utils (pdftoppm).
 """
 import argparse, glob, html, json, os, pathlib, re, shutil, subprocess, sys
+try:
+    from PIL import Image
+except ImportError:      # only needed to flatten photo slides for the PDF
+    Image = None
 
 ROOT = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
@@ -71,7 +75,7 @@ def visual_html(v):
         return v.get("kind", "card"), f'<img src="{path.as_uri()}" alt=""{pos}>'
     return S.render(v)
 
-def render_slide(i, n, s, footer, logo_uri, progress=False):
+def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
     v = s.get("visual")
     kind, inner = (None, "")
     if v:
@@ -126,7 +130,8 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
         sty_s = f' style="top:{ph + 40}px"' if ph else ""
         main = f'<div class="illus"{sty_i}>{inner}</div><div class="stack"{sty_s}>{heading}{rule}{body}</div>'
     elif layout == "bgphoto":       # realistic full-bleed photo as the base layer, copy on a white veil, DRS green callout
-        main = f'<div class="bgimg">{inner}</div><div class="veil"{vstyle}></div><div class="veil2"></div>{ground}<div class="stack"{sstyle}>{heading}{rule}{body}</div>'
+        backdrop = f'<img class="flat" src="{flat}" alt="">' if flat else f'<div class="bgimg">{inner}</div><div class="veil"{vstyle}></div><div class="veil2"></div>{ground}'
+        main = f'{backdrop}<div class="stack"{sstyle}>{heading}{rule}{body}</div>'
     elif layout == "journey":
         rule_j = '<div class="rule"></div>' if heading else ""
         main = f'<div class="stack">{heading}{rule_j}</div><div class="illus">{inner}</div>' + (f'<div class="jbody">{body}</div>' if body else "")
@@ -140,7 +145,7 @@ def render_slide(i, n, s, footer, logo_uri, progress=False):
     dots = ""
     if progress:
         dots = '<div class="dots' + (" last" if last else "") + '">' + "".join(f'<span class="{"on" if k + 1 == i else ""}"></span>' for k in range(n)) + "</div>"
-    return (f'<section class="slide layout-{layout}{nobox}" data-layout="{layout}">'
+    return (f'<section class="slide layout-{layout}{nobox}{" flatbg" if flat else ""}" data-layout="{layout}">'
             f'{main}{callout}{dots}'
             f'{"" if last else f"<div class=next>{ARROW}</div>"}{TEMPLATE_CHROME}</section>')
 
@@ -198,7 +203,8 @@ QA_JS = r"""
 """
 
 
-def page_html(spec):
+def page_html(spec, only=None, flats=None, prep=False):
+    """only: render a single slide; flats: {slide index: flattened background uri}; prep: backgrounds only (text hidden), used to make the flats."""
     fonts_css = (ASSETS / "fonts.css").read_text().replace("url('fonts/", f"url('{(ASSETS / 'fonts').as_uri()}/")
     css = (ROOT / "theme.css").read_text()
     logo = (ASSETS / "logo.svg").as_uri()
@@ -208,9 +214,13 @@ def page_html(spec):
     for sl in slides:
         if sl.get("visual") and "image" in sl["visual"]:
             sl["visual"]["_base"] = base
-    body = "\n".join(render_slide(i + 1, len(slides), s, footer, logo, bool(spec.get("progress"))) for i, s in enumerate(slides))
+    flats = flats or {}
+    body = "\n".join(render_slide(i + 1, len(slides), s, footer, logo, bool(spec.get("progress")), flats.get(i))
+                     for i, s in enumerate(slides) if only is None or i == only)
+    extra = "<style>.stack,.next,.dots,.chrome,.box *{visibility:hidden!important}</style>" if prep else ""
+    script = "" if prep else f"<script>{QA_JS}</script>"
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>{esc(spec.get("title", spec["slug"]))}</title>'
-            f'<style>{fonts_css}\n{css}</style></head><body>{L.DEFS}\n{body}\n<script>{QA_JS}</script></body></html>')
+            f'<style>{fonts_css}\n{css}</style>{extra}</head><body>{L.DEFS}\n{body}\n{script}</body></html>')
 
 
 # ───────────────────────────── chrome / pdf / png ─────────────────────────────
@@ -264,9 +274,29 @@ def build(spec_path):
     qa = json.loads(html.unescape(m.group(1))) if m else []
     (out / "qa.json").write_text(json.dumps(qa, indent=1))
 
+    # Photo slides: bake photo + white fade + shadows into ONE flat 2x image per slide, keep text/logo as vector on top.
+    # CSS masks, filters and blurred shadows otherwise become stacks of transparency groups in the PDF, which browser viewers
+    # render slowly and at low resolution (soft/pixelated pages, pages that do not load).
+    flats = {}
+    bg_idx = [i for i, sl in enumerate(spec["slides"]) if (sl.get("visual") or {}).get("kind") == "bg"]
+    flat_dir = out / "_flat"
+    if bg_idx:
+        if Image is None: sys.exit("Pillow is needed to flatten photo slides: pip install pillow")
+        flat_dir.mkdir()
+        for i in bg_idx:
+            hp = flat_dir / f"s{i + 1}.html"; hp.write_text(page_html(spec, only=i, prep=True))
+            png = flat_dir / f"s{i + 1}.png"
+            chrome("--force-device-scale-factor=2", "--window-size=1080,1400", f"--screenshot={png}", hp.as_uri())   # taller window: headless viewport is shorter than --window-size
+            if not png.exists(): sys.exit(f"could not flatten slide {i + 1}")
+            jpg = flat_dir / f"s{i + 1}.jpg"
+            Image.open(png).convert("RGB").crop((0, 0, 2160, 2160)).save(jpg, "JPEG", quality=93, optimize=True, subsampling=0)
+            flats[i] = jpg.as_uri()
+    pdf_page = out / "_pdf.html"; pdf_page.write_text(page_html(spec, flats=flats))
+
     pdf = out / f"{slug}-linkedin-carousel.pdf"
-    chrome("--no-pdf-header-footer", f"--print-to-pdf={pdf}", uri)
+    chrome("--no-pdf-header-footer", f"--print-to-pdf={pdf}", pdf_page.as_uri())
     if not pdf.exists(): sys.exit("PDF export failed")
+    pdf_page.unlink(missing_ok=True); shutil.rmtree(flat_dir, ignore_errors=True)
     subprocess.run(["pdftoppm", "-r", "96", "-png", str(pdf), str(out / "slide")], check=True)
     for p in out.glob("slide-*.png"):                       # slide-1.png (not slide-01.png)
         n = int(p.stem.split("-")[1]); p.rename(out / f"slide-{n}.png")
