@@ -35,13 +35,17 @@ The first post, `posts/drs-knowing-vs-doing/post.json`, is the reference for ton
 | the same circle inside a card slide (e.g. "circle broken without X", "X restored") | `ring_card` | card | `nodes` (3-6), `center` |
 | a journey / route through 3-5 stages ("pathway", "return route") | `pathway` | col | `nodes` (3-5) |
 | two outcomes side by side (done well vs done badly; before / after) | `compare` | col | `good`, `bad` (3 items each; the `bad` column is shown faded with an x) |
+| **journey band** (full-width road that continues from slide to slide; best for a story told as a pathway): start of the journey with leaks / gaps | `trail` | band | `start`, `leaks` (3), `end` |
+| journey band: things converging onto a structured route | `converge` | band | `nodes` (3-4), `object` |
+| journey band: the route splits into done well vs done badly | `lanes` | band | `start`, `good`, `bad` (2 items each) |
+| journey band: the finished circuit that loops back | `circuit` | band | `nodes` (3-5), `end` |
 | from A to B with enablers in between | `bridge` | wide | `from`, `to`, `stops` (2-4) |
 | the closed circle as a wide oval ("the loop is complete") | `track` | wide | `nodes` (3-6), `center` |
 | a left-to-right sequence | `flow` | wide | `steps` (3-5), optional `labels` |
 | no visual needed (list, quote, closing) | omit `visual` | none | use `bullets` / big `heading` |
 | the user supplies a real photo | `{"image": "path.jpg", "kind": "card"}` | card/tall | |
 
-Panel decides the layout: **tall** = cover-style (text centred on the left, no callout), **card** = text + panel + callout box, **col** = tall card with no callout box (text centred beside a 390x700 panel), **wide** = heading, wide panel, callout box.
+Panel decides the layout: **tall** = cover-style (text centred on the left, no callout), **card** = text + panel + callout box, **band** = *journey layout* (heading on top, full-bleed road in the middle, copy under it, optional callout; the road enters and leaves every slide at the same height, so use band scenes on consecutive slides and the carousel reads as one continuous pathway), **col** = tall card with no callout box (text centred beside a 390x700 panel), **wide** = heading, wide panel, callout box.
 A closing/bold line from the user's copy usually becomes the `fill` callout box; use `col` scenes when a slide has two paragraphs and nothing to put in a box.
 Line breaks: put `\n` in a heading to control where it breaks. Break so the green phrase starts at the beginning of a line (a colour change mid-line looks accidental).
 Slide items are objects (`bottle can glass machine coin crate bag kiosk`, full colour) or icons (`python3 engine/build.py --library` renders the catalogue to `dist/_library.png`; look at it).
@@ -70,6 +74,7 @@ Icons not in the catalogue? Add one to `engine/library.py` (48x48 grid centred o
 }
 ```
 
+* Variety: if a previous post used card/callout layouts on every slide, change the composition (journey band, tall cover, wide statement) rather than repeating it. Keep one visual idea running through the whole carousel. Add `"progress": true` at the top of the spec for slide-progress dots in the footer.
 * Text next to a card panel is vertically centred on the panel (like cover slides). Add `"align": "top"` to a slide to pin it to the top instead.
 * Highlight with `**...**`. If the user already marks emphasis, keep it. If not, highlight one key phrase per heading and the phrase that carries the idea in the body/callout. Don't highlight whole sentences.
 * `callout` style: `line` (white box, green outline) for a reflective point; `fill` (solid green) for the payoff/CTA. Tall (cover) slides have no callout.

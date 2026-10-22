@@ -29,7 +29,7 @@ Fonts and the logo are vendored in `engine/assets`, so builds work offline and l
 posts/<slug>/post.json      content + visuals for each slide (the only thing you write)
 engine/build.py             spec -> HTML -> PDF + PNGs + caption, with layout QA and text auto-fit
 engine/theme.css            the design system (type scale, colours, layouts, footer)
-engine/scenes.py            illustration compositions: gap, hero, fork, loop, steps, stat, ring, ring_card, pathway, compare, bridge, flow, track
+engine/scenes.py            illustration compositions: gap, hero, fork, loop, steps, stat, ring, ring_card, pathway, compare, bridge, flow, track, trail, converge, lanes, circuit (journey bands)
 engine/library.py           objects (bottle, can, machine, coin ...) and line icons
 engine/assets/              Poppins + logo
 ```

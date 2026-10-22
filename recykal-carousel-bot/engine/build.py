@@ -52,12 +52,12 @@ def visual_html(v):
         return v.get("kind", "card"), f'<img src="{path.as_uri()}" alt="">'
     return S.render(v)
 
-def render_slide(i, n, s, footer, logo_uri):
+def render_slide(i, n, s, footer, logo_uri, progress=False):
     v = s.get("visual")
     kind, inner = (None, "")
     if v:
         kind, inner = visual_html(v)
-    layout = {"tall": "cover", "card": "split", "col": "split", "wide": "statement", None: "text"}[kind]
+    layout = {"tall": "cover", "card": "split", "col": "split", "wide": "statement", "band": "journey", None: "text"}[kind]
     hsize = s.get("heading_size")
     hcls = "h2" if layout == "split" else "h1"
     hstyle = f' style="font-size:{hsize}px"' if hsize else ""
@@ -84,6 +84,9 @@ def render_slide(i, n, s, footer, logo_uri):
             main = f'<div class="hd">{heading}<div class="rule"></div></div><div class="col">{body}</div><div class="illus">{inner}</div>'
         else:
             main = f'<div class="col{top}">{heading}{rule}{body}</div><div class="illus">{inner}</div>'
+    elif layout == "journey":
+        rule_j = '<div class="rule"></div>' if heading else ""
+        main = f'<div class="stack">{heading}{rule_j}</div><div class="illus">{inner}</div>' + (f'<div class="jbody">{body}</div>' if body else "")
     elif layout == "statement":
         main = f'<div class="stack">{heading}{rule}<div class="illus">{inner}</div></div>'
         if body:  # statement slides carry heading + visual (+ callout); body text would not fit
@@ -91,9 +94,12 @@ def render_slide(i, n, s, footer, logo_uri):
     else:
         main = f'<div class="stack">{heading}{rule}{body}</div>'
     last = i == n
+    dots = ""
+    if progress:
+        dots = '<div class="dots' + (" last" if last else "") + '">' + "".join(f'<span class="{"on" if k + 1 == i else ""}"></span>' for k in range(n)) + "</div>"
     return (f'<section class="slide layout-{layout}{nobox}" data-layout="{layout}">'
             f'<img class="logo" src="{logo_uri}" alt="Recykal – Sustainable Circularity">'
-            f'{main}{callout}<div class="url">{esc(footer)}</div>'
+            f'{main}{callout}<div class="url">{esc(footer)}</div>{dots}'
             f'{"" if last else f"<div class=next>{ARROW}</div>"}<div class="bar"></div></section>')
 
 
@@ -104,6 +110,15 @@ QA_JS = r"""
   function viol(s){
     const v=[], col=s.querySelector('.col,.stack'), box=s.querySelector('.box'), hd=s.querySelector('.hd');
     if(hd){ const b=rect(hd,s).b; if(b>318) v.push({k:'text-bottom',px:Math.round(b-318)}); }
+    if(s.dataset.layout==='journey'){
+      const st=s.querySelector('.stack'), jb=s.querySelector('.jbody');
+      if(st){ const b=rect(st,s).b; if(b>372) v.push({k:'text-bottom',px:Math.round(b-372)}); }
+      if(jb){ const lim=box?rect(box,s).t-16:930, b=rect(jb,s).b; if(b>lim) v.push({k:'text-bottom',px:Math.round(b-lim)}); }
+      if(box){ const p=box.querySelector('p'), ph=p.getBoundingClientRect().height, lh=parseFloat(getComputedStyle(p).lineHeight);
+        if(ph>box.clientHeight-24) v.push({k:'box-text',px:1}); else if(ph/lh>2.5 && fs(p)>22) v.push({k:'box-lines',px:0}); }
+      const hj=s.querySelector('.h1'); if(hj && hj.scrollWidth>hj.clientWidth+1) v.push({k:'text-wide',px:1});
+      return v;
+    }
     const limit = box ? rect(box,s).t-22 : 930;
     if(col){ const c=rect(col,s);
       if(c.b>limit) v.push({k:'text-bottom',px:Math.round(c.b-limit)});
@@ -149,7 +164,7 @@ def page_html(spec):
     for sl in slides:
         if sl.get("visual") and "image" in sl["visual"]:
             sl["visual"]["_base"] = base
-    body = "\n".join(render_slide(i + 1, len(slides), s, footer, logo) for i, s in enumerate(slides))
+    body = "\n".join(render_slide(i + 1, len(slides), s, footer, logo, bool(spec.get("progress"))) for i, s in enumerate(slides))
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>{esc(spec.get("title", spec["slug"]))}</title>'
             f'<style>{fonts_css}\n{css}</style></head><body>{L.DEFS}\n{body}\n<script>{QA_JS}</script></body></html>')
 

@@ -2,92 +2,92 @@
   "slug": "waste-collection-to-value-recovery",
   "title": "Recykal – From waste collection to value recovery",
   "footer": "www.recykal.com",
+  "progress": true,
   "slides": [
     {
-      "heading": "FROM WASTE COLLECTION\nTO VALUE RECOVERY:\n**BUILDING A BETTER\nPATHWAY**",
-      "body": [
-        "Packaging may have value beyond the product it carries. But recovering that value **depends on what happens after consumption.**",
-        "Littering, improper disposal and gaps in collection systems can prevent packaging waste from entering organised recovery channels, putting its **material value at risk.**"
-      ],
+      "heading": "FROM WASTE COLLECTION\nTO VALUE RECOVERY:\n**BUILDING A BETTER PATHWAY**",
+      "heading_size": 42,
+      "body": "Packaging can **retain value** beyond the product it carries. But littering, improper disposal and gaps in collection systems can **prevent it from reaching recovery channels.**",
       "visual": {
-        "scene": "fork",
-        "object": "bottle",
-        "options": [
+        "scene": "trail",
+        "start": "bottle",
+        "leaks": [
+          {
+            "icon": "bottle"
+          },
           {
             "icon": "bin"
           },
           {
-            "icon": "landfill",
-            "state": "lost"
-          },
-          {
-            "icon": "truck",
-            "state": "lost"
-          },
-          {
-            "icon": "recycle",
-            "state": "go"
+            "icon": "truck"
           }
-        ]
+        ],
+        "end": "recycle"
       },
       "callout": {
         "style": "fill",
         "icon": "arrow",
-        "text": "Addressing these gaps requires a more organised collection system and **a clearer pathway towards material recovery.**"
+        "text": "Recovering that value requires a more organised collection system and **a clear pathway to material recovery.**"
       }
     },
     {
-      "heading": "A DEPOSIT REFUND\nSCHEME CREATES A\n**STRUCTURED RETURN\nPATHWAY.**",
+      "heading": "A DEPOSIT REFUND SCHEME CREATES\n**A STRUCTURED RETURN PATHWAY.**",
+      "heading_size": 40,
       "body": [
-        "A Deposit Refund Scheme (DRS) links DRS-eligible empty packaging to a **nominal refundable deposit**, encouraging its return through designated collection channels.",
-        "By creating a **defined route** for packaging after consumption, DRS can help capture material that might otherwise be missed by conventional collection systems."
+        "A Deposit Refund Scheme (DRS) uses a **nominal refundable deposit** to encourage the return of DRS-eligible empty packaging.",
+        "This helps channel packaging into **organised collection systems**, where it can move towards recycling."
       ],
       "visual": {
-        "scene": "pathway",
+        "scene": "converge",
         "nodes": [
-          "bottle",
           {
             "icon": "rupee"
           },
-          "machine",
+          {
+            "icon": "machine",
+            "state": "go"
+          },
           {
             "icon": "truck"
+          },
+          {
+            "icon": "recycle"
           }
         ]
-      }
+      },
+      "body_size": 28
     },
     {
-      "heading": "THE QUALITY OF COLLECTION SHAPES THE **POTENTIAL FOR RECOVERY.**",
+      "heading": "MATERIAL QUALITY MATTERS\n**FOR RECOVERY.**",
+      "heading_size": 52,
       "body": [
-        "How packaging is collected and handled can affect its **suitability for recycling.**",
-        "Contamination and poor handling can reduce **material quality**, affecting how effectively it can be recycled and the value that can ultimately be recovered."
+        "How packaging is collected and handled affects its **suitability for recycling.**",
+        "Contamination and poor handling can reduce **material quality** and limit the value that can ultimately be recovered."
       ],
       "visual": {
-        "scene": "compare",
+        "scene": "lanes",
+        "start": "bottle",
         "good": [
-          "bottle",
           {
             "icon": "recycle"
           },
           "coin"
         ],
         "bad": [
-          "bottle",
           {
             "icon": "recycle"
           },
           "coin"
         ]
-      }
+      },
+      "body_size": 28
     },
     {
-      "heading": "BUILDING A BETTER PATHWAY MEANS **KEEPING MATERIAL VALUE IN CIRCULATION.**",
-      "body": [
-        "From capturing discarded packaging to preparing it for recycling, every stage contributes to the **recovery journey.**",
-        "DRS can strengthen the **return and collection stage**, while effective sorting, processing and recycling help turn that collected material into a usable resource."
-      ],
+      "heading": "BUILDING A BETTER PATHWAY MEANS\n**KEEPING MATERIAL VALUE**\n**IN CIRCULATION.**",
+      "heading_size": 42,
+      "body": "DRS helps strengthen the **return and collection** of eligible packaging. Effective sorting, processing and recycling help turn collected material into a **usable resource.**",
       "visual": {
-        "scene": "ring_card",
+        "scene": "circuit",
         "nodes": [
           {
             "icon": "machine",
@@ -104,21 +104,21 @@
           },
           {
             "icon": "recycle"
-          },
-          {
-            "icon": "rupee"
           }
         ],
-        "center": "globe"
+        "end": {
+          "icon": "globe",
+          "state": "go"
+        }
       },
       "callout": {
         "style": "fill",
         "icon": "target",
-        "text": "The goal is not simply to collect packaging, but to help its **material value find a way back into the economy.**"
+        "text": "The goal: help packaging's material value **find its way back into the economy.**"
       }
     }
   ],
-  "caption": "From waste collection to value recovery: building a better pathway.\n\nPackaging may have value beyond the product it carries. But recovering that value depends on what happens after consumption. Littering, improper disposal and gaps in collection systems can prevent packaging waste from entering organised recovery channels, putting its material value at risk.\n\nA Deposit Refund Scheme (DRS) creates a structured return pathway. It links DRS-eligible empty packaging to a nominal refundable deposit, encouraging its return through designated collection channels, and by creating a defined route after consumption it can help capture material that might otherwise be missed by conventional collection systems.\n\nThe quality of collection also shapes the potential for recovery. Contamination and poor handling can reduce material quality, affecting how effectively it can be recycled and the value that can ultimately be recovered.\n\nFrom capturing discarded packaging to preparing it for recycling, every stage contributes to the recovery journey. DRS can strengthen the return and collection stage, while effective sorting, processing and recycling help turn that collected material into a usable resource.\n\nThe goal is not simply to collect packaging, but to help its material value find a way back into the economy.\n\nSwipe through the pathway, step by step.",
+  "caption": "From waste collection to value recovery: building a better pathway.\n\nPackaging can retain value beyond the product it carries. But littering, improper disposal and gaps in collection systems can prevent it from reaching recovery channels. Recovering that value requires a more organised collection system and a clear pathway to material recovery.\n\nA Deposit Refund Scheme (DRS) creates a structured return pathway. It uses a nominal refundable deposit to encourage the return of DRS-eligible empty packaging, helping channel it into organised collection systems, where it can move towards recycling.\n\nMaterial quality matters for recovery. How packaging is collected and handled affects its suitability for recycling, and contamination and poor handling can reduce material quality and limit the value that can ultimately be recovered.\n\nBuilding a better pathway means keeping material value in circulation. DRS helps strengthen the return and collection of eligible packaging, while effective sorting, processing and recycling help turn collected material into a usable resource.\n\nThe goal: help packaging's material value find its way back into the economy.\n\nFollow the pathway, slide by slide.",
   "hashtags": [
     "#CircularEconomy",
     "#DepositRefundScheme",

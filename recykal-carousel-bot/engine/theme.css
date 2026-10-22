@@ -66,3 +66,20 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .layout-split.span .hd .rule{ margin:24px 0 0 }
 .layout-split.span .col{ top:528px; width:470px }
 .layout-split.span .illus{ left:560px; top:330px; width:450px; height:396px }
+
+/* journey layout: heading on top, a full-bleed road band in the middle, copy + callout underneath */
+.layout-journey .stack{ top:165px }
+.layout-journey .h1{ font-size:44px }
+.layout-journey .rule{ margin:26px 0 0 }
+.layout-journey .illus{ position:absolute; left:0; top:346px; width:1080px; height:280px; background:none; border-radius:0; overflow:visible }
+.layout-journey .illus svg{ overflow:visible }
+.jbody{ position:absolute; left:var(--mx); top:640px; width:940px }
+.jbody .body{ font-size:24px }
+.layout-journey .box{ top:790px }
+/* footer progress dots (spec: "progress": true) */
+.dots{ position:absolute; right:150px; bottom:57px; display:flex; gap:9px; align-items:center }
+.dots.last{ right:var(--mx) }
+.dots span{ width:10px; height:10px; border-radius:50%; background:#cfe0d8 }
+.dots span.on{ width:28px; border-radius:5px; background:var(--drs) }
+
+.jbody .body{ text-wrap:pretty }

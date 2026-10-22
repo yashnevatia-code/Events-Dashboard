@@ -5,6 +5,8 @@
   card  390x536   split-style slide   (text left, illustration right, callout box below)
   wide  940x280   statement slide     (heading on top, wide illustration, callout box below)
   col   390x700   tall card, no callout box (text left, tall illustration right, nothing below)
+  band  1080x280  full-bleed strip (journey layout): a road that enters/leaves every slide at the same height, so a
+                  carousel reads as one continuous pathway. Heading above it, copy and callout below it.
 
 Scenes only describe *what* is shown. Which one to use is decided by the idea of the slide:
 
@@ -23,9 +25,9 @@ Scenes only describe *what* is shown. Which one to use is decided by the idea of
 """
 import math
 import library as L
-from library import G, MINT, GREY, GREY_L, halo, shadow, chevron, node, fit, icon, pt_on_circle
+from library import G, MINT, GREY, GREY_L, halo, shadow, chevron, node, fit, icon, pt_on_circle, is_object
 
-KINDS = {"tall": (460, 660), "card": (390, 536), "wide": (940, 280), "col": (390, 700)}
+KINDS = {"tall": (460, 660), "card": (390, 536), "wide": (940, 280), "col": (390, 700), "band": (1080, 280)}
 SCENES = {}
 
 
@@ -379,6 +381,129 @@ def compare(p):
             b.append(node(x, y, r, it))
         b.append(_check_badge(x + r * .78, ys[0] - r * .78, 15) if ok else _x_badge(x + r * .78, ys[0] - r * .78, 15))
     return wrap("col", "".join(b))
+
+
+# ───────────────────── journey bands: one pathway running across the whole carousel ─────────────────────
+BW = 1080
+
+def _y(x):
+    """height of the road at x (identical on every slide, so the road continues across slide edges)."""
+    return 140 + 40 * math.sin(2 * math.pi * x / BW)
+
+
+def _ang(x):
+    return math.degrees(math.atan2((_y(x + 1) - _y(x - 1)) / 2, 1))
+
+
+def _poly(x0, x1, step=6, first="M"):
+    xs = list(range(int(x0), int(x1), step)) + [x1]
+    return "".join(f"{first if i == 0 else 'L'}{x:.0f} {_y(x):.1f}" for i, x in enumerate(xs))
+
+
+def _road_d(d, style="solid", w=34):
+    track, dash = ("#CFE8DC", G) if style == "solid" else ("#EDF3EF", GREY_L)
+    return (f'<path d="{d}" fill="none" stroke="{track}" stroke-width="{w}" stroke-linecap="butt" stroke-linejoin="round"/>'
+            f'<path d="{d}" fill="none" stroke="{dash}" stroke-width="3" stroke-dasharray="10 12" stroke-linecap="round" stroke-linejoin="round"/>')
+
+
+def _road(style="solid", x0=-30, x1=1110):
+    return _road_d(_poly(x0, x1), style)
+
+
+def _on_road(x, kind="solid", it=None, r=36):
+    return node(x, _y(x), r, it)
+
+
+def _road_chevron(x, color=G):
+    return chevron(x, _y(x), _ang(x), 14, color)
+
+
+@scene("band")
+def trail(p):
+    """The road at the start of a journey: faint and unfinished, with leaks off to the side (each leak is an item)."""
+    start = p.get("start", "bottle")
+    leaks = [_item(x) for x in (p.get("leaks") or ["bottle", "bin", "truck"])][:3]
+    end = _item(p.get("end", "recycle"))
+    b = [_road("faint")]
+    for x, side, it in zip((330, 560, 790), (-1, 1, 1), leaks):
+        ry, ny = _y(x), (50 if side < 0 else 232)
+        y1, y2 = ry + side * 20, ny - side * 36
+        b.append(f'<path d="M{x} {y1:.1f}V{y2:.1f}" stroke="{GREY_L}" stroke-width="3.5" stroke-dasharray="2 9" stroke-linecap="round"/>')
+        it = dict(it); it.setdefault("state", "lost")
+        b.append(node(x, ny, 34, it))
+        b.append(_x_badge(x + 27, ny - 27, 11))
+    b.append(shadow(90, _y(90) + 18, 28))
+    b.append(fit(start, 52, _y(90) - 104, 76, 124))
+    b.append(_road_chevron(190, GREY_L))
+    n = dict(end); n["state"] = "lost"
+    b.append(node(985, _y(985), 40, n))
+    return wrap("band", "".join(b))
+
+
+@scene("band")
+def converge(p):
+    """Scattered items are drawn onto one solid road that runs through the given stages (3-4 nodes)."""
+    nodes = [_item(x) for x in (p.get("nodes") or [{"icon": "rupee"}, {"icon": "machine", "state": "go"}, {"icon": "truck"}, {"icon": "recycle"}])]
+    n = len(nodes)
+    xs = {3: [380, 640, 920], 4: [330, 545, 760, 965]}[n]
+    radii = [50 if it.get("state") == "go" else 36 for it in nodes]
+    x1, y1 = xs[0] - radii[0], _y(xs[0])
+    b = [_road("solid")]
+    for (bx, by, rot) in ((58, 46, -14), (112, 212, 10), (214, 36, 8)):
+        b.append(f'<path d="M{bx} {by + 6}C{bx + 70} {by + 6} {x1 - 70} {y1:.1f} {x1:.1f} {y1:.1f}" fill="none" stroke="{G}" stroke-width="3.2" stroke-dasharray="2 9" stroke-linecap="round"/>')
+        b.append(f'<g transform="rotate({rot} {bx} {by})">{fit(p.get("object", "bottle"), bx - 24, by - 46, 48, 92, align="center")}</g>')
+    for i in range(n - 1):
+        mid = (xs[i] + radii[i] + xs[i + 1] - radii[i + 1]) / 2
+        b.append(_road_chevron(mid))
+    for x, r, it in zip(xs, radii, nodes):
+        b.append(node(x, _y(x), r, it))
+    return wrap("band", "".join(b))
+
+
+@scene("band")
+def lanes(p):
+    """The road splits in two: handled well (top, green, big result) vs handled badly (bottom, faded, small result)."""
+    start = p.get("start", "bottle")
+    good = [_item(x) for x in (p.get("good") or [{"icon": "recycle"}, "coin"])]
+    bad = [_item(x) for x in (p.get("bad") or [{"icon": "recycle"}, "coin"])]
+    yt, yb = 62, 218
+    up = (f'{_poly(-30, 150)}C215 {_y(150):.1f} 205 {yt} 270 {yt}H830C915 {yt} 940 {_y(1010):.1f} 1010 {_y(1010):.1f}{_poly(1010, 1110, first="L")}')
+    dn = f'{_poly(-30, 150)}C215 {_y(150):.1f} 205 {yb} 270 {yb}H830'
+    b = [_road_d(dn, "faint"), _road_d(up, "solid")]
+    b += [shadow(90, _y(90) + 18, 28), fit(start, 52, _y(90) - 104, 76, 124)]
+    b += [_check_badge(300, yt - 30, 14), _x_badge(300, yb + 30, 14)]
+    xs = (440, 700)
+    for x, it in zip(xs, good):
+        if is_object(it.get("obj") or it.get("name")): b.append(fit(it.get("obj") or it["name"], x - 46, yt - 46, 92, 92, align="center"))
+        else: b.append(node(x, yt, 36, it))
+    for x, it in zip(xs, bad):
+        it = dict(it); it.setdefault("state", "lost")
+        if is_object(it.get("obj") or it.get("name")): b.append(fit(it.get("obj") or it["name"], x - 20, yb - 20, 40, 40, align="center", opacity=.5))
+        else: b.append(node(x, yb, 34, it))
+    b.append(_x_badge(850, yb, 15))
+    b.append(_road_chevron(1045))
+    return wrap("band", "".join(b))
+
+
+@scene("band")
+def circuit(p):
+    """The finished journey: 5 stages on the road, ending in a big node, with a return line that closes the circle."""
+    nodes = [_item(x) for x in _need(p, "nodes", 3, 5, "stages")]
+    end = _item(p.get("end", {"icon": "globe", "state": "go"}))
+    n = len(nodes)
+    xs = [110 + i * (830 - 110) / (n - 1) for i in range(n)]
+    xe = 985
+    b = [_road("solid", -30, xe), ]
+    for i in range(n - 1):
+        b.append(_road_chevron((xs[i] + xs[i + 1]) / 2))
+    b.append(_road_chevron((xs[-1] + xe) / 2))
+    ye, y0 = _y(xe), _y(xs[0])
+    b.append(f'<path d="M{xe} {ye + 62:.1f}C{xe} 268 {xe - 60} 268 {xe - 110} 268H{xs[0] + 90}C{xs[0]} 268 {xs[0]} 250 {xs[0]} {y0 + 48:.1f}" fill="none" stroke="{G}" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>')
+    b.append(chevron(560, 268, 180, 15))
+    for x, it in zip(xs, nodes):
+        b.append(node(x, _y(x), 42, it))
+    b.append(node(xe, ye, 58, end))
+    return wrap("band", "".join(b))
 
 
 def render(visual):
