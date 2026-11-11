@@ -1,0 +1,90 @@
+{
+  "slug": "drs-right-deposit-amount",
+  "title": "Recykal – What determines the right deposit amount?",
+  "progress": true,
+  "slides": [
+    {
+      "heading": "WHAT DETERMINES\n**THE RIGHT DEPOSIT\nAMOUNT?**",
+      "heading_size": 44,
+      "body_size": 26,
+      "text_width": 520,
+      "body": [
+        "A Deposit Refund Scheme (DRS) adds a **refundable deposit** to eligible products, which consumers can reclaim when they return the empty packaging through designated return channels.",
+        "**But how is that deposit amount determined?**"
+      ],
+      "visual": {
+        "image": "images/slide-1.jpg",
+        "kind": "bg"
+      }
+    },
+    {
+      "heading": "MORE THAN\n**A PRICE TAG**",
+      "heading_size": 44,
+      "body_size": 25,
+      "text_width": 560,
+      "body": [
+        "A deposit amount does more than assign a refundable value to packaging."
+      ],
+      "bullets": [
+        "**Behavioural Driver:** It acts as a primary economic incentive to encourage the return of DRS-eligible empty packaging.",
+        "**Market Realities:** It must fit the economic realities of the market in which the scheme operates."
+      ],
+      "visual": {
+        "image": "images/slide-2.jpg",
+        "kind": "bg"
+      }
+    },
+    {
+      "heading": "There is more than\n**one consideration.**",
+      "heading_size": 44,
+      "body_size": 22,
+      "text_width": 640,
+      "body": [
+        "The deposit amount needs to be considered in the context of:"
+      ],
+      "bullets": [
+        "**Consumer affordability:** How the amount relates to the price of the product.",
+        "**Return behaviour:** Whether the amount provides a meaningful reason to return the packaging.",
+        "**Scheme objectives:** What the deposit is intended to support within the wider return system.",
+        "**Market context:** The products, packaging formats and conditions in which the scheme operates."
+      ],
+      "callout": {
+        "style": "fill",
+        "icon": "scale",
+        "text": "These considerations do not operate in isolation. **They form part of a broader scheme-design decision.**"
+      },
+      "visual": {
+        "image": "images/slide-3.jpg",
+        "kind": "bg"
+      }
+    },
+    {
+      "heading": "THE RIGHT AMOUNT\n**IS ABOUT BALANCE.**",
+      "heading_size": 44,
+      "body_size": 24,
+      "text_width": 440,
+      "body": [
+        "Depending on the scheme's design, deposit amounts may vary by **container volume or material type**, rather than remaining the same across all eligible packaging.",
+        "This allows deposit amounts to reflect differences in packaging size and material."
+      ],
+      "callout": {
+        "style": "fill",
+        "icon": "scale",
+        "text": "The aim is to set a deposit that **encourages consumer returns, reflects packaging differences, and remains practical for the scheme to manage.**"
+      },
+      "visual": {
+        "image": "images/slide-4.jpg",
+        "kind": "bg"
+      }
+    }
+  ],
+  "caption": "What determines the right deposit amount?\n\nA Deposit Refund Scheme (DRS) adds a refundable deposit to eligible products, which consumers can reclaim when they return the empty packaging through designated return channels. But how is that deposit amount determined?\n\nA deposit amount does more than assign a refundable value to packaging. It acts as a primary economic incentive to encourage the return of DRS-eligible empty packaging, and it must fit the economic realities of the market in which the scheme operates.\n\nThere is more than one consideration. The deposit amount needs to be considered in the context of consumer affordability, return behaviour, scheme objectives and market context. These considerations do not operate in isolation. They form part of a broader scheme-design decision.\n\nThe right amount is about balance. Depending on the scheme's design, deposit amounts may vary by container volume or material type, rather than remaining the same across all eligible packaging. This allows deposit amounts to reflect differences in packaging size and material.\n\nThe aim is to set a deposit that encourages consumer returns, reflects packaging differences, and remains practical for the scheme to manage.\n\nSwipe through to see how.",
+  "hashtags": [
+    "#DepositRefundScheme",
+    "#DRS",
+    "#CircularEconomy",
+    "#EPR",
+    "#Recycling",
+    "#Recykal"
+  ]
+}
