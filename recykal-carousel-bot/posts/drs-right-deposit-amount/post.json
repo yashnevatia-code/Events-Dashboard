@@ -14,14 +14,19 @@
       ],
       "visual": {
         "image": "images/slide-1.jpg",
-        "kind": "bg"
-      }
+        "kind": "bg",
+        "veil_end": 64
+      },
+      "veil_low": 0.25,
+      "veil_low_from": 60,
+      "veil_low_to": 80,
+      "ground": 1
     },
     {
       "heading": "MORE THAN\n**A PRICE TAG**",
       "heading_size": 44,
       "body_size": 25,
-      "text_width": 560,
+      "text_width": 520,
       "body": [
         "A deposit amount does more than assign a refundable value to packaging."
       ],
@@ -32,13 +37,18 @@
       "visual": {
         "image": "images/slide-2.jpg",
         "kind": "bg"
-      }
+      },
+      "veil_end": 62,
+      "veil_low": 0.25,
+      "veil_low_from": 60,
+      "veil_low_to": 80,
+      "ground": 1
     },
     {
       "heading": "There is more than\n**one consideration.**",
       "heading_size": 44,
-      "body_size": 22,
-      "text_width": 640,
+      "body_size": 21,
+      "text_width": 600,
       "body": [
         "The deposit amount needs to be considered in the context of:"
       ],
@@ -55,14 +65,18 @@
       },
       "visual": {
         "image": "images/slide-3.jpg",
-        "kind": "bg"
-      }
+        "kind": "bg",
+        "zoom": 0.9,
+        "origin": "100% 100%",
+        "shift_y": -90
+      },
+      "veil_end": 60
     },
     {
       "heading": "THE RIGHT AMOUNT\n**IS ABOUT BALANCE.**",
       "heading_size": 44,
       "body_size": 24,
-      "text_width": 440,
+      "text_width": 400,
       "body": [
         "Depending on the scheme's design, deposit amounts may vary by **container volume or material type**, rather than remaining the same across all eligible packaging.",
         "This allows deposit amounts to reflect differences in packaging size and material."
@@ -74,8 +88,12 @@
       },
       "visual": {
         "image": "images/slide-4.jpg",
-        "kind": "bg"
-      }
+        "kind": "bg",
+        "zoom": 1.0,
+        "origin": "100% 100%",
+        "shift_y": -70
+      },
+      "veil_end": 60
     }
   ],
   "caption": "What determines the right deposit amount?\n\nA Deposit Refund Scheme (DRS) adds a refundable deposit to eligible products, which consumers can reclaim when they return the empty packaging through designated return channels. But how is that deposit amount determined?\n\nA deposit amount does more than assign a refundable value to packaging. It acts as a primary economic incentive to encourage the return of DRS-eligible empty packaging, and it must fit the economic realities of the market in which the scheme operates.\n\nThere is more than one consideration. The deposit amount needs to be considered in the context of consumer affordability, return behaviour, scheme objectives and market context. These considerations do not operate in isolation. They form part of a broader scheme-design decision.\n\nThe right amount is about balance. Depending on the scheme's design, deposit amounts may vary by container volume or material type, rather than remaining the same across all eligible packaging. This allows deposit amounts to reflect differences in packaging size and material.\n\nThe aim is to set a deposit that encourages consumer returns, reflects packaging differences, and remains practical for the scheme to manage.\n\nSwipe through to see how.",
