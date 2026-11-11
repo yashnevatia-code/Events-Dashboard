@@ -68,9 +68,12 @@ def visual_html(v):
         if v.get("position"): st.append(f'object-position:{v["position"]}')
         if v.get("zoom") or v.get("shift_x") or v.get("shift_y"):      # pan / zoom a full-bleed photo (kind "bg")
             st.append(f'transform:translate({v.get("shift_x", 0)}px,{v.get("shift_y", 0)}px) scale({v.get("zoom", 1)});transform-origin:{v.get("origin", "50% 50%")}')
-        if v.get("shift_y"):   # panned up: let the photo's bottom edge dissolve instead of ending hard
-            m = "linear-gradient(180deg,#000 0,#000 calc(100% - 120px),transparent 100%)"
-            st.append(f"-webkit-mask-image:{m};mask-image:{m}")
+        masks = []         # fade the photo's edges that end up inside the slide, instead of ending hard
+        if v.get("shift_y"): masks.append("linear-gradient(180deg,#000 0,#000 calc(100% - 120px),transparent 100%)")      # bottom (panned up)
+        if float(v.get("zoom", 1)) < 1:                                                                                      # shrunk: top and left edges show
+            masks += ["linear-gradient(180deg,transparent 0,#000 110px)", "linear-gradient(90deg,transparent 0,#000 110px)"]
+        if masks:
+            st.append(f"-webkit-mask-image:{','.join(masks)};mask-image:{','.join(masks)};-webkit-mask-composite:source-in;mask-composite:intersect")
         pos = f' style="{";".join(st)}"' if st else ""
         return v.get("kind", "card"), f'<img src="{path.as_uri()}" alt=""{pos}>'
     return S.render(v)
