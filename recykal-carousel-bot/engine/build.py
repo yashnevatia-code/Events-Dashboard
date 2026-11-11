@@ -71,7 +71,10 @@ def visual_html(v):
         masks = []         # fade the photo's edges that end up inside the slide, instead of ending hard
         if v.get("shift_y"): masks.append("linear-gradient(180deg,#000 0,#000 calc(100% - 120px),transparent 100%)")      # bottom (panned up)
         if float(v.get("zoom", 1)) < 1:                                                                                      # shrunk: top and left edges show
-            masks += ["linear-gradient(180deg,transparent 0,#000 110px)", "linear-gradient(90deg,transparent 0,#000 110px)"]
+            masks.append("linear-gradient(180deg,transparent 0,#000 110px)")
+            if not v.get("fade_left"): masks.append("linear-gradient(90deg,transparent 0,#000 110px)")
+        if v.get("fade_left"):       # [start, end] in px of the photo: transparent up to start, opaque from end (hides props that reach into the copy)
+            a, b = v["fade_left"]; masks.append(f"linear-gradient(90deg,transparent {a}px,#000 {b}px)")
         if masks:
             st.append(f"-webkit-mask-image:{','.join(masks)};mask-image:{','.join(masks)};-webkit-mask-composite:source-in;mask-composite:intersect")
         pos = f' style="{";".join(st)}"' if st else ""
