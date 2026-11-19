@@ -114,6 +114,8 @@ def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
         body += f'<div class="body"{bstyle}>' + "".join(f"<p>{emph(t, 'g sb')}</p>" for t in paras(s["body"])) + "</div>"
     if s.get("bullets"):
         body += '<ul class="bul"' + bstyle + '>' + "".join(f"<li>{emph(t, 'g sb')}</li>" for t in s["bullets"]) + "</ul>"
+    if s.get("after"):       # paragraph(s) that follow the bullet list
+        body += f'<div class="body after"{bstyle}>' + "".join(f"<p>{emph(t, 'g sb')}</p>" for t in paras(s["after"])) + "</div>"
     rule = '<div class="rule"></div>' if heading and (body or layout == "statement") else ""
     callout = callout_html(s["callout"]) if s.get("callout") and layout != "cover" else ""
     if layout == "cover" and s.get("callout"):

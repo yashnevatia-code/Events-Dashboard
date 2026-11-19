@@ -134,3 +134,4 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .flat{ position:absolute; left:0; top:0; width:1080px; height:1080px; z-index:0; display:block }
 .slide.flatbg .box{ box-shadow:none }
 .slide.flatbg .logo-g{ filter:none }
+.bul + .body.after, .body + .body.after{ margin-top:20px }
