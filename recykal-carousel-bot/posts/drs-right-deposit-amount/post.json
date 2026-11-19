@@ -5,9 +5,9 @@
   "slides": [
     {
       "heading": "WHAT DETERMINES\n**THE RIGHT DEPOSIT\nAMOUNT?**",
-      "heading_size": 44,
-      "body_size": 26,
-      "text_width": 420,
+      "heading_size": 46,
+      "body_size": 28,
+      "text_width": 440,
       "body": [
         "A Deposit Refund Scheme (DRS) allows consumers to reclaim a **refundable deposit** when they return eligible empty packaging.",
         "**But how is that amount decided?**"
@@ -15,11 +15,15 @@
       "visual": {
         "image": "images/slide-1.jpg",
         "kind": "bg",
-        "veil_end": 64,
         "zoom": 0.85,
         "origin": "100% 100%"
       },
-      "veil_end": 58
+      "veil_end": 56,
+      "heading_width": 540,
+      "veil_low": 0.25,
+      "veil_low_from": 60,
+      "veil_low_to": 80,
+      "ground": 1
     },
     {
       "heading": "MORE THAN\n**A PRICE TAG**",
@@ -36,16 +40,20 @@
       "visual": {
         "image": "images/slide-2.jpg",
         "kind": "bg",
-        "zoom": 0.85,
+        "zoom": 0.88,
         "origin": "100% 100%"
       },
-      "veil_end": 56
+      "veil_end": 56,
+      "veil_low": 0.3,
+      "veil_low_from": 60,
+      "veil_low_to": 80,
+      "ground": 1
     },
     {
       "heading": "WHAT GOES INTO\n**THE DECISION?**",
       "heading_size": 44,
-      "body_size": 21,
-      "text_width": 600,
+      "body_size": 22,
+      "text_width": 500,
       "body": [
         "Four considerations shape the deposit amount:"
       ],
@@ -65,17 +73,13 @@
         "kind": "bg",
         "zoom": 0.8,
         "origin": "100% 100%",
-        "shift_y": -170,
-        "fade_left": [
-          390,
-          570
-        ]
+        "shift_y": -150
       },
-      "veil_end": 60
+      "veil_end": 56
     },
     {
       "heading": "THE RIGHT AMOUNT\n**IS ABOUT BALANCE.**",
-      "heading_size": 44,
+      "heading_size": 40,
       "body_size": 24,
       "text_width": 400,
       "body": [
@@ -100,7 +104,8 @@
       ],
       "after": [
         "This allows the deposit to reflect differences across eligible packaging."
-      ]
+      ],
+      "heading_width": 480
     }
   ],
   "caption": "What determines the right deposit amount?\n\nA Deposit Refund Scheme (DRS) allows consumers to reclaim a refundable deposit when they return eligible empty packaging. But how is that amount decided?\n\nMore than a price tag. A deposit amount serves two important purposes: encouraging returns, by giving consumers a meaningful reason to return empty packaging, and reflecting the market, by keeping the amount relevant to the market in which the scheme operates.\n\nWhat goes into the decision? Four considerations shape the deposit amount: consumer affordability (relationship with product price), return behaviour (motivation to return packaging), scheme objectives (intended outcomes of the return system) and market context (products, packaging formats and market conditions). These factors work together in determining the amount.\n\nThe right amount is about balance. Deposit amounts may vary depending on container volume and material type. This allows the deposit to reflect differences across eligible packaging.\n\nThe aim: encourage returns while keeping the deposit practical for the scheme and its market.\n\nSwipe through to see how.",

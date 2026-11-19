@@ -2,8 +2,8 @@
  {
   "slide": 1,
   "layout": "bgphoto",
-  "heading_px": 44,
-  "body_px": 26,
+  "heading_px": 46,
+  "body_px": 28,
   "heading_lines": 3,
   "callout_px": null,
   "callout_lines": 0,
@@ -23,10 +23,10 @@
   "slide": 3,
   "layout": "bgphoto",
   "heading_px": 44,
-  "body_px": 21,
+  "body_px": 22,
   "heading_lines": 2,
   "callout_px": 25,
-  "callout_lines": 2,
+  "callout_lines": 1,
   "problems": []
  },
  {
@@ -35,7 +35,7 @@
   "heading_px": 40,
   "body_px": 24,
   "heading_lines": 2,
-  "callout_px": 22,
+  "callout_px": 25,
   "callout_lines": 2,
   "problems": []
  }
