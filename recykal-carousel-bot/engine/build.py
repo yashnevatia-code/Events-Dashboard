@@ -112,6 +112,8 @@ def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
     body = ""
     if s.get("body"):
         body += f'<div class="body"{bstyle}>' + "".join(f"<p>{emph(t, 'g sb')}</p>" for t in paras(s["body"])) + "</div>"
+    if s.get("bullets") and s.get("bullet_gap"):     # more air between the bullets (the first item keeps no top margin)
+        bstyle = (bstyle[:-1] if bstyle else ' style="') + f'{";" if bstyle else ""}--bgap:{s["bullet_gap"]}px"'
     if s.get("bullets"):
         body += '<ul class="bul"' + bstyle + '>' + "".join(f"<li>{emph(t, 'g sb')}</li>" for t in s["bullets"]) + "</ul>"
     if s.get("after"):       # paragraph(s) that follow the bullet list

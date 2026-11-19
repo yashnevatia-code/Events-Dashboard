@@ -6,10 +6,10 @@
     {
       "heading": "WHAT DETERMINES\n**THE RIGHT DEPOSIT\nAMOUNT?**",
       "heading_size": 46,
-      "body_size": 28,
-      "text_width": 440,
+      "body_size": 26,
+      "text_width": 470,
       "body": [
-        "A Deposit Refund Scheme (DRS) allows consumers to reclaim a **refundable deposit** when they return eligible empty packaging.",
+        "A Deposit Refund Scheme (DRS) allows consumers to reclaim a **refundable deposit** when they return eligible empty packaging through designated return channels.",
         "**But how is that amount decided?**"
       ],
       "visual": {
@@ -19,23 +19,19 @@
         "origin": "100% 100%"
       },
       "veil_end": 56,
-      "heading_width": 540,
-      "veil_low": 0.25,
-      "veil_low_from": 60,
-      "veil_low_to": 80,
-      "ground": 1
+      "heading_width": 540
     },
     {
       "heading": "MORE THAN\n**A PRICE TAG**",
       "heading_size": 44,
       "body_size": 25,
-      "text_width": 440,
+      "text_width": 395,
       "body": [
         "A deposit amount serves two important purposes:"
       ],
       "bullets": [
         "**Encouraging returns:** Giving consumers a meaningful reason to return empty packaging.",
-        "**Reflecting the market:** Keeping the amount relevant to the market in which the scheme operates."
+        "**Reflecting market conditions:** Considering the products and economic realities of the market."
       ],
       "visual": {
         "image": "images/slide-2.jpg",
@@ -43,44 +39,37 @@
         "zoom": 0.88,
         "origin": "100% 100%"
       },
-      "veil_end": 56,
-      "veil_low": 0.3,
-      "veil_low_from": 60,
-      "veil_low_to": 80,
-      "ground": 1
+      "veil_end": 70,
+      "bullet_gap": 28
     },
     {
       "heading": "WHAT GOES INTO\n**THE DECISION?**",
       "heading_size": 44,
-      "body_size": 22,
-      "text_width": 500,
+      "body_size": 23,
+      "text_width": 410,
       "body": [
         "Four considerations shape the deposit amount:"
       ],
       "bullets": [
-        "**Consumer affordability:** Relationship with product price.",
-        "**Return behaviour:** Motivation to return packaging.",
-        "**Scheme objectives:** Intended outcomes of the return system.",
-        "**Market context:** Products, packaging formats and market conditions."
+        "**Consumer affordability:** How the deposit relates to the product price.",
+        "**Return behaviour:** Whether the amount gives consumers a reason to return.",
+        "**Scheme objectives:** What the return system is designed to achieve.",
+        "**Market context:** Packaging formats and market conditions."
       ],
-      "callout": {
-        "style": "fill",
-        "icon": "scale",
-        "text": "These factors work together in determining the amount."
-      },
       "visual": {
         "image": "images/slide-3.jpg",
         "kind": "bg",
-        "zoom": 0.8,
+        "zoom": 0.78,
         "origin": "100% 100%",
-        "shift_y": -150
+        "shift_y": -40
       },
-      "veil_end": 56
+      "veil_end": 56,
+      "bullet_gap": 20
     },
     {
       "heading": "THE RIGHT AMOUNT\n**IS ABOUT BALANCE.**",
-      "heading_size": 40,
-      "body_size": 24,
+      "heading_size": 44,
+      "body_size": 28,
       "text_width": 400,
       "body": [
         "Deposit amounts may vary depending on:"
@@ -88,7 +77,7 @@
       "callout": {
         "style": "fill",
         "icon": "scale",
-        "text": "The aim: **Encourage returns while keeping the deposit practical for the scheme and its market.**"
+        "text": "The aim is to **encourage returns while keeping the deposit practical** for the scheme and its market."
       },
       "visual": {
         "image": "images/slide-4.jpg",
@@ -102,13 +91,14 @@
         "**Container volume**",
         "**Material type**"
       ],
-      "after": [
-        "This allows the deposit to reflect differences across eligible packaging."
-      ],
-      "heading_width": 480
+      "heading_width": 520,
+      "bullet_gap": 22,
+      "veil_low": 0.3,
+      "veil_low_from": 58,
+      "veil_low_to": 80
     }
   ],
-  "caption": "What determines the right deposit amount?\n\nA Deposit Refund Scheme (DRS) allows consumers to reclaim a refundable deposit when they return eligible empty packaging. But how is that amount decided?\n\nMore than a price tag. A deposit amount serves two important purposes: encouraging returns, by giving consumers a meaningful reason to return empty packaging, and reflecting the market, by keeping the amount relevant to the market in which the scheme operates.\n\nWhat goes into the decision? Four considerations shape the deposit amount: consumer affordability (relationship with product price), return behaviour (motivation to return packaging), scheme objectives (intended outcomes of the return system) and market context (products, packaging formats and market conditions). These factors work together in determining the amount.\n\nThe right amount is about balance. Deposit amounts may vary depending on container volume and material type. This allows the deposit to reflect differences across eligible packaging.\n\nThe aim: encourage returns while keeping the deposit practical for the scheme and its market.\n\nSwipe through to see how.",
+  "caption": "What determines the right deposit amount?\n\nA Deposit Refund Scheme (DRS) allows consumers to reclaim a refundable deposit when they return eligible empty packaging through designated return channels. But how is that amount decided?\n\nMore than a price tag. A deposit amount serves two important purposes: encouraging returns, by giving consumers a meaningful reason to return empty packaging, and reflecting market conditions, by considering the products and economic realities of the market.\n\nWhat goes into the decision? Four considerations shape the deposit amount: consumer affordability (how the deposit relates to the product price), return behaviour (whether the amount gives consumers a reason to return), scheme objectives (what the return system is designed to achieve) and market context (packaging formats and market conditions).\n\nThe right amount is about balance. Deposit amounts may vary depending on container volume and material type.\n\nThe aim is to encourage returns while keeping the deposit practical for the scheme and its market.\n\nSwipe through to see how.",
   "hashtags": [
     "#DepositRefundScheme",
     "#DRS",
