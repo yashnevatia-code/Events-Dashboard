@@ -15,8 +15,8 @@
       "visual": {
         "image": "images/slide-1.jpg",
         "kind": "bg",
-        "zoom": 0.85,
-        "origin": "100% 100%"
+        "extend": true,
+        "zoom": 0.85
       },
       "veil_end": 56,
       "heading_width": 540
@@ -36,8 +36,8 @@
       "visual": {
         "image": "images/slide-2.jpg",
         "kind": "bg",
-        "zoom": 0.88,
-        "origin": "100% 100%"
+        "extend": true,
+        "zoom": 0.88
       },
       "veil_end": 70,
       "bullet_gap": 28
@@ -59,8 +59,8 @@
       "visual": {
         "image": "images/slide-3.jpg",
         "kind": "bg",
-        "zoom": 0.78,
-        "origin": "100% 100%",
+        "extend": true,
+        "zoom": 0.74,
         "shift_y": -40
       },
       "veil_end": 56,
@@ -82,9 +82,10 @@
       "visual": {
         "image": "images/slide-4.jpg",
         "kind": "bg",
+        "extend": true,
         "zoom": 0.9,
-        "origin": "100% 100%",
-        "shift_y": -160
+        "shift_y": -160,
+        "fade_bottom": 150
       },
       "veil_end": 52,
       "bullets": [
@@ -92,10 +93,7 @@
         "**Material type**"
       ],
       "heading_width": 520,
-      "bullet_gap": 22,
-      "veil_low": 0.3,
-      "veil_low_from": 58,
-      "veil_low_to": 80
+      "bullet_gap": 22
     }
   ],
   "caption": "What determines the right deposit amount?\n\nA Deposit Refund Scheme (DRS) allows consumers to reclaim a refundable deposit when they return eligible empty packaging through designated return channels. But how is that amount decided?\n\nMore than a price tag. A deposit amount serves two important purposes: encouraging returns, by giving consumers a meaningful reason to return empty packaging, and reflecting market conditions, by considering the products and economic realities of the market.\n\nWhat goes into the decision? Four considerations shape the deposit amount: consumer affordability (how the deposit relates to the product price), return behaviour (whether the amount gives consumers a reason to return), scheme objectives (what the return system is designed to achieve) and market context (packaging formats and market conditions).\n\nThe right amount is about balance. Deposit amounts may vary depending on container volume and material type.\n\nThe aim is to encourage returns while keeping the deposit practical for the scheme and its market.\n\nSwipe through to see how.",

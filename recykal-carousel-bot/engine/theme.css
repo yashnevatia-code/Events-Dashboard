@@ -100,8 +100,7 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .layout-bgphoto .bgimg{ position:absolute; inset:0; z-index:0; background:#fff }
 .layout-bgphoto .bgimg img{ width:100%; height:100%; object-fit:cover; display:block }
 .layout-bgphoto .veil{ position:absolute; inset:0; z-index:1;
-  background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.99) 15%,rgba(255,255,255,.95) 30%,rgba(255,255,255,.82) 42%,rgba(255,255,255,.55) 53%,rgba(255,255,255,.24) 65%,rgba(255,255,255,0) 76%),
-             linear-gradient(180deg,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 190px) }
+  background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.99) 15%,rgba(255,255,255,.95) 30%,rgba(255,255,255,.82) 42%,rgba(255,255,255,.55) 53%,rgba(255,255,255,.24) 65%,rgba(255,255,255,0) 76%) }
 .layout-bgphoto .veil2{ position:absolute; inset:0; z-index:1; pointer-events:none;     /* footer fade, only under the copy side so the photo subject is not washed out */
   background:linear-gradient(0deg,#fff 0,#fff 52px,rgba(255,255,255,.88) 78px,rgba(255,255,255,.5) 110px,rgba(255,255,255,.18) 145px,rgba(255,255,255,0) 175px) }
 
@@ -138,3 +137,9 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .layout-bgphoto .bul li{ margin-top:var(--bgap,16px) }
 .layout-bgphoto .bul li:first-child{ margin-top:0 }
 .layout-bgphoto .bul .g{ font-weight:700 }
+
+/* v2 photo-base finish: photos run edge to edge; white only where the copy sits (the left fade). No top or bottom wash. */
+.layout-bgphoto .veil2{ display:none }
+.layout-bgphoto .dots span{ background:#9ec3b3; box-shadow:0 0 0 1.5px rgba(255,255,255,.75) }
+.layout-bgphoto .dots span.on{ background:var(--drs) }
+.layout-bgphoto .box .g, .box .g{ text-decoration-skip-ink:none }

@@ -64,6 +64,12 @@ def visual_html(v):
             path = (v.get("_base") or pathlib.Path.cwd()) / path
         if not path.exists():
             raise FileNotFoundError(f"image not found: {path}")
+        if v.get("extend"):          # photo placed by zoom/shift_y and extended to the slide edges (see photo_extend.py)
+            import photo_extend
+            od = pathlib.Path(v["_out"]) / "_ext"; od.mkdir(parents=True, exist_ok=True)
+            path = pathlib.Path(photo_extend.extend(path, od / (path.stem + ".jpg"), float(v.get("zoom", 1)),
+                                                    float(v.get("shift_y", 0)), float(v.get("fade_bottom", 0))))
+            return v.get("kind", "card"), f'<img src="{path.as_uri()}" alt="">'
         st = []
         if v.get("position"): st.append(f'object-position:{v["position"]}')
         if v.get("zoom") or v.get("shift_x") or v.get("shift_y"):      # pan / zoom a full-bleed photo (kind "bg")
@@ -107,7 +113,7 @@ def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
         e = float(s["veil_end"]); stops = [(0, 1), (.2 * e, .99), (.4 * e, .95), (.55 * e, .82), (.7 * e, .55), (.85 * e, .24), (e, 0)]
         g = ",".join(f"rgba(255,255,255,{a}) {x:.0f}%" for x, a in stops)
         extra = vstyle[8:-1] + ";" if vstyle else ""
-        vstyle = f' style="{extra}background:linear-gradient(90deg,{g}),linear-gradient(180deg,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 190px)"'
+        vstyle = f' style="{extra}background:linear-gradient(90deg,{g})"'
     heading = f'<h1 class="{hcls}"{hstyle}>{emph(s["heading"], "g")}</h1>' if s.get("heading") else ""
     body = ""
     if s.get("body"):
@@ -224,6 +230,7 @@ def page_html(spec, only=None, flats=None, prep=False):
     for sl in slides:
         if sl.get("visual") and "image" in sl["visual"]:
             sl["visual"]["_base"] = base
+            sl["visual"]["_out"] = spec.get("_out")
     flats = flats or {}
     body = "\n".join(render_slide(i + 1, len(slides), s, footer, logo, bool(spec.get("progress")), flats.get(i))
                      for i, s in enumerate(slides) if only is None or i == only)
@@ -274,6 +281,7 @@ def build(spec_path):
     out = REPO / "dist" / slug
     if out.exists(): shutil.rmtree(out)
     out.mkdir(parents=True)
+    spec["_out"] = str(out)
 
     page = out / "index.html"
     page.write_text(page_html(spec))
@@ -311,6 +319,7 @@ def build(spec_path):
     for p in out.glob("slide-*.png"):                       # slide-1.png (not slide-01.png)
         n = int(p.stem.split("-")[1]); p.rename(out / f"slide-{n}.png")
 
+    shutil.rmtree(out / "_ext", ignore_errors=True)          # extended photos were only needed for the render
     cap = (spec.get("caption", "").strip() + "\n\n" + " ".join(spec.get("hashtags", []))).strip()
     (out / "caption.txt").write_text(cap + "\n")
 
