@@ -143,3 +143,11 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .layout-bgphoto .dots span{ background:#9ec3b3; box-shadow:0 0 0 1.5px rgba(255,255,255,.75) }
 .layout-bgphoto .dots span.on{ background:var(--drs) }
 .layout-bgphoto .box .g, .box .g{ text-decoration-skip-ink:none }
+
+/* panel variant of the photo-base layout: copy on solid white, photo as a crisp block on the right (no gradient, no blur, no overlap) */
+.layout-bgphoto .pimg{ position:absolute; z-index:0; overflow:hidden; background:#eee }
+.layout-bgphoto .pimg img{ width:100%; height:100%; object-fit:cover; display:block }
+.layout-bgphoto.panel .dots span{ background:#cfe0d8; box-shadow:none }
+.layout-bgphoto.panel .dots span.on{ background:var(--drs) }
+.layout-bgphoto.panel .stack{ width:430px }
+.layout-bgphoto.panel .box{ z-index:3 }

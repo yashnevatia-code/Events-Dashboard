@@ -5,9 +5,8 @@
   "slides": [
     {
       "heading": "WHAT DETERMINES\n**THE RIGHT DEPOSIT\nAMOUNT?**",
-      "heading_size": 46,
+      "heading_size": 42,
       "body_size": 26,
-      "text_width": 470,
       "body": [
         "A Deposit Refund Scheme (DRS) allows consumers to reclaim a **refundable deposit** when they return eligible empty packaging through designated return channels.",
         "**But how is that amount decided?**"
@@ -15,17 +14,19 @@
       "visual": {
         "image": "images/slide-1.jpg",
         "kind": "bg",
-        "extend": true,
-        "zoom": 0.85
-      },
-      "veil_end": 56,
-      "heading_width": 540
+        "panel": {
+          "x": 500,
+          "y": 0,
+          "w": 580,
+          "h": 930
+        },
+        "position": "100% 50%"
+      }
     },
     {
       "heading": "MORE THAN\n**A PRICE TAG**",
-      "heading_size": 44,
+      "heading_size": 42,
       "body_size": 25,
-      "text_width": 395,
       "body": [
         "A deposit amount serves two important purposes:"
       ],
@@ -36,17 +37,20 @@
       "visual": {
         "image": "images/slide-2.jpg",
         "kind": "bg",
-        "extend": true,
-        "zoom": 0.88
+        "panel": {
+          "x": 500,
+          "y": 0,
+          "w": 580,
+          "h": 930
+        },
+        "position": "100% 50%"
       },
-      "veil_end": 70,
       "bullet_gap": 28
     },
     {
       "heading": "WHAT GOES INTO\n**THE DECISION?**",
-      "heading_size": 44,
+      "heading_size": 42,
       "body_size": 23,
-      "text_width": 410,
       "body": [
         "Four considerations shape the deposit amount:"
       ],
@@ -59,18 +63,20 @@
       "visual": {
         "image": "images/slide-3.jpg",
         "kind": "bg",
-        "extend": true,
-        "zoom": 0.74,
-        "shift_y": -40
+        "panel": {
+          "x": 500,
+          "y": 0,
+          "w": 580,
+          "h": 930
+        },
+        "position": "100% 50%"
       },
-      "veil_end": 56,
       "bullet_gap": 20
     },
     {
       "heading": "THE RIGHT AMOUNT\n**IS ABOUT BALANCE.**",
-      "heading_size": 44,
+      "heading_size": 42,
       "body_size": 28,
-      "text_width": 400,
       "body": [
         "Deposit amounts may vary depending on:"
       ],
@@ -82,17 +88,18 @@
       "visual": {
         "image": "images/slide-4.jpg",
         "kind": "bg",
-        "extend": true,
-        "zoom": 0.9,
-        "shift_y": -160,
-        "fade_bottom": 150
+        "panel": {
+          "x": 500,
+          "y": 0,
+          "w": 580,
+          "h": 740
+        },
+        "position": "100% 50%"
       },
-      "veil_end": 52,
       "bullets": [
         "**Container volume**",
         "**Material type**"
       ],
-      "heading_width": 520,
       "bullet_gap": 22
     }
   ],

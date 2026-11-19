@@ -146,7 +146,11 @@ def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
         sty_s = f' style="top:{ph + 40}px"' if ph else ""
         main = f'<div class="illus"{sty_i}>{inner}</div><div class="stack"{sty_s}>{heading}{rule}{body}</div>'
     elif layout == "bgphoto":       # realistic full-bleed photo as the base layer, copy on a white veil, DRS green callout
-        backdrop = f'<img class="flat" src="{flat}" alt="">' if flat else f'<div class="bgimg">{inner}</div><div class="veil"{vstyle}></div><div class="veil2"></div>{ground}'
+        pn = (v or {}).get("panel")
+        if flat: backdrop = f'<img class="flat" src="{flat}" alt="">'
+        elif pn:       # crisp-edged photo block on the right, copy on solid white: no fade, no overlap
+            backdrop = (f'<div class="pimg" style="left:{pn["x"]}px;top:{pn["y"]}px;width:{pn["w"]}px;height:{pn["h"]}px">{inner}</div>')
+        else: backdrop = f'<div class="bgimg">{inner}</div><div class="veil"{vstyle}></div><div class="veil2"></div>{ground}'
         main = f'{backdrop}<div class="stack"{sstyle}>{heading}{rule}{body}</div>'
     elif layout == "journey":
         rule_j = '<div class="rule"></div>' if heading else ""
@@ -161,7 +165,7 @@ def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
     dots = ""
     if progress:
         dots = '<div class="dots' + (" last" if last else "") + '">' + "".join(f'<span class="{"on" if k + 1 == i else ""}"></span>' for k in range(n)) + "</div>"
-    return (f'<section class="slide layout-{layout}{nobox}{" flatbg" if flat else ""}" data-layout="{layout}">'
+    return (f'<section class="slide layout-{layout}{nobox}{" flatbg" if flat else ""}{" panel" if (v or {}).get("panel") else ""}" data-layout="{layout}">'
             f'{main}{callout}{dots}'
             f'{"" if last else f"<div class=next>{ARROW}</div>"}{TEMPLATE_CHROME}</section>')
 

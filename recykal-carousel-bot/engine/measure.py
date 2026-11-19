@@ -16,7 +16,9 @@ const q=(sel)=>{const e=s.querySelector(sel);if(!e)return null;const r=e.getBoun
 const st=s.querySelector('.stack,.col');
 const kids=st?[...st.children].map(c=>{const r=c.getBoundingClientRect();return [c.className||c.tagName,Math.round(r.top-b.top),Math.round(r.bottom-b.top)]}):[];
 const paras=[...s.querySelectorAll('.body p')].map(p=>{const r=p.getBoundingClientRect();return [Math.round(r.top-b.top),Math.round(r.bottom-b.top)]});
-R.push({slide:i+1,kids,paras,box:q('.box')})});
+let tr=0; if(st){const w=document.createTreeWalker(st,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){if(!n.textContent.trim())continue;const r=document.createRange();r.selectNodeContents(n);for(const c of r.getClientRects()){tr=Math.max(tr,Math.round(c.right-b.left))}}}
+const pn=s.querySelector('.pimg');const px=pn?Math.round(pn.getBoundingClientRect().left-b.left):null;
+R.push({slide:i+1,kids,paras,box:q('.box'),textRight:tr,panelX:px})});
 const pre=document.createElement('pre');pre.id='m';pre.textContent=JSON.stringify(R);document.body.appendChild(pre)})</script>"""
 
 LOGO_BOTTOM = 134      # the template's logo block ends at y=134
@@ -53,6 +55,8 @@ def main(path):
         line = f"slide {r['slide']}: text {top}-{bot} (h {bot - top}) | gap logo->text {top - LOGO_BOTTOM} | {below}"
         if len(kids) > 2:
             line += f" | heading->rule {kids[1][1] - kids[0][2]} | rule->body {kids[2][1] - kids[1][2]}"
+        if r.get("panelX") is not None:
+            line += f" | text right {r['textRight']}, clear of photo {r['panelX'] - r['textRight']}px"
         gaps = [r["paras"][i + 1][0] - r["paras"][i][1] for i in range(len(r["paras"]) - 1)]
         if gaps:
             line += f" | paragraph gaps {gaps}"
