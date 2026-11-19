@@ -76,9 +76,10 @@ def visual_html(v):
             st.append(f'transform:translate({v.get("shift_x", 0)}px,{v.get("shift_y", 0)}px) scale({v.get("zoom", 1)});transform-origin:{v.get("origin", "50% 50%")}')
         masks = []         # fade the photo's edges that end up inside the slide, instead of ending hard
         if v.get("shift_y"): masks.append("linear-gradient(180deg,#000 0,#000 calc(100% - 120px),transparent 100%)")      # bottom (panned up)
-        if float(v.get("zoom", 1)) < 1:                                                                                      # shrunk: top and left edges show
-            masks.append("linear-gradient(180deg,transparent 0,#000 110px)")
-            if not v.get("fade_left"): masks.append("linear-gradient(90deg,transparent 0,#000 110px)")
+        if float(v.get("zoom", 1)) < 1:                                                                                      # shrunk: top and left edges can show
+            _z = float(v.get("zoom", 1)); _y0 = 1080 * (1 - _z) + float(v.get("shift_y", 0)); _x0 = 1080 * (1 - _z)
+            if _y0 > 10: masks.append("linear-gradient(180deg,transparent 0,#000 110px)")                                    # only when there is a gap above the photo
+            if _x0 > 10 and not v.get("fade_left"): masks.append("linear-gradient(90deg,transparent 0,#000 110px)")
         if v.get("fade_left"):       # [start, end] in px of the photo: transparent up to start, opaque from end (hides props that reach into the copy)
             a, b = v["fade_left"]; masks.append(f"linear-gradient(90deg,transparent {a}px,#000 {b}px)")
         if masks:
@@ -109,7 +110,11 @@ def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
     if s.get("veil_low") is not None:    # ease the white fade off below the copy so more of the photo shows in the lower-left
         m = f"linear-gradient(180deg,#000 0,#000 {s.get('veil_low_from', 62)}%,rgba(0,0,0,{s['veil_low']}) {s.get('veil_low_to', 82)}%)"
         vstyle = f' style="-webkit-mask-image:{m};mask-image:{m}"'
-    if s.get("veil_end"):        # where the white fade behind the copy ends (% of width); narrower = more of the photo stays clear
+    if s.get("veil_solid"):      # solid white up to the end of the text column, then a short eased fade: text never sits on the photo
+        a = float(s["veil_solid"]); f = float(s.get("veil_fade", 150))
+        g = f"#fff 0,#fff {a:.0f}px,rgba(255,255,255,.85) {a+.3*f:.0f}px,rgba(255,255,255,.45) {a+.62*f:.0f}px,rgba(255,255,255,.14) {a+.85*f:.0f}px,rgba(255,255,255,0) {a+f:.0f}px"
+        vstyle = (vstyle[:-1] + ";" if vstyle else ' style="') + f'background:linear-gradient(90deg,{g})"'
+    elif s.get("veil_end"):        # where the white fade behind the copy ends (% of width); narrower = more of the photo stays clear
         e = float(s["veil_end"]); stops = [(0, 1), (.2 * e, .99), (.4 * e, .95), (.55 * e, .82), (.7 * e, .55), (.85 * e, .24), (e, 0)]
         g = ",".join(f"rgba(255,255,255,{a}) {x:.0f}%" for x, a in stops)
         extra = vstyle[8:-1] + ";" if vstyle else ""

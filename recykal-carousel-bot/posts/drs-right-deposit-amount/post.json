@@ -13,15 +13,11 @@
       ],
       "visual": {
         "image": "images/slide-1.jpg",
-        "kind": "bg",
-        "panel": {
-          "x": 500,
-          "y": 0,
-          "w": 580,
-          "h": 930
-        },
-        "position": "100% 50%"
-      }
+        "kind": "bg"
+      },
+      "text_width": 430,
+      "veil_solid": 470,
+      "veil_fade": 120
     },
     {
       "heading": "MORE THAN\n**A PRICE TAG**",
@@ -36,16 +32,12 @@
       ],
       "visual": {
         "image": "images/slide-2.jpg",
-        "kind": "bg",
-        "panel": {
-          "x": 500,
-          "y": 0,
-          "w": 580,
-          "h": 930
-        },
-        "position": "100% 50%"
+        "kind": "bg"
       },
-      "bullet_gap": 28
+      "bullet_gap": 28,
+      "text_width": 430,
+      "veil_solid": 470,
+      "veil_fade": 120
     },
     {
       "heading": "WHAT GOES INTO\n**THE DECISION?**",
@@ -63,15 +55,13 @@
       "visual": {
         "image": "images/slide-3.jpg",
         "kind": "bg",
-        "panel": {
-          "x": 500,
-          "y": 0,
-          "w": 580,
-          "h": 930
-        },
-        "position": "100% 50%"
+        "zoom": 1.4,
+        "origin": "100% 100%"
       },
-      "bullet_gap": 20
+      "bullet_gap": 20,
+      "text_width": 430,
+      "veil_solid": 470,
+      "veil_fade": 90
     },
     {
       "heading": "THE RIGHT AMOUNT\n**IS ABOUT BALANCE.**",
@@ -88,19 +78,18 @@
       "visual": {
         "image": "images/slide-4.jpg",
         "kind": "bg",
-        "panel": {
-          "x": 500,
-          "y": 0,
-          "w": 580,
-          "h": 740
-        },
-        "position": "100% 50%"
+        "zoom": 0.84,
+        "origin": "100% 100%",
+        "shift_y": -175
       },
       "bullets": [
         "**Container volume**",
         "**Material type**"
       ],
-      "bullet_gap": 22
+      "bullet_gap": 22,
+      "text_width": 430,
+      "veil_solid": 470,
+      "veil_fade": 110
     }
   ],
   "caption": "What determines the right deposit amount?\n\nA Deposit Refund Scheme (DRS) allows consumers to reclaim a refundable deposit when they return eligible empty packaging through designated return channels. But how is that amount decided?\n\nMore than a price tag. A deposit amount serves two important purposes: encouraging returns, by giving consumers a meaningful reason to return empty packaging, and reflecting market conditions, by considering the products and economic realities of the market.\n\nWhat goes into the decision? Four considerations shape the deposit amount: consumer affordability (how the deposit relates to the product price), return behaviour (whether the amount gives consumers a reason to return), scheme objectives (what the return system is designed to achieve) and market context (packaging formats and market conditions).\n\nThe right amount is about balance. Deposit amounts may vary depending on container volume and material type.\n\nThe aim is to encourage returns while keeping the deposit practical for the scheme and its market.\n\nSwipe through to see how.",
