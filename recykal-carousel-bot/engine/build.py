@@ -201,7 +201,7 @@ def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
     dots = ""
     if progress:
         dots = '<div class="dots' + (" last" if last else "") + '">' + "".join(f'<span class="{"on" if k + 1 == i else ""}"></span>' for k in range(n)) + "</div>"
-    return (f'<section class="slide layout-{layout}{nobox}{" flatbg" if flat else ""}{" panel" if (v or {}).get("panel") else ""}" data-layout="{layout}">'
+    return (f'<section class="slide layout-{layout}{nobox}{" flatbg" if flat else ""}{" panel" if (v or {}).get("panel") else ""}{" inl" if s.get("inline_labels") else ""}" data-layout="{layout}">'
             f'{main}{callout}{dots}'
             f'{"" if last else f"<div class=next>{ARROW}</div>"}{TEMPLATE_CHROME}</section>')
 

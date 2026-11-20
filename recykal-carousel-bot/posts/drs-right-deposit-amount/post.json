@@ -49,18 +49,19 @@
       "alt": "Close view of a person about to put an empty clear plastic bottle into the round opening of a plain grey return unit with a soft green light ring."
     },
     {
-      "eyebrow": "1 / 2",
       "heading": "WHAT GOES INTO\n**THE DECISION?**",
       "heading_size": 44,
-      "text_width": 470,
+      "text_width": 445,
       "body": [
         "Four considerations shape the deposit amount:"
       ],
       "bullets": [
         "**Consumer affordability:** How the deposit relates to the product price.",
-        "**Return behaviour:** Whether the amount gives consumers a reason to return."
+        "**Return behaviour:** Whether the amount gives consumers a reason to return.",
+        "**Scheme objectives:** What the return system is designed to achieve.",
+        "**Market context:** Packaging formats and market conditions."
       ],
-      "bullet_gap": 26,
+      "bullet_gap": 20,
       "visual": {
         "image": "images/slide-3.jpg",
         "kind": "bg",
@@ -71,29 +72,9 @@
         "hold": 170,
         "end": 720
       },
-      "alt": "Two colleagues at a wooden table examine a small plastic bottle, with a larger plastic bottle, an aluminium can, a glass bottle, a notebook and papers in front of them."
-    },
-    {
-      "eyebrow": "2 / 2",
-      "heading": "WHAT GOES INTO\n**THE DECISION?**",
-      "heading_size": 44,
-      "text_width": 490,
-      "bullets": [
-        "**Scheme objectives:** What the return system is designed to achieve.",
-        "**Market context:** Packaging formats and market conditions."
-      ],
-      "bullet_gap": 26,
-      "visual": {
-        "image": "images/slide-4.jpg",
-        "kind": "bg",
-        "mirror_shift": 70
-      },
-      "veil_soft": {
-        "a": 1.0,
-        "hold": 170,
-        "end": 720
-      },
-      "alt": "Hands arranging a small plastic bottle, a larger plastic bottle, an aluminium can and a glass bottle on a wooden table next to an open notebook."
+      "alt": "Two colleagues at a wooden table examine a small plastic bottle, with a larger plastic bottle, an aluminium can, a glass bottle, a notebook and papers in front of them.",
+      "inline_labels": true,
+      "body_size": 23
     },
     {
       "heading": "THE RIGHT AMOUNT\n**IS ABOUT BALANCE.**",
