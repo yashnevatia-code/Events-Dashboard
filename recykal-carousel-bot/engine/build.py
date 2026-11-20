@@ -64,6 +64,11 @@ def visual_html(v):
             path = (v.get("_base") or pathlib.Path.cwd()) / path
         if not path.exists():
             raise FileNotFoundError(f"image not found: {path}")
+        if v.get("mirror_shift") or v.get("lift_y") or v.get("scale"):        # nudge the subject right without blur or bars (see photo_extend.mirror_shift)
+            import photo_extend
+            od = pathlib.Path(v["_out"]) / "_ext"; od.mkdir(parents=True, exist_ok=True)
+            path = pathlib.Path(photo_extend.mirror_shift(path, od / (path.stem + "_m.jpg"), float(v.get("mirror_shift", 0)), float(v.get("lift_y", 0)), float(v.get("scale", 1))))
+            return v.get("kind", "card"), f'<img src="{path.as_uri()}" alt="">'
         if v.get("extend"):          # photo placed by zoom/shift_y and extended to the slide edges (see photo_extend.py)
             import photo_extend
             od = pathlib.Path(v["_out"]) / "_ext"; od.mkdir(parents=True, exist_ok=True)
@@ -110,7 +115,17 @@ def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
     if s.get("veil_low") is not None:    # ease the white fade off below the copy so more of the photo shows in the lower-left
         m = f"linear-gradient(180deg,#000 0,#000 {s.get('veil_low_from', 62)}%,rgba(0,0,0,{s['veil_low']}) {s.get('veil_low_to', 82)}%)"
         vstyle = f' style="-webkit-mask-image:{m};mask-image:{m}"'
-    if s.get("veil_solid"):      # solid white up to the end of the text column, then a short eased fade: text never sits on the photo
+    if s.get("veil_soft"):       # {"a": .8, "hold": 520, "end": 800}: translucent wash held behind the copy, then eased out; small plate behind the logo
+        vs = s["veil_soft"]; a = float(vs.get("a", .8)); h = float(vs.get("hold", 520)); e = float(vs.get("end", 800))
+        import math
+        stops = []
+        for k in range(0, 9):
+            x = h + (e - h) * k / 8; t = k / 8; al = a * (1 - (t * t * (3 - 2 * t)))
+            stops.append(f"rgba(255,255,255,{al:.3f}) {x:.0f}px")
+        g = f"rgba(255,255,255,{a}) 0,rgba(255,255,255,{a}) {h:.0f}px," + ",".join(stops)
+        logo = "radial-gradient(ellipse 330px 150px at 165px 92px,rgba(255,255,255,.92),rgba(255,255,255,0))"
+        vstyle = f' style="background:{logo},linear-gradient(90deg,{g})"'
+    elif s.get("veil_solid"):      # solid white up to the end of the text column, then a short eased fade: text never sits on the photo
         a = float(s["veil_solid"]); f = float(s.get("veil_fade", 150))
         g = f"#fff 0,#fff {a:.0f}px,rgba(255,255,255,.85) {a+.3*f:.0f}px,rgba(255,255,255,.45) {a+.62*f:.0f}px,rgba(255,255,255,.14) {a+.85*f:.0f}px,rgba(255,255,255,0) {a+f:.0f}px"
         vstyle = (vstyle[:-1] + ";" if vstyle else ' style="') + f'background:linear-gradient(90deg,{g})"'
@@ -120,6 +135,7 @@ def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
         extra = vstyle[8:-1] + ";" if vstyle else ""
         vstyle = f' style="{extra}background:linear-gradient(90deg,{g})"'
     heading = f'<h1 class="{hcls}"{hstyle}>{emph(s["heading"], "g")}</h1>' if s.get("heading") else ""
+    if s.get("eyebrow"): heading = f'<div class="eyebrow">{esc(s["eyebrow"])}</div>' + heading
     body = ""
     if s.get("body"):
         body += f'<div class="body"{bstyle}>' + "".join(f"<p>{emph(t, 'g sb')}</p>" for t in paras(s["body"])) + "</div>"
@@ -127,6 +143,8 @@ def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
         bstyle = (bstyle[:-1] if bstyle else ' style="') + f'{";" if bstyle else ""}--bgap:{s["bullet_gap"]}px"'
     if s.get("bullets"):
         body += '<ul class="bul"' + bstyle + '>' + "".join(f"<li>{emph(t, 'g sb')}</li>" for t in s["bullets"]) + "</ul>"
+    if s.get("lead"):        # larger green hook line (e.g. the question that makes people swipe)
+        body += f'<p class="lead">{emph(s["lead"], "g")}</p>'
     if s.get("after"):       # paragraph(s) that follow the bullet list
         body += f'<div class="body after"{bstyle}>' + "".join(f"<p>{emph(t, 'g sb')}</p>" for t in paras(s["after"])) + "</div>"
     rule = '<div class="rule"></div>' if heading and (body or layout == "statement") else ""

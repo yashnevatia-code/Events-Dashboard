@@ -151,3 +151,19 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .layout-bgphoto.panel .dots span.on{ background:var(--drs) }
 .layout-bgphoto.panel .stack{ width:430px }
 .layout-bgphoto.panel .box{ z-index:3 }
+
+/* ===== v3 photo-base finish (brand: Poppins, 3 weights only: 800 / 600 / 400; larger, calmer type; no widows) ===== */
+.layout-bgphoto .h1{ font-weight:800; font-size:54px; line-height:1.18; letter-spacing:-.2px }
+.layout-bgphoto .body, .layout-bgphoto .bul{ font-size:30px; line-height:1.45; font-weight:400 }
+.layout-bgphoto .body p, .layout-bgphoto .bul li{ text-wrap:pretty }
+.layout-bgphoto .sb, .layout-bgphoto .bul .g{ font-weight:600 }
+.layout-bgphoto .body p + p{ margin-top:22px }
+.layout-bgphoto .rule{ width:76px; height:5px; margin:30px 0 28px }
+.layout-bgphoto .lead{ font-size:34px; line-height:1.3; font-weight:600; color:var(--drs); margin-top:30px; text-wrap:balance }
+.layout-bgphoto .box p{ font-size:30px; line-height:1.35; font-weight:600 }
+.layout-bgphoto .box.fill .g{ font-weight:600 }
+.layout-bgphoto .dots span{ background:#6f9a88; box-shadow:none }
+.layout-bgphoto .dots span.on{ background:var(--drs) }
+.layout-bgphoto .next{ box-shadow:0 6px 16px rgba(4,151,105,.28) }
+.layout-bgphoto .eyebrow{ font-size:26px; font-weight:600; color:var(--drs); letter-spacing:1px; margin-bottom:14px }
+.layout-bgphoto .eyebrow{ position:absolute; top:-46px; left:0; margin:0 }

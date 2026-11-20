@@ -49,6 +49,25 @@ def extend(src, dst, zoom=1.0, shift_y=0, fade_bottom=0, size=SIZE):
     return dst
 
 
+def mirror_shift(src, dst, shift_x=0, lift_y=0, scale=1.0, size=SIZE):
+    """Reposition the picture inside the square with NO blur and no white bar.
+    scale < 1 shrinks it anchored to the bottom-right corner (objects on the left move right, the right edge stays put);
+    shift_x moves it right and lift_y moves it up (slide px). Every strip that opens up is filled with the mirror of the
+    picture's own edge, which in these photos is plain wall / plain table (the calm areas kept free for the copy)."""
+    im = Image.open(src).convert("RGB").resize((size, size), Image.LANCZOS)
+    if scale < 1:
+        w = int(round(size * scale)); sm = im.resize((w, w), Image.LANCZOS)
+        a = np.asarray(sm); pad = size - w
+        arr = np.pad(a, ((pad, 0), (pad, 0), (0, 0)), mode="reflect")
+    else:
+        arr = np.asarray(im)
+    n = int(round(shift_x * 2)); m = int(round(lift_y * 2))
+    if n: arr = np.pad(arr[:, : size - n], ((0, 0), (n, 0), (0, 0)), mode="reflect")
+    if m: arr = np.pad(arr[m:, :], ((0, m), (0, 0), (0, 0)), mode="reflect")
+    Image.fromarray(arr).save(dst, "JPEG", quality=93, optimize=True, subsampling=0)
+    return dst
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("src"); ap.add_argument("dst")
