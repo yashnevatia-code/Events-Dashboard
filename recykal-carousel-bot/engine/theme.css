@@ -206,3 +206,4 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .layout-bgphoto .box p{ font-size:25px; line-height:1.42; font-weight:600 }
 .layout-bgphoto .box.fill .g{ font-weight:800 }
 .layout-bgphoto .eyebrow{ font-weight:600; font-size:24px }
+.layout-bgphoto .veilb{ position:absolute; inset:0; z-index:1; pointer-events:none }

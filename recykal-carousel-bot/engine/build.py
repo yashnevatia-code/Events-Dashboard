@@ -178,7 +178,15 @@ def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
         if flat: backdrop = f'<img class="flat" src="{flat}" alt="">'
         elif pn:       # crisp-edged photo block on the right, copy on solid white: no fade, no overlap
             backdrop = (f'<div class="pimg" style="left:{pn["x"]}px;top:{pn["y"]}px;width:{pn["w"]}px;height:{pn["h"]}px">{inner}</div>')
-        else: backdrop = f'<div class="bgimg">{inner}</div><div class="veil"{vstyle}></div><div class="veil2"></div>{ground}'
+        else:
+            vb = s.get("veil_band")
+            band = ""
+            if vb:    # extra white held further across, but only between y0 and y1 (soft edges): hides a hard photo edge behind the text without washing the subject below
+                y0, y1, f_, h, e = [float(vb[k]) for k in ("y0", "y1", "fade", "hold", "end")]
+                gx = f"linear-gradient(90deg,#fff 0,#fff {h:.0f}px,rgba(255,255,255,.55) {h + .4*(e-h):.0f}px,rgba(255,255,255,.18) {h + .75*(e-h):.0f}px,rgba(255,255,255,0) {e:.0f}px)"
+                gy = f"linear-gradient(180deg,transparent {y0 - f_:.0f}px,#000 {y0:.0f}px,#000 {y1:.0f}px,transparent {y1 + f_:.0f}px)"
+                band = f'<div class="veilb" style="background:{gx};-webkit-mask-image:{gy};mask-image:{gy}"></div>'
+            backdrop = f'<div class="bgimg">{inner}</div><div class="veil"{vstyle}></div>{band}<div class="veil2"></div>{ground}'
         main = f'{backdrop}<div class="stack"{sstyle}>{heading}{rule}{body}</div>'
     elif layout == "journey":
         rule_j = '<div class="rule"></div>' if heading else ""
