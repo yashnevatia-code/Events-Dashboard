@@ -181,3 +181,16 @@ html,body{ background:#fff; font-family:'Poppins',sans-serif; color:var(--ink); 
 .layout-bgphoto .body, .layout-bgphoto .bul{ font-size:28px; line-height:1.45 }
 .layout-bgphoto .lead{ font-size:32px }
 .layout-bgphoto .box p{ font-size:28px }
+
+/* v5: back to the brand type system. Weights 800 / 700 / 400 only; approved headline leading and rule; shorter, calmer text:
+   body 26 px at 1.55 leading on a wider measure (about 35 characters per line, not 28); green emphasis in Bold so it reads as full DRS green. */
+.layout-bgphoto .h1{ font-weight:800; font-size:52px; line-height:1.18; letter-spacing:-.2px }
+.layout-bgphoto .body, .layout-bgphoto .bul{ font-size:26px; line-height:1.55; font-weight:400 }
+.layout-bgphoto .sb, .layout-bgphoto .bul .g, .layout-bgphoto .body .g{ font-weight:700 }
+.layout-bgphoto .lead{ font-size:30px; line-height:1.4; font-weight:700; margin-top:34px }
+.layout-bgphoto .rule{ width:64px; height:4px; margin:32px 0 30px }
+.layout-bgphoto .body p + p{ margin-top:24px }
+.layout-bgphoto .bul li .g{ margin-bottom:4px }
+.layout-bgphoto .box p{ font-size:27px; line-height:1.4; font-weight:700 }
+.layout-bgphoto .box.fill .g{ font-weight:700 }
+.layout-bgphoto .eyebrow{ font-weight:700 }

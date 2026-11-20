@@ -5,8 +5,8 @@
   "slides": [
     {
       "heading": "WHAT DETERMINES\n**THE RIGHT DEPOSIT\nAMOUNT?**",
-      "heading_size": 54,
-      "text_width": 450,
+      "heading_size": 52,
+      "text_width": 470,
       "body": [
         "A Deposit Refund Scheme (DRS) allows consumers to reclaim a **refundable deposit** when they return eligible empty packaging through designated return channels."
       ],
@@ -29,12 +29,13 @@
         }
       },
       "heading_width": 560,
-      "alt": "Two people at a return counter: a customer hands an empty clear plastic bottle to a collection attendant, with crates of empty containers behind the counter."
+      "alt": "Two people at a return counter: a customer hands an empty clear plastic bottle to a collection attendant, with crates of empty containers behind the counter.",
+      "bullet_gap": 30
     },
     {
       "heading": "MORE THAN\n**A PRICE TAG**",
-      "heading_size": 54,
-      "text_width": 470,
+      "heading_size": 52,
+      "text_width": 490,
       "body": [
         "A deposit amount serves two important purposes:"
       ],
@@ -42,7 +43,7 @@
         "**Encouraging returns:** Giving consumers a meaningful reason to return empty packaging.",
         "**Reflecting market conditions:** Considering the products and economic realities of the market."
       ],
-      "bullet_gap": 22,
+      "bullet_gap": 30,
       "visual": {
         "image": "images/slide-2.jpg",
         "kind": "bg",
@@ -59,8 +60,8 @@
     {
       "eyebrow": "1 / 2",
       "heading": "WHAT GOES INTO\n**THE DECISION?**",
-      "heading_size": 54,
-      "text_width": 450,
+      "heading_size": 52,
+      "text_width": 470,
       "body": [
         "Four considerations shape the deposit amount:"
       ],
@@ -85,13 +86,13 @@
     {
       "eyebrow": "2 / 2",
       "heading": "WHAT GOES INTO\n**THE DECISION?**",
-      "heading_size": 54,
-      "text_width": 450,
+      "heading_size": 52,
+      "text_width": 490,
       "bullets": [
         "**Scheme objectives:** What the return system is designed to achieve.",
         "**Market context:** Packaging formats and market conditions."
       ],
-      "bullet_gap": 34,
+      "bullet_gap": 30,
       "visual": {
         "image": "images/slide-4.jpg",
         "kind": "bg",
@@ -107,8 +108,8 @@
     },
     {
       "heading": "THE RIGHT AMOUNT\n**IS ABOUT BALANCE.**",
-      "heading_size": 54,
-      "text_width": 450,
+      "heading_size": 52,
+      "text_width": 490,
       "body": [
         "Deposit amounts may vary depending on:"
       ],
@@ -116,7 +117,7 @@
         "**Container volume**",
         "**Material type**"
       ],
-      "bullet_gap": 20,
+      "bullet_gap": 30,
       "callout": {
         "style": "fill",
         "icon": "scale",
