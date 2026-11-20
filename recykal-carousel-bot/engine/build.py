@@ -124,7 +124,12 @@ def render_slide(i, n, s, footer, logo_uri, progress=False, flat=None):
             stops.append(f"rgba(255,255,255,{al:.3f}) {x:.0f}px")
         g = f"rgba(255,255,255,{a}) 0,rgba(255,255,255,{a}) {h:.0f}px," + ",".join(stops)
         logo = "radial-gradient(ellipse 330px 150px at 165px 92px,rgba(255,255,255,.92),rgba(255,255,255,0))"
-        vstyle = f' style="background:{logo},linear-gradient(90deg,{g})"'
+        head = ""
+        if vs.get("head"):       # soft cloud behind the headline only (does not touch the photo below it)
+            hd = vs["head"]; ha = float(hd.get("a", .8))
+            head = (f"radial-gradient(ellipse {hd['rx']}px {hd['ry']}px at {hd['cx']}px {hd['cy']}px,"
+                    f"rgba(255,255,255,{ha}) 0%,rgba(255,255,255,{ha*.8:.2f}) 30%,rgba(255,255,255,{ha*.35:.2f}) 65%,rgba(255,255,255,0) 100%),")
+        vstyle = f' style="background:{head}{logo},linear-gradient(90deg,{g})"'
     elif s.get("veil_solid"):      # solid white up to the end of the text column, then a short eased fade: text never sits on the photo
         a = float(s["veil_solid"]); f = float(s.get("veil_fade", 150))
         g = f"#fff 0,#fff {a:.0f}px,rgba(255,255,255,.85) {a+.3*f:.0f}px,rgba(255,255,255,.45) {a+.62*f:.0f}px,rgba(255,255,255,.14) {a+.85*f:.0f}px,rgba(255,255,255,0) {a+f:.0f}px"
@@ -346,6 +351,8 @@ def build(spec_path):
     for p in out.glob("slide-*.png"):                       # slide-1.png (not slide-01.png)
         n = int(p.stem.split("-")[1]); p.rename(out / f"slide-{n}.png")
 
+    alts = [f"Slide {i + 1}: {sl['alt']}" for i, sl in enumerate(spec["slides"]) if sl.get("alt")]
+    if alts: (out / "alt-text.txt").write_text("\n".join(alts) + "\n")          # alt text for LinkedIn's image/document upload
     shutil.rmtree(out / "_ext", ignore_errors=True)          # extended photos were only needed for the render
     cap = (spec.get("caption", "").strip() + "\n\n" + " ".join(spec.get("hashtags", []))).strip()
     (out / "caption.txt").write_text(cap + "\n")

@@ -5,7 +5,7 @@
   "slides": [
     {
       "heading": "WHAT DETERMINES\n**THE RIGHT DEPOSIT\nAMOUNT?**",
-      "heading_size": 44,
+      "heading_size": 54,
       "text_width": 450,
       "body": [
         "A Deposit Refund Scheme (DRS) allows consumers to reclaim a **refundable deposit** when they return eligible empty packaging through designated return channels."
@@ -17,15 +17,24 @@
         "mirror_shift": 80
       },
       "veil_soft": {
-        "a": 0.84,
-        "hold": 440,
-        "end": 640
-      }
+        "a": 0.94,
+        "hold": 220,
+        "end": 720,
+        "head": {
+          "cx": 300,
+          "cy": 270,
+          "rx": 560,
+          "ry": 230,
+          "a": 0.7
+        }
+      },
+      "heading_width": 560,
+      "alt": "Two people at a return counter: a customer hands an empty clear plastic bottle to a collection attendant, with crates of empty containers behind the counter."
     },
     {
       "heading": "MORE THAN\n**A PRICE TAG**",
-      "heading_size": 44,
-      "text_width": 450,
+      "heading_size": 54,
+      "text_width": 470,
       "body": [
         "A deposit amount serves two important purposes:"
       ],
@@ -33,22 +42,24 @@
         "**Encouraging returns:** Giving consumers a meaningful reason to return empty packaging.",
         "**Reflecting market conditions:** Considering the products and economic realities of the market."
       ],
-      "bullet_gap": 30,
+      "bullet_gap": 22,
       "visual": {
         "image": "images/slide-2.jpg",
         "kind": "bg",
         "mirror_shift": 80
       },
       "veil_soft": {
-        "a": 0.93,
-        "hold": 470,
-        "end": 640
-      }
+        "a": 0.96,
+        "hold": 280,
+        "end": 740
+      },
+      "heading_width": 560,
+      "alt": "Close view of a person about to put an empty clear plastic bottle into the round opening of a plain grey return unit with a soft green light ring."
     },
     {
       "eyebrow": "1 / 2",
       "heading": "WHAT GOES INTO\n**THE DECISION?**",
-      "heading_size": 44,
+      "heading_size": 54,
       "text_width": 450,
       "body": [
         "Four considerations shape the deposit amount:"
@@ -64,15 +75,17 @@
         "mirror_shift": 70
       },
       "veil_soft": {
-        "a": 0.84,
-        "hold": 440,
-        "end": 640
-      }
+        "a": 0.92,
+        "hold": 140,
+        "end": 720
+      },
+      "heading_width": 560,
+      "alt": "Two colleagues at a wooden table examine a small plastic bottle, with a larger plastic bottle, an aluminium can, a glass bottle, a notebook and papers in front of them."
     },
     {
       "eyebrow": "2 / 2",
       "heading": "WHAT GOES INTO\n**THE DECISION?**",
-      "heading_size": 44,
+      "heading_size": 54,
       "text_width": 450,
       "bullets": [
         "**Scheme objectives:** What the return system is designed to achieve.",
@@ -85,14 +98,16 @@
         "mirror_shift": 70
       },
       "veil_soft": {
-        "a": 0.84,
-        "hold": 440,
-        "end": 640
-      }
+        "a": 0.92,
+        "hold": 140,
+        "end": 720
+      },
+      "heading_width": 560,
+      "alt": "Hands arranging a small plastic bottle, a larger plastic bottle, an aluminium can and a glass bottle on a wooden table next to an open notebook."
     },
     {
       "heading": "THE RIGHT AMOUNT\n**IS ABOUT BALANCE.**",
-      "heading_size": 44,
+      "heading_size": 54,
       "text_width": 450,
       "body": [
         "Deposit amounts may vary depending on:"
@@ -115,10 +130,19 @@
         "scale": 0.86
       },
       "veil_soft": {
-        "a": 0.88,
-        "hold": 450,
-        "end": 580
-      }
+        "a": 0.92,
+        "hold": 140,
+        "end": 720,
+        "head": {
+          "cx": 380,
+          "cy": 262,
+          "rx": 720,
+          "ry": 200,
+          "a": 1.0
+        }
+      },
+      "heading_width": 560,
+      "alt": "Four empty containers side by side: a small plastic bottle, a larger plastic bottle, an aluminium can and a glass bottle, on a plain surface."
     }
   ],
   "caption": "What determines the right deposit amount?\n\nA Deposit Refund Scheme (DRS) allows consumers to reclaim a refundable deposit when they return eligible empty packaging through designated return channels. But how is that amount decided?\n\nMore than a price tag. A deposit amount serves two important purposes: encouraging returns, by giving consumers a meaningful reason to return empty packaging, and reflecting market conditions, by considering the products and economic realities of the market.\n\nWhat goes into the decision? Four considerations shape the deposit amount: consumer affordability (how the deposit relates to the product price), return behaviour (whether the amount gives consumers a reason to return), scheme objectives (what the return system is designed to achieve) and market context (packaging formats and market conditions).\n\nThe right amount is about balance. Deposit amounts may vary depending on container volume and material type.\n\nThe aim is to encourage returns while keeping the deposit practical for the scheme and its market.\n\nFollow Recykal for more insights on Deposit Refund Schemes.\n\nSwipe through to see how.",
